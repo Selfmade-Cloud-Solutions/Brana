@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<LoginPage> createState() => _MyWidgetState();
+  State<SignupPage> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<LoginPage> {
+class _MyWidgetState extends State<SignupPage> {
   late Color myColor;
   late Size mediaSize;
+  TextEditingController firstnameController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
@@ -80,8 +82,14 @@ class _MyWidgetState extends State<LoginPage> {
           style: TextStyle(
               color: myColor, fontSize: 32, fontWeight: FontWeight.w500),
         ),
-        _buildGreyText("Please login with your information"),
+        _buildGreyText("Fill Form To Register"),
         const SizedBox(height: 60),
+        _buildGreyText("First Name"),
+        _buildInputField(firstnameController),
+        const SizedBox(height: 40,),
+        _buildGreyText("Last Name"),
+        _buildInputField(lastnameController),
+        const SizedBox(height: 40,),
         _buildGreyText("Email address"),
         _buildInputField(emailController),
         const SizedBox(height: 40),
@@ -130,11 +138,10 @@ class _MyWidgetState extends State<LoginPage> {
                     rememberUser = value!;
                   });
                 }),
-            _buildGreyText("Remember me"),
+            
           ],
         ),
-        TextButton(
-            onPressed: () {}, child: _buildGreyText("I forgot my password"))
+        
       ],
     );
   }
@@ -151,7 +158,7 @@ class _MyWidgetState extends State<LoginPage> {
         shadowColor: myColor,
         minimumSize: const Size.fromHeight(60),
       ),
-      child: const Text("LOGIN"),
+      child: const Text("SignUp"),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:brana_mobile/login_page.dart';
+import 'package:brana_mobile/signup_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,11 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const SignupPage(),
       debugShowCheckedModeBanner: false,
     );
   }
