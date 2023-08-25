@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:brana_mobile/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,7 +17,7 @@ class _MyWidgetState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    myColor = Theme.of(context).primaryColor;
+    myColor = Theme.of(context).primaryColorLight;
     mediaSize = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
@@ -64,7 +65,7 @@ class _MyWidgetState extends State<LoginPage> {
           topRight: Radius.circular(30),
         )),
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(20.0),
           child: _buildForm(),
         ),
       ),
@@ -76,22 +77,26 @@ class _MyWidgetState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Welcome",
+          "Welcome Back",
           style: TextStyle(
               color: myColor, fontSize: 32, fontWeight: FontWeight.w500),
         ),
-        _buildGreyText("Please login with your information"),
-        const SizedBox(height: 60),
+        _buildGreyText("Please login to Brana"),
+        const SizedBox(height: 50),
         _buildGreyText("Email address"),
         _buildInputField(emailController),
-        const SizedBox(height: 40),
+        const SizedBox(height: 30),
         _buildGreyText("Password"),
         _buildInputField(passwordController, isPassword: true),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         _buildRememberForgot(),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         _buildLoginButton(),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
+        _buildNotRegistered(),
+        const SizedBox(height: 10),
+        _buildSignupButton(),
+        const SizedBox(height: 15),
         _buildOtherLogin(),
       ],
     );
@@ -134,11 +139,25 @@ class _MyWidgetState extends State<LoginPage> {
           ],
         ),
         TextButton(
-            onPressed: () {}, child: _buildGreyText("I forgot my password"))
+            onPressed: () {}, child: _buildGreyText("Forgot password"))
       ],
     );
   }
-
+Widget _buildNotRegistered() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildGreyText("Not Registered ?"),
+          ],
+        ),
+      ),
+    ],
+  );
+}
   Widget _buildLoginButton() {
     return ElevatedButton(
       onPressed: () {
@@ -152,6 +171,23 @@ class _MyWidgetState extends State<LoginPage> {
         minimumSize: const Size.fromHeight(60),
       ),
       child: const Text("LOGIN"),
+    );
+  }
+    Widget _buildSignupButton() {
+    return ElevatedButton(
+      onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SignupPage()),
+    );
+  },
+      style: ElevatedButton.styleFrom(
+        shape: const StadiumBorder(),
+        elevation: 20,
+        shadowColor: myColor,
+        minimumSize: const Size.fromHeight(60),
+      ),
+      child: const Text("SIGN UP"),
     );
   }
 

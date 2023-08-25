@@ -1,5 +1,5 @@
 import 'package:brana_mobile/login_page.dart';
-import 'package:brana_mobile/signup_page.dart';
+// import 'package:brana_mobile/signup_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const SignupPage(),
+      // home: const SignupPage(),
+      home: const LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }

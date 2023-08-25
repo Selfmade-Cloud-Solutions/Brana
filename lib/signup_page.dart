@@ -18,7 +18,7 @@ class _MyWidgetState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    myColor = Theme.of(context).primaryColor;
+    myColor = Theme.of(context).primaryColorLight;
     mediaSize = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
@@ -83,23 +83,21 @@ class _MyWidgetState extends State<SignupPage> {
               color: myColor, fontSize: 32, fontWeight: FontWeight.w500),
         ),
         _buildGreyText("Fill Form To Register"),
-        const SizedBox(height: 60),
+        const SizedBox(height: 50),
         _buildGreyText("First Name"),
         _buildInputField(firstnameController),
-        const SizedBox(height: 40,),
+        const SizedBox(height: 30,),
         _buildGreyText("Last Name"),
         _buildInputField(lastnameController),
-        const SizedBox(height: 40,),
+        const SizedBox(height: 30,),
         _buildGreyText("Email address"),
         _buildInputField(emailController),
-        const SizedBox(height: 40),
+        const SizedBox(height: 30),
         _buildGreyText("Password"),
         _buildInputField(passwordController, isPassword: true),
-        const SizedBox(height: 20),
-        _buildRememberForgot(),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         _buildLoginButton(),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         _buildOtherLogin(),
       ],
     );
@@ -125,26 +123,6 @@ class _MyWidgetState extends State<SignupPage> {
     );
   }
 
-  Widget _buildRememberForgot() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Checkbox(
-                value: rememberUser,
-                onChanged: (value) {
-                  setState(() {
-                    rememberUser = value!;
-                  });
-                }),
-            
-          ],
-        ),
-        
-      ],
-    );
-  }
 
   Widget _buildLoginButton() {
     return ElevatedButton(
