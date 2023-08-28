@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:brana_mobile/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,14 +25,14 @@ class _MyWidgetState extends State<LoginPage> {
           image: const AssetImage("assets/images/bg.png"),
           fit: BoxFit.cover,
           colorFilter:
-              ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
+              ColorFilter.mode(myColor.withOpacity(1), BlendMode.color),
         ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
-          Positioned(top: 80, child: _buildTop()),
-          Positioned(bottom: 0, child: _buildBottom()),
+          Positioned(top: 30, child: _buildTop()),
+          Positioned(bottom: 130, child: _buildBottom()),
         ]),
       ),
     );
@@ -60,10 +59,8 @@ class _MyWidgetState extends State<LoginPage> {
       width: mediaSize.width,
       child: Card(
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        )),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: _buildForm(),
@@ -79,25 +76,20 @@ class _MyWidgetState extends State<LoginPage> {
         Text(
           "Welcome Back",
           style: TextStyle(
-              color: myColor, fontSize: 32, fontWeight: FontWeight.w500),
+              color: myColor, fontSize: 32, fontWeight: FontWeight.w900),
         ),
         _buildGreyText("Please login to Brana"),
-        const SizedBox(height: 50),
+        const SizedBox(height: 30),
         _buildGreyText("Email address"),
         _buildInputField(emailController),
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
         _buildGreyText("Password"),
         _buildInputField(passwordController, isPassword: true),
-        const SizedBox(height: 15),
+        const SizedBox(height: 5),
         _buildRememberForgot(),
         const SizedBox(height: 15),
         _buildLoginButton(),
-        const SizedBox(height: 15),
-        _buildNotRegistered(),
-        const SizedBox(height: 10),
-        _buildSignupButton(),
-        const SizedBox(height: 15),
-        _buildOtherLogin(),
+        const SizedBox(height: 35),
       ],
     );
   }
@@ -143,21 +135,6 @@ class _MyWidgetState extends State<LoginPage> {
       ],
     );
   }
-Widget _buildNotRegistered() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildGreyText("Not Registered ?"),
-          ],
-        ),
-      ),
-    ],
-  );
-}
   Widget _buildLoginButton() {
     return ElevatedButton(
       onPressed: () {
@@ -168,45 +145,9 @@ Widget _buildNotRegistered() {
         shape: const StadiumBorder(),
         elevation: 20,
         shadowColor: myColor,
-        minimumSize: const Size.fromHeight(60),
+        minimumSize: const Size.fromHeight(50),
       ),
       child: const Text("LOGIN"),
-    );
-  }
-    Widget _buildSignupButton() {
-    return ElevatedButton(
-      onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SignupPage()),
-    );
-  },
-      style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
-        elevation: 20,
-        shadowColor: myColor,
-        minimumSize: const Size.fromHeight(60),
-      ),
-      child: const Text("SIGN UP"),
-    );
-  }
-
-  Widget _buildOtherLogin() {
-    return Center(
-      child: Column(
-        children: [
-          _buildGreyText("Or Login with"),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Tab(icon: Image.asset("assets/images/google.png")),
-              Tab(icon: Image.asset("assets/images/facebook.png")),
-              Tab(icon: Image.asset("assets/images/twitter.png")),
-            ],
-          )
-        ],
-      ),
     );
   }
 }

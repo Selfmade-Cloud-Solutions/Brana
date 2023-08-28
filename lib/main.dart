@@ -1,6 +1,7 @@
-import 'package:brana_mobile/login_page.dart';
-// import 'package:brana_mobile/signup_page.dart';
 import 'package:flutter/material.dart';
+// import 'package:brana_mobile/login_signup_option.dart';
+// import 'package:brana_mobile/navigation.dart';
+import 'package:brana_mobile/bookstore.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +14,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Brana',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
       // home: const SignupPage(),
-      home: const LoginPage(),
+      // home: const LoginSignupOption(),
+      // home: const Navigation(),
+      home: const Bookstore(),
+
       debugShowCheckedModeBanner: false,
     );
   }
