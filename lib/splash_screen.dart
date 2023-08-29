@@ -14,20 +14,18 @@ class _SplashScreenState extends State<Splashscreen>
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 14), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (_) => const Bookstore(),
       ));
     });
   }
-
   @override
   void dispose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,16 +40,8 @@ class _SplashScreenState extends State<Splashscreen>
             AssetImage("assets/images/logo2.png"),
               size: 150,
             ),
-            
             SizedBox(
               height: 20,
-            ),
-            Text(
-              "Brana Audiobook",
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 38,
-              ),
             )
           ],
         ),
