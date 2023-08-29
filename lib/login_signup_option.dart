@@ -3,7 +3,7 @@ import 'package:brana_mobile/signup_page.dart';
 import 'package:brana_mobile/login_page.dart';
 
 class LoginSignupOption extends StatefulWidget {
-  const LoginSignupOption({super.key});
+  const LoginSignupOption({super.key, required double screenHeight});
 
   @override
   State<LoginSignupOption> createState() => _MyWidgetState();
@@ -12,9 +12,7 @@ class LoginSignupOption extends StatefulWidget {
 class _MyWidgetState extends State<LoginSignupOption> {
   late Color myColor;
   late Size mediaSize;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  bool rememberUser = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +101,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 10,
-        backgroundColor:const Color.fromARGB(255, 237, 238, 240),
+        backgroundColor:const Color.fromARGB(255, 44, 51, 53),
         shadowColor:const Color.fromARGB(255, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
@@ -121,7 +119,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 10,
-        backgroundColor:const Color.fromARGB(255, 237, 238, 240),
+        backgroundColor:const Color.fromARGB(255, 7, 243, 204),
         shadowColor:const Color.fromARGB(255, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
@@ -162,15 +160,28 @@ class _MyWidgetState extends State<LoginSignupOption> {
                       color: const Color.fromARGB(255, 58, 57, 57).withOpacity(0.2),
                       blurRadius: 1.0,
                       spreadRadius: 2.0,
-                      offset:const Offset(10,10) ,),
+                      offset:const Offset(0,0) ,),
                       
                   ]
                 ),
                 child:
               Tab(icon: Image.asset("assets/images/facebook.png")),
               ),
+                            Container(
+                decoration:BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color.fromARGB(255, 58, 57, 57).withOpacity(0.2),
+                      blurRadius: 1.0,
+                      spreadRadius: 2.0,
+                      offset:const Offset(0,0) ,),
+                      
+                  ]
+                ),
+                child:
               Tab(icon: Image.asset("assets/images/twitter.png")),
-            ],
+          )
+          ],
           ),
         ],
       ),
