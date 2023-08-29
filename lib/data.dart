@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 class NavigationItem {
-
   IconData iconData;
 
   NavigationItem(this.iconData);
-
 }
 
-List<NavigationItem> getNavigationItemList(){
+List<NavigationItem> getNavigationItemList() {
   return <NavigationItem>[
     NavigationItem(Icons.home),
     NavigationItem(Icons.book),
@@ -18,7 +16,6 @@ List<NavigationItem> getNavigationItemList(){
 }
 
 class Book {
-
   String title;
   String description;
   Author author;
@@ -26,10 +23,9 @@ class Book {
   String image;
 
   Book(this.title, this.description, this.author, this.score, this.image);
-
 }
 
-List<Book> getBookList(){
+List<Book> getBookList() {
   return <Book>[
     Book(
       "ላስብበት",
@@ -39,7 +35,7 @@ List<Book> getBookList(){
         90,
         "assets/authors/ፍሬዓለምሺባባው.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ላስብበት.jpg",
     ),
     Book(
@@ -50,7 +46,7 @@ List<Book> getBookList(){
         123,
         "assets/authors/ፍሬዓለምሺባባው.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ስቅታ.jpg",
     ),
     Book(
@@ -61,7 +57,7 @@ List<Book> getBookList(){
         99,
         "assets/authors/እንዳለጌታከበደ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/እስረኞቹ.jpg",
     ),
     Book(
@@ -72,7 +68,7 @@ List<Book> getBookList(){
         134,
         "assets/authors/መለሰእሸቱ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ሀብት_ያለው_አእምሮህ.jpg",
     ),
     Book(
@@ -83,7 +79,7 @@ List<Book> getBookList(){
         87,
         "assets/authors/መለሰእሸቱ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ቴሎስ.jpg",
     ),
     Book(
@@ -94,7 +90,7 @@ List<Book> getBookList(){
         108,
         "assets/authors/ዘነበወላ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ልጅነት.jpg",
     ),
     Book(
@@ -105,7 +101,7 @@ List<Book> getBookList(){
         77,
         "assets/authors/ ሀዲስ አለማየሁ.jpeg",
       ),
-      "4.14",
+      " ",
       "assets/books/ወንጀለኛው_ዳኛ.jpg",
     ),
     Book(
@@ -116,7 +112,7 @@ List<Book> getBookList(){
         112,
         "assets/authors/ዘነበወላ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ማሃትማ_ጋንዲ.jpg",
     ),
     Book(
@@ -127,7 +123,7 @@ List<Book> getBookList(){
         65,
         "assets/authors/መለሰእሸቱ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ጠበሳ.jpg",
     ),
     Book(
@@ -138,7 +134,7 @@ List<Book> getBookList(){
         75,
         "assets/authors/መለሰእሸቱ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ለምትኬ.jpg",
     ),
     Book(
@@ -149,26 +145,22 @@ List<Book> getBookList(){
         70,
         "assets/authors/ሰለሞንሙሉጌታካሳ.jpg",
       ),
-      "4.14",
+      " ",
       "assets/books/ግርምተ_ሳይቴክ.jpg",
     ),
   ];
 }
 
 class Author {
-
   String fullname;
   int books;
   String image;
 
-
   Author(this.fullname, this.books, this.image);
-
 }
 
-List<Author> getAuthorList(){
+List<Author> getAuthorList() {
   return <Author>[
-    
     Author(
       "ፍሬዓለም ሺባባው",
       108,
@@ -213,14 +205,12 @@ List<Author> getAuthorList(){
 }
 
 class Filter {
-
   String name;
 
   Filter(this.name);
-
 }
 
-List<Filter> getFilterList(){
+List<Filter> getFilterList() {
   return <Filter>[
     Filter("CLASSICS"),
     Filter("NEW"),

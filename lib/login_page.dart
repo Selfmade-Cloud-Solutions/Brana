@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:brana_mobile/bookstore.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -138,14 +139,19 @@ class _MyWidgetState extends State<LoginPage> {
   Widget _buildLoginButton() {
     return ElevatedButton(
       onPressed: () {
-        debugPrint("Email : ${emailController.text}");
-        debugPrint("Password : ${passwordController.text}");
-      },
+        // debugPrint("Email : ${emailController.text}");
+        // debugPrint("Password : ${passwordController.text}");
+        Navigator.push(
+      context,
+        MaterialPageRoute(builder: (context) => const Bookstore()),
+    );
+    },
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 20,
         shadowColor: myColor,
         minimumSize: const Size.fromHeight(50),
+        
       ),
       child: const Text("LOGIN"),
     );

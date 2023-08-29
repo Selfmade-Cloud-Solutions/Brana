@@ -97,14 +97,14 @@ class BookDetail extends StatelessWidget {
                             child: Row(
                               children: [
 
-                                Row(
+                                const Row(
                                   children: <Widget>[
 
-                                    Icon(Icons.star, size: 20, color: kStarsColor,),
-                                    Icon(Icons.star, size: 20, color: kStarsColor,),
-                                    Icon(Icons.star, size: 20, color: kStarsColor,),
-                                    Icon(Icons.star, size: 20, color: kStarsColor,),
-                                    Icon(Icons.star_half, size: 20, color: kStarsColor,),
+                                    // Icon(Icons.star, size: 20, color: kStarsColor,),
+                                    // Icon(Icons.star, size: 20, color: kStarsColor,),
+                                    // Icon(Icons.star, size: 20, color: kStarsColor,),
+                                    // Icon(Icons.star, size: 20, color: kStarsColor,),
+                                    // Icon(Icons.star_half, size: 20, color: kStarsColor,),
 
                                   ],
                                 ),
@@ -179,7 +179,7 @@ class BookDetail extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Want to read",
+                                  "Listen",
                                   style: GoogleFonts.catamaran(
                                     fontSize: 18,
                                     color: Colors.white,
@@ -190,7 +190,7 @@ class BookDetail extends StatelessWidget {
                                   width: 8,
                                 ),
                                 const Icon(
-                                  Icons.keyboard_arrow_down,
+                                  Icons.play_arrow_rounded,
                                   color: Colors.white,
                                 ),
                               ],
@@ -223,7 +223,7 @@ class BookDetail extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Get a copy",
+                                  "Add to Wishlist",
                                   style: GoogleFonts.catamaran(
                                     fontSize: 18,
                                     color: Colors.grey,
@@ -234,7 +234,7 @@ class BookDetail extends StatelessWidget {
                                   width: 8,
                                 ),
                                 Icon(
-                                  Icons.content_copy,
+                                  Icons.bookmark_add,
                                   color: kPrimaryColor,
                                   size: 20,
                                 ),
