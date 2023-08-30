@@ -4,16 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
+import 'package:anim_search_bar/anim_search_bar.dart';
 
 class Bookstore extends StatefulWidget {
   const Bookstore({super.key});
-
   @override
-   State<Bookstore> createState() => _BookstoreState();
+  State<Bookstore> createState() => _BookstoreState();
 }
 
 class _BookstoreState extends State<Bookstore> {
-
+TextEditingController textController = TextEditingController();
   List<Filter> filters = getFilterList();
   late Filter selectedFilter;
 
@@ -38,26 +38,35 @@ class _BookstoreState extends State<Bookstore> {
     appBar: AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      leading: Icon(
-        Icons.sort,
-        color: kPrimaryColor,
-        size: 28,
+      actions: [
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: AnimSearchBar(
+        width: 350,
+        textController: textController,
+        onSuffixTap: () {
+          setState(() {
+            textController.clear();
+          });
+        },
+        color: Colors.blue[100]!,
+        helpText: "Search",
+        autoFocus: true,
+        closeSearchOnSuffixTap: true,
+        animationDurationInMilli: 1500,
+        rtl: false,
+        onSubmitted: (string ) {  },
       ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16,),
-            child: Icon(
-              Icons.search,
-              color: Colors.grey[400],
-              size: 28,
-            ),
-          ),
-        ], systemOverlayStyle: SystemUiOverlayStyle.dark,
+    ),
+
+        ], 
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        
       ),
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-
           Container(
             padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
             decoration: BoxDecoration(
