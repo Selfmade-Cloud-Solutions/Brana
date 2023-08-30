@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:brana_mobile/home_page.dart';
-import 'package:brana_mobile/search.dart';
-import 'package:brana_mobile/explore.dart';
-import 'package:brana_mobile/profile.dart';
+import 'package:brana_mobile/navigation_pages/home_page.dart';
+import 'package:brana_mobile/navigation_pages/search.dart';
+import 'package:brana_mobile/navigation_pages/explore.dart';
+import 'package:brana_mobile/navigation_pages/profile.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);

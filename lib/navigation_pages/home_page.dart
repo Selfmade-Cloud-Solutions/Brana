@@ -6,19 +6,19 @@ import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 
-class Bookstore extends StatefulWidget {
-  const Bookstore({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  State<Bookstore> createState() => _BookstoreState();
+  State<HomePage> createState() => _MyWidgetState();
 }
 
-class _BookstoreState extends State<Bookstore> {
-TextEditingController textController = TextEditingController();
+class _MyWidgetState extends State<HomePage> {
+  TextEditingController textController = TextEditingController();
   List<Filter> filters = getFilterList();
   late Filter selectedFilter;
 
-  List<NavigationItem> navigationItems = getNavigationItemList();
-  late NavigationItem selectedItem;
+  
 
   List<Book> books = getBookList();
   List<Author> authors = getAuthorList();
@@ -28,7 +28,7 @@ TextEditingController textController = TextEditingController();
     super.initState();
     setState(() {
       selectedFilter = filters[0];
-      selectedItem = navigationItems[0];
+    
     });
   }
 
@@ -190,28 +190,6 @@ TextEditingController textController = TextEditingController();
 
 
         ],
-      ),
-      bottomNavigationBar: Container(
-        height: 70,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 8,
-              blurRadius: 12,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: buildNavigationItems(),
-        ),
       ),
     );
   }
@@ -422,34 +400,6 @@ TextEditingController textController = TextEditingController();
           ),
 
         ],
-      ),
-    );
-  }
-
-  List<Widget> buildNavigationItems(){
-    List<Widget> list = [];
-    for (var navigationItem in navigationItems) {
-      list.add(buildNavigationItem(navigationItem));
-    }
-    return list;
-  }
-
-  Widget buildNavigationItem(NavigationItem item){
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedItem = item;
-        });
-      },
-      child: SizedBox(
-        width: 50,
-        child: Center(
-          child: Icon(
-            item.iconData,
-            color: selectedItem == item ? kPrimaryColor : Colors.grey[400],
-            size: 28,
-          ),
-        ),
       ),
     );
   }
