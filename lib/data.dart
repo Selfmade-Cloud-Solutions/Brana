@@ -1,19 +1,3 @@
-import 'package:flutter/material.dart';
-
-class NavigationItem {
-  IconData iconData;
-
-  NavigationItem(this.iconData);
-}
-
-List<NavigationItem> getNavigationItemList() {
-  return <NavigationItem>[
-    NavigationItem(Icons.home),
-    NavigationItem(Icons.book),
-    NavigationItem(Icons.local_library),
-    NavigationItem(Icons.person),
-  ];
-}
 
 class Book {
   String title;
