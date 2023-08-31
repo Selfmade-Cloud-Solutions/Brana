@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:brana_mobile/bookstore.dart';
+import 'package:brana_mobile/navigation.dart';
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
 
@@ -16,7 +16,7 @@ class _SplashScreenState extends State<Splashscreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => const Bookstore(),
+        builder: (_) =>  const Navigation(),
       ));
     });
   }

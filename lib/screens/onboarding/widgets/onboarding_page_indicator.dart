@@ -9,7 +9,7 @@ class OnboardingPageIndicator extends StatelessWidget {
   final int currentPage;
   final Widget child;
 
-  const OnboardingPageIndicator({
+  const OnboardingPageIndicator({super.key, 
     required this.angle,
     required this.currentPage,
     required this.child,

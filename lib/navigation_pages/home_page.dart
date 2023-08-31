@@ -4,21 +4,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
+import 'package:anim_search_bar/anim_search_bar.dart';
 
-class Bookstore extends StatefulWidget {
-  const Bookstore({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-   State<Bookstore> createState() => _BookstoreState();
+  State<HomePage> createState() => _MyWidgetState();
 }
 
-class _BookstoreState extends State<Bookstore> {
-
+class _MyWidgetState extends State<HomePage> {
+  TextEditingController textController = TextEditingController();
   List<Filter> filters = getFilterList();
   late Filter selectedFilter;
 
-  List<NavigationItem> navigationItems = getNavigationItemList();
-  late NavigationItem selectedItem;
+  
 
   List<Book> books = getBookList();
   List<Author> authors = getAuthorList();
@@ -28,7 +28,7 @@ class _BookstoreState extends State<Bookstore> {
     super.initState();
     setState(() {
       selectedFilter = filters[0];
-      selectedItem = navigationItems[0];
+    
     });
   }
 
@@ -38,26 +38,35 @@ class _BookstoreState extends State<Bookstore> {
     appBar: AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      leading: Icon(
-        Icons.sort,
-        color: kPrimaryColor,
-        size: 28,
+      actions: [
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: AnimSearchBar(
+        width: 350,
+        textController: textController,
+        onSuffixTap: () {
+          setState(() {
+            textController.clear();
+          });
+        },
+        color: Colors.blue[100]!,
+        helpText: "Search",
+        autoFocus: true,
+        closeSearchOnSuffixTap: true,
+        animationDurationInMilli: 1500,
+        rtl: false,
+        onSubmitted: (string ) {  },
       ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16,),
-            child: Icon(
-              Icons.search,
-              color: Colors.grey[400],
-              size: 28,
-            ),
-          ),
-        ], systemOverlayStyle: SystemUiOverlayStyle.dark,
+    ),
+
+        ], 
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        
       ),
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-
           Container(
             padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
             decoration: BoxDecoration(
@@ -181,28 +190,6 @@ class _BookstoreState extends State<Bookstore> {
 
 
         ],
-      ),
-      bottomNavigationBar: Container(
-        height: 70,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 8,
-              blurRadius: 12,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: buildNavigationItems(),
-        ),
       ),
     );
   }
@@ -413,34 +400,6 @@ class _BookstoreState extends State<Bookstore> {
           ),
 
         ],
-      ),
-    );
-  }
-
-  List<Widget> buildNavigationItems(){
-    List<Widget> list = [];
-    for (var navigationItem in navigationItems) {
-      list.add(buildNavigationItem(navigationItem));
-    }
-    return list;
-  }
-
-  Widget buildNavigationItem(NavigationItem item){
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedItem = item;
-        });
-      },
-      child: SizedBox(
-        width: 50,
-        child: Center(
-          child: Icon(
-            item.iconData,
-            color: selectedItem == item ? kPrimaryColor : Colors.grey[400],
-            size: 28,
-          ),
-        ),
       ),
     );
   }
