@@ -1,33 +1,30 @@
+import 'package:brana_mobile/audioplayer.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BookDetail extends StatelessWidget {
-
   final Book book;
 
   const BookDetail({super.key, required this.book});
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
-    
+
     return Scaffold(
       body: Stack(
         children: [
-
           Hero(
             tag: book.title,
-            child: Image.asset(
-              book.image,
-              fit: BoxFit.fitWidth
-            ),
+            child: Image.asset(book.image, fit: BoxFit.fitWidth),
           ),
-
           Padding(
-            padding: const EdgeInsets.only(top: 48, left: 32,),
+            padding: const EdgeInsets.only(
+              top: 48,
+              left: 32,
+            ),
             child: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
@@ -51,7 +48,6 @@ class BookDetail extends StatelessWidget {
               ),
             ),
           ),
-
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -66,14 +62,16 @@ class BookDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.only(right: 32, left: 32, bottom: 16,),
+                      padding: const EdgeInsets.only(
+                        right: 32,
+                        left: 32,
+                        bottom: 16,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-
                           Text(
                             book.title,
                             style: GoogleFonts.catamaran(
@@ -82,7 +80,6 @@ class BookDetail extends StatelessWidget {
                               height: 1,
                             ),
                           ),
-
                           Text(
                             book.author.fullname,
                             style: GoogleFonts.catamaran(
@@ -91,28 +88,22 @@ class BookDetail extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: Row(
                               children: [
-
                                 const Row(
                                   children: <Widget>[
-
                                     // Icon(Icons.star, size: 20, color: kStarsColor,),
                                     // Icon(Icons.star, size: 20, color: kStarsColor,),
                                     // Icon(Icons.star, size: 20, color: kStarsColor,),
                                     // Icon(Icons.star, size: 20, color: kStarsColor,),
                                     // Icon(Icons.star_half, size: 20, color: kStarsColor,),
-
                                   ],
                                 ),
-
                                 const SizedBox(
                                   width: 12,
                                 ),
-
                                 Text(
                                   book.score,
                                   style: GoogleFonts.catamaran(
@@ -121,11 +112,9 @@ class BookDetail extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
-
                           Expanded(
                             child: SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
@@ -137,16 +126,19 @@ class BookDetail extends StatelessWidget {
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
                   ),
-
                   Container(
                     height: 100,
                     width: size.width,
-                    padding: const EdgeInsets.only(top: 16, left: 32, right: 32, bottom: 32,),
+                    padding: const EdgeInsets.only(
+                      top: 16,
+                      left: 32,
+                      right: 32,
+                      bottom: 32,
+                    ),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -157,105 +149,74 @@ class BookDetail extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-
-                        Container(
-                          width: size.width / 2 - 44,
-                          decoration: BoxDecoration(
-                            color: kPrimaryColor,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(15),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: kPrimaryColor.withOpacity(0.4),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 0),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.width * 0.4, 20),
+                            textStyle: const TextStyle(fontSize: 16),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.teal,
+                            shadowColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            elevation: 5,
+                          ),
+                          // onPressed: () => Navigator.of(context).push(
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const AudioPlayer())),
+                          onPressed: () {
+                            String dataToSend = "This Is the Data to send";
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AudioPlayer(data: dataToSend),
                               ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Listen",
-                                  style: GoogleFonts.catamaran(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              const  SizedBox(
-                                  width: 8,
-                                ),
-                                const Icon(
-                                  Icons.play_arrow_rounded,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
+                            );
+                          },
+                          icon: const Icon(Icons.play_arrow_rounded, size: 30),
+                          label: const Center(child: Text('Listen')),
                         ),
-
-                        Container(
-                          width: size.width / 2 - 44,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(15),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.4),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: const Offset(0, 0),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.width * 0.4, 20),
+                            textStyle: const TextStyle(fontSize: 16),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.teal,
+                            shadowColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            elevation: 5,
+                          ),
+                          onPressed: () {
+                            String dataToSend = "This Is the Data to send";
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AudioPlayer(data: dataToSend),
                               ),
-                            ],
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 1,
-                            ),
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Add to Wishlist",
-                                  style: GoogleFonts.catamaran(
-                                    fontSize: 18,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(
-                                  Icons.bookmark_add,
-                                  color: kPrimaryColor,
-                                  size: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
+                            );
+                          },
+                          // onPressed: () => Navigator.of(context).push(
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const AudioPlayer())),
+                          icon: const Icon(Icons.bookmark_add, size: 30),
+                          label: const Center(child: Text('Add to Wishlist')),
+                        )
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
           ),
-
           Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: EdgeInsets.only(left: 32, bottom: (size.height * 0.5) - (75 / 2)),
+              padding: EdgeInsets.only(
+                  left: 32, bottom: (size.height * 0.5) - (75 / 2)),
               child: Card(
                 elevation: 4,
                 margin: const EdgeInsets.all(0),
@@ -270,7 +231,7 @@ class BookDetail extends StatelessWidget {
                   height: 75,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(book.author.image), 
+                      image: AssetImage(book.author.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -278,7 +239,6 @@ class BookDetail extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
