@@ -194,10 +194,16 @@ class Filter {
   Filter(this.name);
 }
 
-List<Filter> getFilterList() {
+List<Filter> getFilterListHome() {
   return <Filter>[
     Filter("CLASSICS"),
     Filter("NEW"),
     Filter("UPCOMING"),
+  ];
+}
+List<Filter> getFilterListExplore() {
+  return <Filter>[
+    Filter("AUDIOBOOKS"),
+    Filter("PODCASTS"),
   ];
 }

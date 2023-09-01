@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _MyWidgetState extends State<HomePage> {
   TextEditingController textController = TextEditingController();
-  List<Filter> filters = getFilterList();
+  List<Filter> filters = getFilterListHome();
   late Filter selectedFilter;
 
   
@@ -40,7 +40,7 @@ class _MyWidgetState extends State<HomePage> {
       elevation: 0,
       actions: [
     Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: AnimSearchBar(
         width: 350,
         textController: textController,
@@ -49,7 +49,7 @@ class _MyWidgetState extends State<HomePage> {
             textController.clear();
           });
         },
-        color: Colors.blue[100]!,
+        
         helpText: "Search",
         autoFocus: true,
         closeSearchOnSuffixTap: true,
@@ -91,7 +91,7 @@ class _MyWidgetState extends State<HomePage> {
                   "Discover Audiobooks",
                   style: GoogleFonts.catamaran(
                     fontWeight: FontWeight.w900,
-                    fontSize: 40,
+                    fontSize: 12,
                     height: 1,
                   ),
                 ),

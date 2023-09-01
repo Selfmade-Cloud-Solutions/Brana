@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:brana_mobile/navigation_pages/home_page.dart';
-import 'package:brana_mobile/navigation_pages/search.dart';
+import 'package:brana_mobile/navigation_pages/library.dart';
 import 'package:brana_mobile/navigation_pages/explore.dart';
 import 'package:brana_mobile/navigation_pages/profile.dart';
 
@@ -29,30 +29,32 @@ class _MyWidgetState extends State<Navigation> {
         children: const [
           HomePage(),
           ExplorePage(),
-          SearchPage(),
+          LibraryPage(),
           ProfilePage(),
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.blue.shade200,
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 1,
-            ),
-          ],
-        ),
+        decoration: const BoxDecoration(
+  color: Color.fromARGB(20, 0, 13, 24),
+  borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(20),
+    topRight: Radius.circular(20),
+  ),
+  boxShadow: [
+    BoxShadow(
+      blurRadius: 20,
+      color: Color.fromARGB(100, 255, 255, 255), // Adjust the opacity (alpha value) and color as needed
+      spreadRadius: 1,
+    ),
+  ],
+),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(
             gap: 8,
-            backgroundColor: Colors.blue.shade200,
-            color: Colors.white,
+            color: const Color.fromARGB(255, 7, 7, 7),
             activeColor: Colors.white,
-            tabBackgroundColor: Colors.blue.shade400,
+            tabBackgroundColor: Colors.grey,
             padding: const EdgeInsets.all(10),
             selectedIndex: _currentIndex,
             onTabChange: (index) {
