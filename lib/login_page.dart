@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:brana_mobile/bookstore.dart';
+import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,7 +34,7 @@ class _MyWidgetState extends State<LoginPage> {
         backgroundColor: Colors.transparent,
         body: Stack(children: [
           Positioned(top: 30, child: _buildTop()),
-          Positioned(bottom: 130, child: _buildBottom()),
+          Positioned(bottom: 80, child: _buildBottom()),
         ]),
       ),
     );
@@ -64,7 +64,7 @@ class _MyWidgetState extends State<LoginPage> {
             borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(10.0),
           child: _buildForm(),
         ),
       ),
@@ -150,7 +150,8 @@ class _MyWidgetState extends State<LoginPage> {
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 20,
-        shadowColor: myColor,
+        shadowColor: kPrimaryColor,
+        backgroundColor:  kPrimaryColor,
         minimumSize: const Size.fromHeight(50),
         
       ),
