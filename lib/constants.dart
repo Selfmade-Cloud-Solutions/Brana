@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-Color kPrimaryColor =const Color.fromARGB(164, 6, 207, 221);
+Color kPrimaryColor =const Color(0xFF041E42);
 Color kStarsColor = const Color(0xFFFA6400);
 
 // Constants for Onboarding
 
 // Colors
-const Color kBlue = Color(0xFF306EFF);
-const Color kLightBlue = Color(0xFF4985FD);
-const Color kDarkBlue = Color(0xFF1046B3);
+const Color kBlue = Color(0xFF00308F);
+const Color kLightBlue = Color(0xFF007BB8);
+const Color kDarkBlue = Color(0xFF041E42);
 const Color kWhite = Color(0xFFFFFFFF);
-const Color kGrey = Color(0xFFF4F5F7);
+const Color kGrey = Color.fromARGB(255, 209, 212, 218);
 const Color kBlack = Color(0xFF2D3243);
 
 // Padding

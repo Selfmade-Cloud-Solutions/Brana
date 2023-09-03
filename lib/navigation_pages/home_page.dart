@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _MyWidgetState extends State<HomePage> {
   TextEditingController textController = TextEditingController();
-  List<Filter> filters = getFilterList();
+  List<Filter> filters = getFilterListHome();
   late Filter selectedFilter;
 
   List<Book> books = getBookList();
@@ -31,31 +31,32 @@ class _MyWidgetState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child: AnimSearchBar(
-              width: 350,
-              textController: textController,
-              onSuffixTap: () {
-                setState(() {
-                  textController.clear();
-                });
-              },
-              color: Colors.blue[100]!,
-              helpText: "Search",
-              autoFocus: true,
-              closeSearchOnSuffixTap: true,
-              animationDurationInMilli: 1500,
-              rtl: false,
-              onSubmitted: (string) {},
-            ),
-          ),
-        ],
+  return Scaffold(
+    appBar: AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      actions: [
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      child: AnimSearchBar(
+        width: 350,
+        textController: textController,
+        onSuffixTap: () {
+          setState(() {
+            textController.clear();
+          });
+        },
+        
+        helpText: "Search",
+        autoFocus: true,
+        closeSearchOnSuffixTap: true,
+        animationDurationInMilli: 1500,
+        rtl: false,
+        onSubmitted: (string ) {  },
+      ),
+    ),
+
+        ], 
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: Column(
@@ -84,7 +85,7 @@ class _MyWidgetState extends State<HomePage> {
                   "Discover Audiobooks",
                   style: GoogleFonts.catamaran(
                     fontWeight: FontWeight.w900,
-                    fontSize: 40,
+                    fontSize: 12,
                     height: 1,
                   ),
                 ),
