@@ -1,21 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
-class AudioPlayer extends StatefulWidget {
-  const AudioPlayer({super.key, required String data});
+class AudioPlayerPage extends StatefulWidget {
+  const AudioPlayerPage({
+    super.key,
+  });
 
   @override
-  _AudioPlayerState createState() => _AudioPlayerState();
+  State<AudioPlayerPage> createState() => _AudioPlayerPageState();
 }
 
-class _AudioPlayerState extends State<AudioPlayer> {
+class _AudioPlayerPageState extends State<AudioPlayerPage> {
   Song? _currentSong;
   bool _isPlaying = false;
 
-  void _playPause() {
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
+  late AudioPlayer audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    // init AudioPlayer();
+    audioPlayer = AudioPlayer();
   }
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  void playAudio() {
+    _isPlaying = !_isPlaying;
+    audioPlayer.setAsset('assets/audiobooks/1.mp3');
+    // audioPlayer.play();
+  }
+
+  void pauseAudio() {
+    _isPlaying = !_isPlaying;
+    audioPlayer.pause();
+  }
+
+  void stopAudio() {
+    audioPlayer.stop();
+  }
+
+  // void _playPause() {
+  //   setState(() {
+  //     _isPlaying = !_isPlaying;
+  //     audioPlayer.setAsset('assets/audiobooks/GetachewKassa.mp3');
+  //     // audioPlayer.play();
+  //   });
+  // }
 
   void _selectSong(Song song) {
     setState(() {
@@ -24,11 +59,12 @@ class _AudioPlayerState extends State<AudioPlayer> {
     });
   }
 
+  double _sliderValue = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Audio Player'),
+        title: const Text('ላስብበት'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -44,11 +80,24 @@ class _AudioPlayerState extends State<AudioPlayer> {
               itemCount: songs.length,
               itemBuilder: (context, index) {
                 final song = songs[index];
+
                 return ListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
+                  // tileColor: Colors.grey[200],
                   leading: CircleAvatar(
+                    // backgroundColor: Colors.black,
                     backgroundImage: AssetImage(song.albumCover),
                   ),
-                  title: Text(song.title),
+                  // contentPadding: const EdgeInsets.all(6.0),
+                  title: Text(
+                    song.title,
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
                   subtitle: Text(song.artist),
                   onTap: () => _selectSong(song),
                 );
@@ -56,8 +105,8 @@ class _AudioPlayerState extends State<AudioPlayer> {
             ),
           ),
           Container(
-            color: Colors.black,
-            padding: const EdgeInsets.all(16.0),
+            color: Colors.teal,
+            padding: const EdgeInsets.all(3.0),
             child: Column(
               children: [
                 const Text(
@@ -68,7 +117,7 @@ class _AudioPlayerState extends State<AudioPlayer> {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 10.0),
+                // const SizedBox(height: 1.0),
                 Text(
                   _currentSong?.title ?? 'No song selected',
                   style: const TextStyle(
@@ -76,7 +125,7 @@ class _AudioPlayerState extends State<AudioPlayer> {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 5.0),
+                const SizedBox(height: 2.0),
                 Text(
                   _currentSong?.artist ?? '',
                   style: const TextStyle(
@@ -84,12 +133,25 @@ class _AudioPlayerState extends State<AudioPlayer> {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 20.0),
+                Slider(
+                  thumbColor: Colors.white,
+                  activeColor: Colors.amber,
+                  inactiveColor: Colors.black12,
+                  value: _sliderValue,
+                  min: 0.0, // The minimum value of the slider
+                  max: 100.0, // The maximum value of the slider
+                  onChanged: (value) {
+                    // Update the slider value when the user interacts with it
+                    setState(() {
+                      _sliderValue = value;
+                    });
+                  },
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.skip_previous),
+                      icon: const Icon(Icons.fast_rewind_outlined),
                       onPressed: () {
                         // Handle previous song logic
                       },
@@ -99,11 +161,11 @@ class _AudioPlayerState extends State<AudioPlayer> {
                       icon: Icon(
                         _isPlaying ? Icons.pause : Icons.play_arrow,
                       ),
-                      onPressed: _playPause,
+                      onPressed: _isPlaying ? pauseAudio : playAudio,
                       color: Colors.white,
                     ),
                     IconButton(
-                      icon: const Icon(Icons.skip_next),
+                      icon: const Icon(Icons.fast_forward_outlined),
                       onPressed: () {
                         // Handle next song logic
                       },
@@ -127,8 +189,6 @@ class Song {
 
   Song({required this.title, required this.artist, required this.albumCover});
 }
-
-
 
 final List<Song> songs = [
   Song(

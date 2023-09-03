@@ -38,9 +38,26 @@ dependencies:
   google_nav_bar: ^5.0.6
   google_fonts: ^5.1.0
   flutter_svg: ^1.0.0
-  audioplayers: ^5.1.0
+  # audioplayers: ^5.1.0
+  # audioplayers_linux: ^3.0.0
+  # audioplayers_android: ^4.0.1
+  # audioplayers_darwin: ^5.0.1
+  audioplayers_platform_interface: ^6.0.0
   anim_search_bar: ^2.0.3
   cached_network_image: ^3.2.3
+
+  file: ^7.0.0
+  meta: ^1.9.1
+  path_provider: ^2.1.1
+  synchronized: ^3.1.0
+  uuid: ^3.0.7
+
+  audio_video_progress_bar: ^2.0.0
+  just_audio: ^0.9.34
+  mpv_dart: ^0.0.1
+  just_audio_mpv: ^0.1.7
+  
+
 
 
 dev_dependencies:
@@ -71,6 +88,8 @@ flutter:
     - assets/authors/
     - assets/books/
     - assets/images/
+    - assets/audiobooks/
+    - assets/audiobooks/GetachewKassa.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -165,12 +165,11 @@ class BookDetail extends StatelessWidget {
                           //     MaterialPageRoute(
                           //         builder: (context) => const AudioPlayer())),
                           onPressed: () {
-                            String dataToSend = "This Is the Data to send";
+                            // String dataToSend = "This Is the Data to send";
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    AudioPlayer(data: dataToSend),
+                                builder: (context) => const AudioPlayerPage(),
                               ),
                             );
                           },
@@ -190,12 +189,11 @@ class BookDetail extends StatelessWidget {
                             elevation: 5,
                           ),
                           onPressed: () {
-                            String dataToSend = "This Is the Data to send";
+                            // String dataToSend = "This Is the Data to send";
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    AudioPlayer(data: dataToSend),
+                                builder: (context) => const AudioPlayerPage(),
                               ),
                             );
                           },

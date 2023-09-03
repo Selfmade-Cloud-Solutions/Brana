@@ -18,8 +18,6 @@ class _MyWidgetState extends State<HomePage> {
   List<Filter> filters = getFilterList();
   late Filter selectedFilter;
 
-  
-
   List<Book> books = getBookList();
   List<Author> authors = getAuthorList();
 
@@ -28,42 +26,38 @@ class _MyWidgetState extends State<HomePage> {
     super.initState();
     setState(() {
       selectedFilter = filters[0];
-    
     });
   }
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      actions: [
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: AnimSearchBar(
-        width: 350,
-        textController: textController,
-        onSuffixTap: () {
-          setState(() {
-            textController.clear();
-          });
-        },
-        color: Colors.blue[100]!,
-        helpText: "Search",
-        autoFocus: true,
-        closeSearchOnSuffixTap: true,
-        animationDurationInMilli: 1500,
-        rtl: false,
-        onSubmitted: (string ) {  },
-      ),
-    ),
-
-        ], 
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: AnimSearchBar(
+              width: 350,
+              textController: textController,
+              onSuffixTap: () {
+                setState(() {
+                  textController.clear();
+                });
+              },
+              color: Colors.blue[100]!,
+              helpText: "Search",
+              autoFocus: true,
+              closeSearchOnSuffixTap: true,
+              animationDurationInMilli: 1500,
+              rtl: false,
+              onSubmitted: (string) {},
+            ),
+          ),
+        ],
         systemOverlayStyle: SystemUiOverlayStyle.dark,
-        
       ),
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -86,7 +80,6 @@ class _MyWidgetState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 Text(
                   "Discover Audiobooks",
                   style: GoogleFonts.catamaran(
@@ -95,11 +88,9 @@ class _MyWidgetState extends State<HomePage> {
                     height: 1,
                   ),
                 ),
-
                 const SizedBox(
                   height: 16,
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(right: 75),
                   child: Row(
@@ -107,11 +98,9 @@ class _MyWidgetState extends State<HomePage> {
                     children: buildFilters(),
                   ),
                 ),
-
               ],
             ),
           ),
-
           Expanded(
             child: ListView(
               physics: const BouncingScrollPhysics(),
@@ -119,7 +108,6 @@ class _MyWidgetState extends State<HomePage> {
               children: buildBooks(),
             ),
           ),
-
           Container(
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -129,13 +117,11 @@ class _MyWidgetState extends State<HomePage> {
             ),
             child: Column(
               children: [
-                
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       const Text(
                         "Authors to follow",
                         style: TextStyle(
@@ -144,10 +130,8 @@ class _MyWidgetState extends State<HomePage> {
                           color: Colors.black,
                         ),
                       ),
-
                       Row(
                         children: [
-
                           Text(
                             "Show all",
                             style: TextStyle(
@@ -156,24 +140,19 @@ class _MyWidgetState extends State<HomePage> {
                               color: kPrimaryColor,
                             ),
                           ),
-
                           const SizedBox(
                             width: 8,
                           ),
-
                           Icon(
                             Icons.arrow_forward,
                             size: 18,
                             color: kPrimaryColor,
                           ),
-
                         ],
                       ),
-
                     ],
                   ),
                 ),
-
                 Container(
                   height: 100,
                   margin: const EdgeInsets.only(bottom: 16),
@@ -183,18 +162,15 @@ class _MyWidgetState extends State<HomePage> {
                     children: buildAuthors(),
                   ),
                 ),
-
               ],
             ),
           ),
-
-
         ],
       ),
     );
   }
 
-  List<Widget> buildFilters(){
+  List<Widget> buildFilters() {
     List<Widget> list = [];
     for (var i = 0; i < filters.length; i++) {
       list.add(buildFilter(filters[i]));
@@ -202,7 +178,7 @@ class _MyWidgetState extends State<HomePage> {
     return list;
   }
 
-  Widget buildFilter(Filter item){
+  Widget buildFilter(Filter item) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -213,35 +189,34 @@ class _MyWidgetState extends State<HomePage> {
         height: 50,
         child: Stack(
           children: <Widget>[
-
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
                 width: 30,
                 height: 3,
-                color: selectedFilter == item ? kPrimaryColor : Colors.transparent,
+                color:
+                    selectedFilter == item ? kPrimaryColor : Colors.transparent,
               ),
             ),
-
             Center(
               child: Text(
                 item.name,
                 style: GoogleFonts.catamaran(
-                  color: selectedFilter == item ? kPrimaryColor : Colors.grey[400],
+                  color:
+                      selectedFilter == item ? kPrimaryColor : Colors.grey[400],
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 3,
                 ),
               ),
             )
-
           ],
         ),
       ),
     );
   }
 
-  List<Widget> buildBooks(){
+  List<Widget> buildBooks() {
     List<Widget> list = [];
     for (var i = 0; i < books.length; i++) {
       list.add(buildBook(books[i], i));
@@ -249,7 +224,7 @@ class _MyWidgetState extends State<HomePage> {
     return list;
   }
 
-  Widget buildBook(Book book, int index){
+  Widget buildBook(Book book, int index) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -258,12 +233,12 @@ class _MyWidgetState extends State<HomePage> {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(right: 32, left: index == 0 ? 16 : 0, bottom: 8),
+        margin:
+            EdgeInsets.only(right: 32, left: index == 0 ? 16 : 0, bottom: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -276,7 +251,10 @@ class _MyWidgetState extends State<HomePage> {
                     ),
                   ],
                 ),
-                margin: const EdgeInsets.only(bottom: 16, top: 24,),
+                margin: const EdgeInsets.only(
+                  bottom: 16,
+                  top: 24,
+                ),
                 child: Hero(
                   tag: book.title,
                   child: Image.asset(
@@ -286,7 +264,6 @@ class _MyWidgetState extends State<HomePage> {
                 ),
               ),
             ),
-
             Text(
               book.title,
               style: GoogleFonts.catamaran(
@@ -294,7 +271,6 @@ class _MyWidgetState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             Text(
               book.author.fullname,
               style: const TextStyle(
@@ -303,14 +279,13 @@ class _MyWidgetState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
           ],
         ),
       ),
     );
   }
 
-  List<Widget> buildAuthors(){
+  List<Widget> buildAuthors() {
     List<Widget> list = [];
     for (var i = 0; i < authors.length; i++) {
       list.add(buildAuthor(authors[i], i));
@@ -318,7 +293,7 @@ class _MyWidgetState extends State<HomePage> {
     return list;
   }
 
-  Widget buildAuthor(Author author, int index){
+  Widget buildAuthor(Author author, int index) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey[200],
@@ -332,7 +307,6 @@ class _MyWidgetState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-
           Card(
             elevation: 4,
             margin: const EdgeInsets.all(0),
@@ -347,22 +321,19 @@ class _MyWidgetState extends State<HomePage> {
               height: 75,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(author.image), 
+                  image: AssetImage(author.image),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-
           const SizedBox(
             width: 12,
           ),
-
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Text(
                 author.fullname,
                 style: GoogleFonts.catamaran(
@@ -370,20 +341,16 @@ class _MyWidgetState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               Row(
                 children: [
-
                   const Icon(
                     Icons.library_books,
                     color: Colors.grey,
                     size: 14,
                   ),
-
                   const SizedBox(
                     width: 8,
                   ),
-                  
                   Text(
                     "${author.books} books",
                     style: const TextStyle(
@@ -392,16 +359,12 @@ class _MyWidgetState extends State<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                 ],
               ),
-
             ],
           ),
-
         ],
       ),
     );
   }
-
 }
