@@ -31,32 +31,30 @@ class _MyWidgetState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      actions: [
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: AnimSearchBar(
-        width: 350,
-        textController: textController,
-        onSuffixTap: () {
-          setState(() {
-            textController.clear();
-          });
-        },
-        
-        helpText: "Search",
-        autoFocus: true,
-        closeSearchOnSuffixTap: true,
-        animationDurationInMilli: 1500,
-        rtl: false,
-        onSubmitted: (string ) {  },
-      ),
-    ),
-
-        ], 
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            child: AnimSearchBar(
+              width: 350,
+              textController: textController,
+              onSuffixTap: () {
+                setState(() {
+                  textController.clear();
+                });
+              },
+              helpText: "Search",
+              autoFocus: true,
+              closeSearchOnSuffixTap: true,
+              animationDurationInMilli: 1500,
+              rtl: false,
+              onSubmitted: (string) {},
+            ),
+          ),
+        ],
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: Column(

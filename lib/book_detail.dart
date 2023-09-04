@@ -161,18 +161,20 @@ class BookDetail extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15)),
                             elevation: 5,
                           ),
-                          // onPressed: () => Navigator.of(context).push(
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const AudioPlayer())),
-                          onPressed: () {
-                            // String dataToSend = "This Is the Data to send";
-                            Navigator.push(
-                              context,
+                          onPressed: () => Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const AudioPlayerPage(),
-                              ),
-                            );
-                          },
+                                  builder: (context) =>
+                                      AudioPlayerPage(book: book))),
+                          // onPressed: () {
+                          //   // String dataToSend = "This Is the Data to send";
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) =>
+                          //           AudioPlayerPage(book: book),
+                          //     ),
+                          //   );
+                          // },
                           icon: const Icon(Icons.play_arrow_rounded, size: 30),
                           label: const Center(child: Text('Listen')),
                         ),
@@ -190,12 +192,12 @@ class BookDetail extends StatelessWidget {
                           ),
                           onPressed: () {
                             // String dataToSend = "This Is the Data to send";
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const AudioPlayerPage(),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const AudioPlayerPage(),
+                            //   ),
+                            // );
                           },
                           // onPressed: () => Navigator.of(context).push(
                           //     MaterialPageRoute(
@@ -210,33 +212,33 @@ class BookDetail extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: 32, bottom: (size.height * 0.5) - (75 / 2)),
-              child: Card(
-                elevation: 4,
-                margin: const EdgeInsets.all(0),
-                clipBehavior: Clip.antiAlias,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-                child: Container(
-                  width: 75,
-                  height: 75,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(book.author.image),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.bottomLeft,
+          //   child: Padding(
+          //     padding: EdgeInsets.only(
+          //         left: 32, bottom: (size.height * 0.5) - (75 / 2)),
+          //     child: Card(
+          //       elevation: 4,
+          //       margin: const EdgeInsets.all(0),
+          //       clipBehavior: Clip.antiAlias,
+          //       shape: const RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.all(
+          //           Radius.circular(15),
+          //         ),
+          //       ),
+          //       child: Container(
+          //         width: 75,
+          //         height: 75,
+          //         decoration: BoxDecoration(
+          //           image: DecorationImage(
+          //             image: AssetImage(book.author.image),
+          //             fit: BoxFit.cover,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

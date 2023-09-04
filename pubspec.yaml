@@ -36,6 +36,8 @@ dependencies:
   mpv_dart: ^0.0.1
   just_audio_mpv: ^0.1.7
   animate_do: ^3.0.2
+  audio_session: ^0.1.16
+  rxdart: ^0.27.7
   
 
 

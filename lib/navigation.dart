@@ -35,19 +35,20 @@ class _MyWidgetState extends State<Navigation> {
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-  color: Color.fromARGB(20, 0, 13, 24),
-  borderRadius: BorderRadius.only(
-    topLeft: Radius.circular(20),
-    topRight: Radius.circular(20),
-  ),
-  boxShadow: [
-    BoxShadow(
-      blurRadius: 20,
-      color: Color.fromARGB(100, 255, 255, 255), // Adjust the opacity (alpha value) and color as needed
-      spreadRadius: 1,
-    ),
-  ],
-),
+          color: Color.fromARGB(20, 0, 13, 24),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20,
+              color: Color.fromARGB(100, 255, 255,
+                  255), // Adjust the opacity (alpha value) and color as needed
+              spreadRadius: 1,
+            ),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(
