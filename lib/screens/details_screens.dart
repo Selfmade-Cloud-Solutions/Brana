@@ -48,7 +48,7 @@ class DetailScreen extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.only(left: 16, bottom:50, right:16, top:0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -80,7 +80,7 @@ class DetailScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         Text(
                           'Overview',
-                          style: GoogleFonts.openSans(
+                          style: GoogleFonts.jost(
                             fontSize: 25,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
@@ -89,7 +89,7 @@ class DetailScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         Text(
                           movie.overview,
-                          style: GoogleFonts.catamaran(
+                          style: GoogleFonts.jost(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
@@ -101,7 +101,7 @@ class DetailScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Release Date: ${movie.releaseDate}',
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -115,7 +115,7 @@ class DetailScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   '${movie.voteAverage.toStringAsFixed(1)}/10',
-                                  style: GoogleFonts.catamaran(
+                                  style: GoogleFonts.jost(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
