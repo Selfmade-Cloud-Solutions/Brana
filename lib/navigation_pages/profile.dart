@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:brana_mobile/pages/edit_description.dart';
+import 'package:brana_mobile/pages/profile/edit_description.dart';
 import 'package:brana_mobile/pages/profile/edit_email.dart';
 import 'package:brana_mobile/pages/profile/edit_image.dart';
 import 'package:brana_mobile/pages/profile/edit_name.dart';
-import 'package:brana_mobile/pages/edit_phone.dart';
+import 'package:brana_mobile/pages/profile/edit_phone.dart';
 import '../user/user.dart';
 import '../widgets/display_image_widget.dart';
 import '../user/user_data.dart';
