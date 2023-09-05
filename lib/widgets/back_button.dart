@@ -12,7 +12,7 @@ class BackBtn extends StatelessWidget {
       width: 70,
       margin: const EdgeInsets.only(top: 16, left: 16),
       decoration: BoxDecoration(
-          color: Colors.black,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(8)),
       child: IconButton(
         onPressed: () {
