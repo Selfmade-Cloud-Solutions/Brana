@@ -112,7 +112,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             const SizedBox(height: 24),
                             Text(
                               'Overview',
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -121,7 +121,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             const SizedBox(height: 16),
                             Text(
                               series.overview,
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 18,
                                 color: Colors.white,
                               ),
@@ -129,7 +129,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             const SizedBox(height: 24),
                             Text(
                               'Release Date:',
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
@@ -137,7 +137,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             ),
                             Text(
                               series.firstAirDate,
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 18,
                                 color: Colors.white,
                               ),
@@ -147,7 +147,7 @@ class SeriesDetailScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   'Rating:',
-                                  style: GoogleFonts.catamaran(
+                                  style: GoogleFonts.jost(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white,
@@ -160,7 +160,7 @@ class SeriesDetailScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   '${series.voteAverage.toStringAsFixed(1)}/10',
-                                  style: GoogleFonts.catamaran(
+                                  style: GoogleFonts.jost(
                                     fontSize: 18,
                                     color: Colors.white,
                                   ),
@@ -170,7 +170,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             const SizedBox(height: 24),
                             Text(
                               'Genre:',
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
@@ -178,7 +178,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             ),
                             Text(
                               genreNames.join(', '),
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 18,
                                 color: Colors.white,
                               ),
@@ -186,7 +186,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             const SizedBox(height: 24),
                             Text(
                               'Origin Country:',
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
@@ -194,7 +194,7 @@ class SeriesDetailScreen extends StatelessWidget {
                             ),
                             Text(
                               series.originCountry.join(', '),
-                              style: GoogleFonts.catamaran(
+                              style: GoogleFonts.jost(
                                 fontSize: 18,
                                 color: Colors.white,
                               ),

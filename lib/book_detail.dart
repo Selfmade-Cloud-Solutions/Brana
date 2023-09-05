@@ -74,7 +74,7 @@ class BookDetail extends StatelessWidget {
                         children: [
                           Text(
                             book.title,
-                            style: GoogleFonts.catamaran(
+                            style: GoogleFonts.jost(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
                               height: 1,
@@ -82,7 +82,7 @@ class BookDetail extends StatelessWidget {
                           ),
                           Text(
                             book.author.fullname,
-                            style: GoogleFonts.catamaran(
+                            style: GoogleFonts.jost(
                               fontSize: 18,
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class BookDetail extends StatelessWidget {
                                 ),
                                 Text(
                                   book.score,
-                                  style: GoogleFonts.catamaran(
+                                  style: GoogleFonts.jost(
                                     fontSize: 16,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class BookDetail extends StatelessWidget {
                               physics: const BouncingScrollPhysics(),
                               child: Text(
                                 book.description,
-                                style: GoogleFonts.catamaran(
+                                style: GoogleFonts.jost(
                                   fontSize: 16,
                                 ),
                               ),

@@ -81,7 +81,7 @@ class _MyWidgetState extends State<HomePage> {
               children: [
                 Text(
                   "Discover Audiobooks",
-                  style: GoogleFonts.catamaran(
+                  style: GoogleFonts.jost(
                     fontWeight: FontWeight.w900,
                     fontSize: 12,
                     height: 1,
@@ -200,7 +200,7 @@ class _MyWidgetState extends State<HomePage> {
             Center(
               child: Text(
                 item.name,
-                style: GoogleFonts.catamaran(
+                style: GoogleFonts.jost(
                   color:
                       selectedFilter == item ? kPrimaryColor : Colors.grey[400],
                   fontSize: 12,
@@ -265,7 +265,7 @@ class _MyWidgetState extends State<HomePage> {
             ),
             Text(
               book.title,
-              style: GoogleFonts.catamaran(
+              style: GoogleFonts.jost(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -335,7 +335,7 @@ class _MyWidgetState extends State<HomePage> {
             children: [
               Text(
                 author.fullname,
-                style: GoogleFonts.catamaran(
+                style: GoogleFonts.jost(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),

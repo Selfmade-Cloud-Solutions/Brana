@@ -5,9 +5,7 @@ import 'package:brana_mobile/api/sapi.dart';
 import 'package:brana_mobile/models/movie.dart';
 import 'package:brana_mobile/models/series.dart';
 import '../widgets/movies_slider.dart';
-import 'package:brana_mobile/widgets/multi_search.dart';
 import '../widgets/trending_slider.dart';
-import '../widgets/trending_slider_series.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -40,8 +38,7 @@ class _HomeScreenState extends State<ExplorePage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Container(
-        ),
+        child: Container(),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -95,8 +92,10 @@ class _HomeScreenState extends State<ExplorePage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error.toString(),
-                        style: const TextStyle(color: Colors.black),),
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.black),
+                        ),
                       );
                     } else if (snapshot.hasData) {
                       return MoviesSlider(snapshot: snapshot);
@@ -118,7 +117,7 @@ class _HomeScreenState extends State<ExplorePage> {
                         child: Text(snapshot.error.toString()),
                       );
                     } else if (snapshot.hasData) {
-                      return TrendingSliderSeries(snapshot: snapshot);
+                      return MoviesSlider(snapshot: snapshot);
                     } else {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -137,7 +136,7 @@ class _HomeScreenState extends State<ExplorePage> {
                         child: Text(snapshot.error.toString()),
                       );
                     } else if (snapshot.hasData) {
-                      return TrendingSliderSeries(snapshot: snapshot);
+                      return MoviesSlider(snapshot: snapshot);
                     } else {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -156,7 +155,7 @@ class _HomeScreenState extends State<ExplorePage> {
                         child: Text(snapshot.error.toString()),
                       );
                     } else if (snapshot.hasData) {
-                      return TrendingSliderSeries(snapshot: snapshot);
+                      return MoviesSlider(snapshot: snapshot);
                     } else {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -167,19 +166,6 @@ class _HomeScreenState extends State<ExplorePage> {
               ),
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const MultiSearchScreen()),
-          );
-        },
-        backgroundColor: Colors.transparent,
-        child: const Icon(
-          Icons.search,
-          color: Colors.white,
         ),
       ),
     );
