@@ -1,382 +1,199 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:brana_mobile/data.dart';
-import 'package:brana_mobile/constants.dart';
-import 'package:brana_mobile/book_detail.dart';
+import 'package:brana_mobile/api/api.dart';
+import 'package:brana_mobile/api/sapi.dart';
+import 'package:brana_mobile/models/movie.dart';
+import 'package:brana_mobile/models/series.dart';
+import '../widgets/movies_slider.dart';
+import '../widgets/trending_slider.dart';
+
 class ExplorePage extends StatefulWidget {
-  const ExplorePage({super.key});
+  const ExplorePage({Key? key}) : super(key: key);
 
   @override
-  State<ExplorePage> createState() => _MyWidgetState();
+  State<ExplorePage> createState() => _HomeScreenState();
 }
 
-class _MyWidgetState extends State<ExplorePage> {
-  TextEditingController textController = TextEditingController();
-  List<Filter> filters = getFilterListExplore();
-  late Filter selectedFilter;
-
-  
-
-  List<Book> books = getBookList();
-  List<Author> authors = getAuthorList();
+class _HomeScreenState extends State<ExplorePage> {
+  late Future<List<Movie>> trendingMovies;
+  late Future<List<Movie>> topRatedMovies;
+  late Future<List<Movie>> upcomingMovies;
+  late Future<List<Series>> trendingSeries;
+  late Future<List<Series>> topRatedSeries;
+  late Future<List<Series>> popularSeries;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      selectedFilter = filters[0];
-    
-    });
+    trendingMovies = Api().getTrendingMovies();
+    topRatedMovies = Api().getTopRatedMovies();
+    upcomingMovies = Api().getUpcomingMovies();
+    trendingSeries = SApi().getTrendingSeries();
+    topRatedSeries = SApi().getTopRatedSeries();
+    popularSeries = SApi().getPopularSeries();
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                bottomRight: Radius.circular(40),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 8,
-                  blurRadius: 12,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Explore",
-                  style: GoogleFonts.catamaran(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 20,
-                    height: 1,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 75),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: buildFilters(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height - 200, // Adjust the height according to your needs
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: buildBooks(),
-            ),
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-              ),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Authors to follow",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Show all",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 18,
-                            color: kPrimaryColor,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 100,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    children: buildAuthors(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Container(),
       ),
-    ),
-  );
-}
-
-  List<Widget> buildFilters(){
-    List<Widget> list = [];
-    for (var i = 0; i < filters.length; i++) {
-      list.add(buildFilter(filters[i]));
-    }
-    return list;
-  }
-
-  Widget buildFilter(Filter item){
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedFilter = item;
-        });
-      },
-      child: SizedBox(
-        height: 50,
-        child: Stack(
-
-          children: <Widget>[
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                width: 30,
-                height: 3,
-                color: selectedFilter == item ? kPrimaryColor : Colors.transparent,
-              ),
-            ),
-
-            Center(
-              child: Text(
-                item.name,
-                style: GoogleFonts.catamaran(
-                  color: selectedFilter == item ? kPrimaryColor : Colors.grey[400],
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 3,
-                ),
-              ),
-            )
-
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<Widget> buildBooks(){
-    List<Widget> list = [];
-    for (var i = 0; i < books.length; i++) {
-      list.add(buildBook(books[i], i));
-    }
-    return list;
-  }
-
-  Widget buildBook(Book book, int index){
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 32, left: index == 0 ? 16 : 0, bottom: 8),
-        
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 8,
-                      blurRadius: 12,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                margin: const EdgeInsets.only(bottom: 16, top: 24,),
-                child: Hero(
-                  tag: book.title,
-                  child: Image.asset(
-                    book.image,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-            ),
-              Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 8,
-                      blurRadius: 12,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                margin: const EdgeInsets.only(bottom: 16, top: 24,),
-                child: Hero(
-                  tag: book.title,
-                  child: Image.asset(
-                    book.image,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-            ),
-
-            Text(
-              book.title,
-              style: GoogleFonts.catamaran(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            Text(
-              book.author.fullname,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<Widget> buildAuthors(){
-    List<Widget> list = [];
-    for (var i = 0; i < authors.length; i++) {
-      list.add(buildAuthor(authors[i], i));
-    }
-    return list;
-  }
-
-  Widget buildAuthor(Author author, int index){
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      padding: const EdgeInsets.all(12),
-      margin: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
-      width: 255,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-
-          Card(
-            elevation: 4,
-            margin: const EdgeInsets.all(0),
-            clipBehavior: Clip.antiAlias,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            child: Container(
-              width: 75,
-              height: 75,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(author.image), 
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-
-          const SizedBox(
-            width: 12,
-          ),
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              Text(
-                author.fullname,
-                style: GoogleFonts.catamaran(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              const SectionTitle(''),
+              SizedBox(
+                child: FutureBuilder(
+                  future: trendingMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return TrendingSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 ),
               ),
-
-              Row(
-                children: [
-
-                  const Icon(
-                    Icons.library_books,
-                    color: Colors.grey,
-                    size: 14,
-                  ),
-
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  
-                  Text(
-                    "${author.books} books",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                ],
+              const SectionTitle('Top Rated Audiobooks'),
+              SizedBox(
+                child: FutureBuilder(
+                  future: topRatedMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
               ),
-
+              const SectionTitle('Upcoming Audiobooks'),
+              SizedBox(
+                child: FutureBuilder(
+                  future: upcomingMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+              const SectionTitle('Trending Podcasts'),
+              SizedBox(
+                child: FutureBuilder(
+                  future: trendingSeries,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+              const SectionTitle('Top Rated Podcasts'),
+              SizedBox(
+                child: FutureBuilder(
+                  future: topRatedSeries,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+              const SectionTitle('Popular Podcasts'),
+              SizedBox(
+                child: FutureBuilder(
+                  future: popularSeries,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
-
-        ],
+        ),
       ),
     );
   }
+}
 
+class SectionTitle extends StatelessWidget {
+  final String title;
+
+  const SectionTitle(this.title, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          title,
+          style: GoogleFonts.aBeeZee(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
 }

@@ -73,10 +73,7 @@ class _MyWidgetState extends State<Navigation> {
                 icon: Icons.explore_outlined,
                 text: 'Explore',
               ),
-              GButton(
-                icon: Icons.search,
-                text: 'Search',
-              ),
+              
               GButton(icon: Icons.person, text: 'Profile'),
             ],
           ),
