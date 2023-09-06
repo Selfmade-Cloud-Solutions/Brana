@@ -164,7 +164,7 @@ class BookDetail extends StatelessWidget {
                           onPressed: () => Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      AudioPlayerPage(book: book))),
+                                      AudioPlayerPage())),
                           // onPressed: () {
                           //   // String dataToSend = "This Is the Data to send";
                           //   Navigator.push(
@@ -239,7 +239,7 @@ class BookDetail extends StatelessWidget {
           //     ),
           //   ),
           // ),
-        ],
+        ]
       ),
     );
   }

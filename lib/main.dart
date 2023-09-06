@@ -2,6 +2,7 @@
 // import 'package:brana_mobile/audioplayer.dart';
 // import 'package:brana_mobile/audioplayer.dart';
 // import 'package:brana_mobile/test.dart';
+import 'package:brana_mobile/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'screens/onboarding/onboarding.dart';
 
@@ -75,8 +76,8 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const Splashscreen(),
-          // home: const AudioPlayerPage(),
+      // home: const Splashscreen(),
+          home: const AudioPlayerPage(),
 
       debugShowCheckedModeBanner: false,
     );
