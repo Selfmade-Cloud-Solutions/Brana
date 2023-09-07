@@ -116,7 +116,7 @@ class BookDetail extends StatelessWidget {
                         ),
                         onPressed: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => AudioPlayerPage())),
+                                builder: (context) => const AudioPlayerPage())),
                         // onPressed: () {
                         //   // String dataToSend = "This Is the Data to send";
                         //   Navigator.push(
