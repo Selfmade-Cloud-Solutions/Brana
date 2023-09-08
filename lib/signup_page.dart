@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:brana_mobile/constants.dart';
+import 'package:brana_mobile/navigation.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -16,6 +18,7 @@ class _MyWidgetState extends State<SignupPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController phonenumberController = TextEditingController();
   TextEditingController dateofbirthController = TextEditingController();
+  bool isPasswordVisible = false;
   bool rememberUser = false;
 
   @override
@@ -25,18 +28,12 @@ class _MyWidgetState extends State<SignupPage> {
     return Container(
       decoration: BoxDecoration(
         color: myColor,
-        image: DecorationImage(
-          image: const AssetImage("assets/images/bg.png"),
-          fit: BoxFit.cover,
-          colorFilter:
-              ColorFilter.mode(myColor.withOpacity(1), BlendMode.color),
-        ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: branaPrimaryColor,
         body: Stack(children: [
-          Positioned(top: 30, child: _buildTop()),
-          Positioned(bottom: 50, child: _buildBottom()),
+          Positioned(top: 80, child: _buildTop()),
+          Positioned(bottom: 150, left: 10, right: 10, child: _buildBottom()),
         ]),
       ),
     );
@@ -65,6 +62,7 @@ class _MyWidgetState extends State<SignupPage> {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
+        color: kLightBlue.withOpacity(0.1),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: _buildForm(),
@@ -77,35 +75,58 @@ class _MyWidgetState extends State<SignupPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
           "Welcome",
           style: TextStyle(
-              color: myColor, fontSize: 32, fontWeight: FontWeight.w900),
+            color: branaWhite,
+            fontSize: 32,
+            fontWeight: FontWeight.w900,
+          ),
         ),
-        _buildGreyText("Fill Form To Register"),
+      ),
+      const SizedBox(height: 10),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildPrimaryText("Fill Form To Register"),),
         const SizedBox(height: 20),
-        _buildInputFieldFirstName(firstnameController),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldFirstName(firstnameController),),
         const SizedBox(height: 5),
-        _buildInputFieldLastName(lastnameController),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldLastName(lastnameController),),
         const SizedBox(height: 5),
-        _buildInputFieldPhoneNumber(phonenumberController),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldPhoneNumber(phonenumberController),),
         const SizedBox(height: 5),
-        _buildInputFieldEmail(emailController),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldEmail(emailController),),
         const SizedBox(height: 5),
-        _buildInputFieldDateOfBirth(dateofbirthController),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldDateOfBirth(dateofbirthController),),
         const SizedBox(height: 5),
-        _buildInputFieldPassword(passwordController, isPassword: true),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldPassword(passwordController, isPassword: true),),
         const SizedBox(height: 15),
-        _buildSignupButton(),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 80),
+        child: _buildSignupButton(),),
         const SizedBox(height: 15),
       ],
     );
   }
 
-  Widget _buildGreyText(String text) {
+  Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: Colors.grey),
+      style: const TextStyle(color: branaWhite),
     );
   }
 
@@ -115,6 +136,7 @@ class _MyWidgetState extends State<SignupPage> {
         decoration: const InputDecoration(
           suffixIcon: Icon(Icons.done),
           hintText: 'First Name',
+          hintStyle: TextStyle(color: branaWhite)
         ));
   }
 
@@ -124,6 +146,7 @@ class _MyWidgetState extends State<SignupPage> {
         decoration: const InputDecoration(
           suffixIcon: Icon(Icons.done),
           hintText: 'Last Name',
+          hintStyle: TextStyle(color: branaWhite)
         ));
   }
 
@@ -133,6 +156,7 @@ class _MyWidgetState extends State<SignupPage> {
       decoration: const InputDecoration(
         suffixIcon: Icon(Icons.done),
         hintText: 'Email',
+          hintStyle: TextStyle(color: branaWhite)
       ),
     );
   }
@@ -141,11 +165,21 @@ class _MyWidgetState extends State<SignupPage> {
       {isPassword = false}) {
     return TextField(
       controller: controller,
-      decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.remove_red_eye),
+      decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              isPasswordVisible = !isPasswordVisible;
+            });
+          },
+          icon: isPasswordVisible
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        ),
         hintText: 'Password',
+          hintStyle: const TextStyle(color: branaWhite)
       ),
-      obscureText: isPassword,
+      obscureText: !isPasswordVisible,
     );
   }
 
@@ -155,6 +189,7 @@ class _MyWidgetState extends State<SignupPage> {
         decoration: const InputDecoration(
           suffixIcon: Icon(Icons.done),
           hintText: 'Phone Number',
+          hintStyle: TextStyle(color: branaWhite)
         ));
   }
 
@@ -164,6 +199,7 @@ class _MyWidgetState extends State<SignupPage> {
         decoration: const InputDecoration(
           suffixIcon: Icon(Icons.done),
           hintText: 'Date of Birth',
+          hintStyle: TextStyle(color: branaWhite)
         ));
   }
 
@@ -176,14 +212,18 @@ class _MyWidgetState extends State<SignupPage> {
         debugPrint("Password : ${passwordController.text}");
         debugPrint("Phone Number : ${phonenumberController.text}");
         debugPrint("Date of Birth : ${dateofbirthController.text}");
-      },
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Navigation()),
+        );},
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 20,
-        shadowColor: myColor,
         minimumSize: const Size.fromHeight(60),
       ),
-      child: const Text("SignUp"),
+      child: Text("SignUp",
+        style: TextStyle(
+          color: branaPrimaryColor,),),
     );
   }
 }

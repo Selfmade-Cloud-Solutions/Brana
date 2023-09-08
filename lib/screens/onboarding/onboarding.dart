@@ -43,11 +43,11 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     super.initState();
     _cardsAnimationController = AnimationController(
       vsync: this,
-      duration: kCardAnimationDuration,
+      duration: branaCardAnimationDuration,
     );
     _pageIndicatorAnimationController = AnimationController(
       vsync: this,
-      duration: kButtonAnimationDuration,
+      duration: branaButtonAnimationDuration,
     );
     _rippleAnimationController = AnimationController(
       vsync: this,
@@ -216,7 +216,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBlue,
+      backgroundColor: branaBlue,
       body: Stack(
         children: <Widget>[
           SafeArea(

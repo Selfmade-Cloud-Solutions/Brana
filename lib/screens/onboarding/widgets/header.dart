@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
-
 class Header extends StatelessWidget {
   final VoidCallback onSkip;
 
-  const Header({super.key, 
+  const Header({
+    super.key,
     required this.onSkip,
   });
 
@@ -20,7 +20,7 @@ class Header extends StatelessWidget {
           child: Text(
             'Skip',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: kWhite,
+                  color: branaWhite,
                 ),
           ),
         ),

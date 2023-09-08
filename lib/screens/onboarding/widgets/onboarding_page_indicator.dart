@@ -9,14 +9,15 @@ class OnboardingPageIndicator extends StatelessWidget {
   final int currentPage;
   final Widget child;
 
-  const OnboardingPageIndicator({super.key, 
+  const OnboardingPageIndicator({
+    super.key,
     required this.angle,
     required this.currentPage,
     required this.child,
   });
 
   Color _getPageIndicatorColor(int pageIndex) {
-    return currentPage > pageIndex ? kWhite : kWhite.withOpacity(0.25);
+    return currentPage > pageIndex ? branaWhite : branaWhite.withOpacity(0.25);
   }
 
   double get indicatorGap => pi / 12;

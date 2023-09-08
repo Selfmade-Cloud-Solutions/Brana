@@ -11,7 +11,8 @@ class OnboardingPage extends StatelessWidget {
   final Animation<Offset> darkCardOffsetAnimation;
   final Widget textColumn;
 
-  const OnboardingPage({super.key, 
+  const OnboardingPage({
+    super.key,
     required this.number,
     required this.lightCardChild,
     required this.darkCardChild,
@@ -33,7 +34,7 @@ class OnboardingPage extends StatelessWidget {
         ),
         SizedBox(height: number % 2 == 1 ? 50.0 : 25.0),
         AnimatedSwitcher(
-          duration: kCardAnimationDuration,
+          duration: branaCardAnimationDuration,
           child: textColumn,
         ),
       ],
