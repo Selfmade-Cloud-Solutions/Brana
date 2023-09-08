@@ -1,11 +1,13 @@
 import 'dart:async';
 // import 'dart:convert';
 // import 'package:brana_mobile/data.dart';
+import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/screens/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
+import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:flutter/services.dart' show rootBundle;
 // import 'dart:typed_data';
@@ -208,7 +210,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                               style: const TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.teal,
+                                color: kDarkBlue,
                               ),
                             ),
                             subtitle: Text(song.title),
@@ -222,238 +224,341 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                       ),
                     )),
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = true;
-                        appBarColor = Colors.teal;
-                        iconview = const Icon(Icons.view_list);
-                      });
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      width: double.infinity,
-                      height: _isExpanded
-                          ? MediaQuery.of(context).size.height - 56
-                          : 142,
-                      child: Container(
-                        color: Colors.teal,
-                        padding: const EdgeInsets.all(0),
-                        child: Stack(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                if (_isExpanded)
-                                  (Expanded(
-                                      child: CircleAvatar(
-                                    radius: 100,
-                                    backgroundImage: AssetImage(
-                                        _currentSong?.albumCover ??
-                                            "assets/books/ላስብበት.jpg"),
-                                  ))),
-                                Expanded(
+                      onTap: () {
+                        setState(() {
+                          _isExpanded = true;
+                          appBarColor = kDarkBlue;
+                          iconview = const Icon(Icons.view_list);
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 100),
+                        curve: Curves.easeIn,
+                        width: double.infinity,
+                        height: _isExpanded
+                            ? MediaQuery.of(context).size.height - 56
+                            : 120,
+                        child: Container(
+                          color: kDarkBlue,
+                          child: Column(children: [
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                trackHeight: 4.0,
+                                thumbShape: const RoundSliderThumbShape(
+                                    enabledThumbRadius: 8.0),
+                                rangeThumbShape:
+                                    const RoundRangeSliderThumbShape(),
+                                rangeValueIndicatorShape:
+                                    const PaddleRangeSliderValueIndicatorShape(),
+                              ),
+                              child: StreamBuilder<Duration>(
+                                stream: audioPlayer.positionStream,
+                                builder: (context, snapshot) {
+                                  final position =
+                                      snapshot.data ?? Duration.zero;
+                                  final duration =
+                                      audioPlayer.duration ?? Duration.zero;
+                                  return Expanded(
                                     child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
                                       children: [
-                                        if (_isExpanded)
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 25),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                        Column(
+                                          children: [
+                                            if (_isExpanded)
+                                              Column(
+                                                children: [
+                                                  (SizedBox(
+                                                      height: 300,
+                                                      child: Container(
+                                                        width: 250,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                                image:
+                                                                    DecorationImage(
+                                                                  image:
+                                                                      AssetImage(
+                                                                    _currentSong
+                                                                            ?.albumCover ??
+                                                                        "assets/books/ላስብበት.jpg",
+                                                                  ),
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                )),
+                                                      ))),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 35,
+                                                        horizontal: 25),
+                                                    child: Column(
                                                       children: [
-                                                        (Text(
-                                                          _currentSong?.title ??
-                                                              'Chapter 1',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14.0,
-                                                            color: Colors.white,
-                                                          ),
-                                                        )),
-                                                        Text(
-                                                          _currentSong
-                                                                  ?.artist ??
-                                                              'Chapter 1',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14.0,
-                                                            color: Colors.white,
-                                                          ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                (Text(
+                                                                  _currentSong
+                                                                          ?.title ??
+                                                                      'Chapter 1',
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                )),
+                                                                Text(
+                                                                  _currentSong
+                                                                          ?.artist ??
+                                                                      'Chapter 1',
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            IconButton(
+                                                                onPressed:
+                                                                    () {},
+                                                                color: Colors
+                                                                    .white,
+                                                                icon: const Icon(
+                                                                    Icons
+                                                                        .favorite_border))
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
-                                                    IconButton(
-                                                        onPressed: () {},
-                                                        color: Colors.white,
-                                                        icon: const Icon(Icons
-                                                            .favorite_border))
-                                                  ],
-                                                ),
-                                              ],
+                                                  ),
+                                                ],
+                                              ),
+                                            Slider(
+                                              thumbColor: Colors.white,
+                                              activeColor: Colors.amber,
+                                              inactiveColor:
+                                                  const Color.fromARGB(
+                                                      31, 206, 198, 198),
+                                              value: position.inMilliseconds
+                                                  .toDouble(),
+                                              min: 0.0,
+                                              max: audioPlayer
+                                                      .duration?.inMilliseconds
+                                                      .toDouble() ??
+                                                  0.0,
+                                              onChanged: (value) {
+                                                final newPosition = Duration(
+                                                    milliseconds:
+                                                        value.floor());
+                                                audioPlayer.seek(newPosition);
+                                              },
+                                              onChangeEnd: (value) {
+                                                final newPosition = Duration(
+                                                    milliseconds:
+                                                        value.floor());
+                                                audioPlayer.seek(newPosition);
+                                              },
                                             ),
-                                          ),
-                                      ],
-                                    ),
-                                    SliderTheme(
-                                      data: SliderTheme.of(context).copyWith(
-                                        trackHeight: 4.0,
-                                        // thumbShape: const RoundSliderThumbShape(
-                                        //     enabledThumbRadius: 6.0),
-                                        // rangeThumbShape: const RoundRangeSliderThumbShape(),
-                                        // rangeValueIndicatorShape:
-                                        //     const PaddleRangeSliderValueIndicatorShape(),
-                                      ),
-                                      child: StreamBuilder<Duration>(
-                                        stream: audioPlayer.positionStream,
-                                        builder: (context, snapshot) {
-                                          final position =
-                                              snapshot.data ?? Duration.zero;
-                                          final duration =
-                                              audioPlayer.duration ??
-                                                  Duration.zero;
-                                          return Expanded(
-                                            child: Column(
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    formatDuration(position),
+                                                    style: const TextStyle(
+                                                        fontSize: 13,
+                                                        color: Colors.white),
+                                                  ),
+                                                  Text(
+                                                    formatDuration(
+                                                        duration - position),
+                                                    style: const TextStyle(
+                                                        fontSize: 13,
+                                                        color: Colors.white),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
                                               children: [
-                                                Slider(
-                                                  thumbColor: Colors.white,
-                                                  activeColor: Colors.amber,
-                                                  inactiveColor:
-                                                      const Color.fromARGB(
-                                                          31, 230, 11, 11),
-                                                  value: position.inMilliseconds
-                                                      .toDouble(),
-                                                  min: 0.0,
-                                                  max: audioPlayer.duration
-                                                          ?.inMilliseconds
-                                                          .toDouble() ??
-                                                      0.0,
-                                                  onChanged: (value) {
-                                                    final newPosition =
-                                                        Duration(
-                                                            milliseconds:
-                                                                value.floor());
-                                                    audioPlayer
-                                                        .seek(newPosition);
-                                                  },
-                                                  onChangeEnd: (value) {
-                                                    final newPosition =
-                                                        Duration(
-                                                            milliseconds:
-                                                                value.floor());
-                                                    audioPlayer
-                                                        .seek(newPosition);
-                                                  },
+                                                IconButton(
+                                                  icon: const Icon(
+                                                      size: 25,
+                                                      CupertinoIcons
+                                                          .gobackward_30),
+                                                  onPressed: () {},
+                                                  color: Colors.white,
                                                 ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 22),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        formatDuration(
-                                                            position),
-                                                        style: const TextStyle(
-                                                            fontSize: 16),
-                                                      ),
-                                                      Text(
-                                                        formatDuration(
-                                                            duration -
-                                                                position),
-                                                        style: const TextStyle(
-                                                            fontSize: 16),
-                                                      ),
-                                                    ],
+                                                if (_isExpanded)
+                                                  (IconButton(
+                                                    icon: const Icon(
+                                                      Icons.skip_previous,
+                                                      size: 35,
+                                                    ),
+                                                    onPressed: () {},
+                                                    color: Colors.white,
+                                                  )),
+                                                IconButton(
+                                                  icon: Icon(
+                                                    _isPlaying
+                                                        ? Icons.play_arrow
+                                                        : Icons.pause,
+                                                    size: 35,
                                                   ),
+                                                  onPressed: () => _isPlaying
+                                                      ? playAudio()
+                                                      : pauseAudio(),
+                                                  color: Colors.white,
+                                                ),
+                                                if (_isExpanded)
+                                                  (IconButton(
+                                                    icon: const Icon(
+                                                      Icons.skip_next,
+                                                      size: 35,
+                                                    ),
+                                                    onPressed: () {},
+                                                    color: Colors.white,
+                                                  )),
+                                                IconButton(
+                                                  icon: const Icon(
+                                                      size: 25,
+                                                      CupertinoIcons
+                                                          .goforward_15),
+                                                  onPressed: () {
+                                                    seekAudio();
+                                                  },
+                                                  color: Colors.white,
                                                 ),
                                               ],
                                             ),
-                                          );
-                                        },
-                                      ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(
-                                                CupertinoIcons.gobackward_15),
-                                            onPressed: () {},
-                                            color: Colors.white,
-                                          ),
-                                          if (_isExpanded)
-                                            (IconButton(
-                                              icon: const Icon(
-                                                  Icons.skip_previous),
-                                              onPressed: () {},
-                                              color: Colors.white,
-                                            )),
-                                          IconButton(
-                                            icon: Icon(
-                                              _isPlaying
-                                                  ? Icons.play_arrow
-                                                  : Icons.pause,
-                                            ),
-                                            onPressed: () => _isPlaying
-                                                ? playAudio()
-                                                : pauseAudio(),
-                                            color: Colors.white,
-                                          ),
-                                          if (_isExpanded)
-                                            (IconButton(
-                                              icon: const Icon(Icons.skip_next),
-                                              onPressed: () {},
-                                              color: Colors.white,
-                                            )),
-                                          IconButton(
-                                            icon: const Icon(
-                                                CupertinoIcons.goforward_15),
-                                            onPressed: () {
-                                              seekAudio();
-                                            },
-                                            color: Colors.white,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                              ],
+                                  );
+                                },
+                              ),
                             ),
-                          ],
+                          ]),
                         ),
-                      ),
-                    ),
-                  ),
+                      ))
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     setState(() {
+                  //       _isExpanded = true;
+                  //       appBarColor = kDarkBlue;
+                  //       iconview = const Icon(Icons.view_list);
+                  //     });
+                  //   },
+                  //   child: AnimatedContainer(
+                  //     duration: const Duration(milliseconds: 600),
+                  //     curve: Curves.linear,
+                  //     width: double.infinity,
+                  //     height: _isExpanded
+                  //         ? MediaQuery.of(context).size.height - 56
+                  //         : 100,
+                  //     child: Container(
+                  //       color: kDarkBlue,
+                  //       padding: const EdgeInsets.all(0),
+                  //       child:
+                  //           Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.center,
+                  //             children: [
+// ,
+//                   Expanded(
+//                       child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.start,
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Column(
+//                         children: [
+
+//                         ],
+//                       ),
+
+                  //     // Expanded(
+                  //     //   child: Row(
+                  //     //     mainAxisAlignment:
+                  //     //         MainAxisAlignment.center,
+                  //     //     crossAxisAlignment:
+                  //     //         CrossAxisAlignment.start,
+                  //     //     children: [
+                  //     //       IconButton(
+                  //     //         icon: const Icon(
+                  //     //             CupertinoIcons.gobackward_15),
+                  //     //         onPressed: () {},
+                  //     //         color: Colors.white,
+                  //     //       ),
+                  //     //       if (_isExpanded)
+                  //     //         (IconButton(
+                  //     //           icon: const Icon(
+                  //     //               Icons.skip_previous),
+                  //     //           onPressed: () {},
+                  //     //           color: Colors.white,
+                  //     //         )),
+                  //     //       IconButton(
+                  //     //         icon: Icon(
+                  //     //           _isPlaying
+                  //     //               ? Icons.play_arrow
+                  //     //               : Icons.pause,
+                  //     //         ),
+                  //     //         onPressed: () => _isPlaying
+                  //     //             ? playAudio()
+                  //     //             : pauseAudio(),
+                  //     //         color: Colors.white,
+                  //     //       ),
+                  //     //       if (_isExpanded)
+                  //     //         (IconButton(
+                  //     //           icon: const Icon(Icons.skip_next),
+                  //     //           onPressed: () {},
+                  //     //           color: Colors.white,
+                  //     //         )),
+                  //     //       IconButton(
+                  //     //         icon: const Icon(
+                  //     //             CupertinoIcons.goforward_15),
+                  //     //         onPressed: () {
+                  //     //           seekAudio();
+                  //     //         },
+                  //     //         color: Colors.white,
+                  //     //       ),
+                  //     //     ],
+                  //     //   ),
+                  //     // ),
+                  //   ],
+                  // )),
                 ],
               ),
+
+              // ),
+              // ),
+              // ),
+              // ],
+              // ),
             ),
     );
   }
@@ -496,7 +601,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   //     print("fatching audiobooks completed...");
   //   } catch (e) {
   //     print("fatching audiobooks error...");
-  //   }
+  // }
   // }
 }
 
