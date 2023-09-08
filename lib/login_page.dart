@@ -15,6 +15,7 @@ class _MyWidgetState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
+  bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +23,13 @@ class _MyWidgetState extends State<LoginPage> {
     mediaSize = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color: myColor,
-        image: DecorationImage(
-          image: const AssetImage("assets/images/bg.png"),
-          fit: BoxFit.cover,
-          colorFilter:
-              ColorFilter.mode(myColor.withOpacity(1), BlendMode.color),
-        ),
+        color: branaPrimaryColor,
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: branaPrimaryColor,
         body: Stack(children: [
-          Positioned(top: 30, child: _buildTop()),
-          Positioned(bottom: 80, child: _buildBottom()),
+          Positioned(top: 80, child: _buildTop()),
+          Positioned(bottom: 350, left: 10, right: 10, child: _buildBottom()),
         ]),
       ),
     );
@@ -43,7 +38,8 @@ class _MyWidgetState extends State<LoginPage> {
   Widget _buildTop() {
     return SizedBox(
       width: mediaSize.width,
-      child:  Column(
+      height: mediaSize.height,
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
@@ -61,8 +57,9 @@ class _MyWidgetState extends State<LoginPage> {
       width: mediaSize.width,
       child: Card(
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        color: kLightBlue.withOpacity(0.1),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: _buildForm(),
@@ -72,47 +69,87 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Widget _buildForm() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
           "Welcome Back",
           style: TextStyle(
-              color: myColor, fontSize: 32, fontWeight: FontWeight.w900),
+            color: branaWhite,
+            fontSize: 32,
+            fontWeight: FontWeight.w900,
+          ),
         ),
-        _buildGreyText("Please login to Brana"),
-        const SizedBox(height: 30),
-        _buildGreyText("Email address"),
-        _buildInputField(emailController),
-        const SizedBox(height: 10),
-        _buildGreyText("Password"),
-        _buildInputField(passwordController, isPassword: true),
-        const SizedBox(height: 5),
-        _buildRememberForgot(),
-        const SizedBox(height: 15),
-        _buildLoginButton(),
-        const SizedBox(height: 35),
-      ],
-    );
-  }
+      ),
+      const SizedBox(height: 10),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildPrimaryText("Please login to Brana"),
+      ),
+      const SizedBox(height: 15),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldEmail(emailController),
+      ),
+      const SizedBox(height: 30),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildInputFieldPassword(passwordController, isPassword: true),
+      ),
+      const SizedBox(height: 5),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: _buildRememberForgot(),
+      ),
+      const SizedBox(height: 15),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 80),
+        child: _buildLoginButton(),
+      ),
+      const SizedBox(height: 35),
+    ],
+  );
+}
 
-  Widget _buildGreyText(String text) {
+  Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: Colors.grey),
+      style: const TextStyle(
+        color: branaWhite,
+      ),
     );
   }
 
-  Widget _buildInputField(TextEditingController controller,
+  Widget _buildInputFieldEmail(TextEditingController controller) {
+    return TextField(
+      controller: controller,
+      decoration: const InputDecoration(
+          suffixIcon: Icon(Icons.done),
+          hintText: 'Email',
+          hintStyle: TextStyle(color: branaWhite)),
+    );
+  }
+
+  Widget _buildInputFieldPassword(TextEditingController controller,
       {isPassword = false}) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        suffixIcon: isPassword
-            ? const Icon(Icons.remove_red_eye)
-            : const Icon(Icons.done),
-      ),
-      obscureText: isPassword,
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                isPasswordVisible = !isPasswordVisible;
+              });
+            },
+            icon: isPasswordVisible
+                ? const Icon(Icons.visibility)
+                : const Icon(Icons.visibility_off),
+          ),
+          hintText: 'Password',
+          hintStyle: const TextStyle(color: branaWhite)),
+      obscureText: !isPasswordVisible,
     );
   }
 
@@ -129,33 +166,38 @@ class _MyWidgetState extends State<LoginPage> {
                     rememberUser = value!;
                   });
                 }),
-            _buildGreyText("Remember me"),
+            _buildPrimaryText("Remember me"),
           ],
         ),
         TextButton(
-            onPressed: () {}, child: _buildGreyText("Forgot password"))
+            onPressed: () {}, child: _buildPrimaryText("Forgot password"))
       ],
     );
   }
+
   Widget _buildLoginButton() {
     return ElevatedButton(
       onPressed: () {
         // debugPrint("Email : ${emailController.text}");
         // debugPrint("Password : ${passwordController.text}");
         Navigator.push(
-      context,
-        MaterialPageRoute(builder: (context) =>  const Navigation()),
-    );
-    },
+          context,
+          MaterialPageRoute(builder: (context) => const Navigation()),
+        );
+      },
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 20,
-        shadowColor: kPrimaryColor,
-        backgroundColor:  kPrimaryColor,
+        shadowColor: branaPrimaryColor,
+        backgroundColor: branaPrimaryColor,
         minimumSize: const Size.fromHeight(50),
-        
       ),
-      child: const Text("LOGIN"),
+      child: const Text(
+        "LOGIN",
+        style: TextStyle(
+          color: branaWhite,
+        ),
+      ),
     );
   }
 }

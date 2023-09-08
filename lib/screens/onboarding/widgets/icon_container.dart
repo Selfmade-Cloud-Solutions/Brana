@@ -6,7 +6,8 @@ class IconContainer extends StatelessWidget {
   final IconData icon;
   final double padding;
 
-  const IconContainer({super.key, 
+  const IconContainer({
+    super.key,
     required this.icon,
     required this.padding,
   });
@@ -16,13 +17,13 @@ class IconContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: kWhite.withOpacity(0.25),
+        color: branaWhite.withOpacity(0.25),
         shape: BoxShape.circle,
       ),
       child: Icon(
         icon,
         size: 32.0,
-        color: kWhite,
+        color: branaWhite,
       ),
     );
   }

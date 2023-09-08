@@ -1,7 +1,7 @@
 // import 'package:brana_mobile/audioplayer.dart';
 // import 'package:brana_mobile/audioplayer.dart';
 // import 'package:brana_mobile/test.dart';
-import 'package:brana_mobile/audioplayer.dart';
+// import 'package:brana_mobile/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'screens/onboarding/onboarding.dart';
 
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<Splashscreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ImageIcon(
-              AssetImage("assets/images/logo2.png"),
+              AssetImage("assets/images/logo.png"),
               size: 250,
             ),
             SizedBox(
@@ -75,8 +75,8 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      // home: const Splashscreen(),
-      home: const AudioPlayerPage(),
+      home: const Splashscreen(),
+      // home: const AudioPlayerPage(),
 
       debugShowCheckedModeBanner: false,
     );

@@ -136,7 +136,7 @@ class _MyWidgetState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: kPrimaryColor,
+                              color: branaPrimaryColor,
                             ),
                           ),
                           const SizedBox(
@@ -145,7 +145,7 @@ class _MyWidgetState extends State<HomePage> {
                           Icon(
                             Icons.arrow_forward,
                             size: 18,
-                            color: kPrimaryColor,
+                            color: branaPrimaryColor,
                           ),
                         ],
                       ),
@@ -193,16 +193,18 @@ class _MyWidgetState extends State<HomePage> {
               child: Container(
                 width: 30,
                 height: 3,
-                color:
-                    selectedFilter == item ? kPrimaryColor : Colors.transparent,
+                color: selectedFilter == item
+                    ? branaPrimaryColor
+                    : Colors.transparent,
               ),
             ),
             Center(
               child: Text(
                 item.name,
                 style: GoogleFonts.jost(
-                  color:
-                      selectedFilter == item ? kPrimaryColor : Colors.grey[400],
+                  color: selectedFilter == item
+                      ? branaPrimaryColor
+                      : Colors.grey[400],
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 3,

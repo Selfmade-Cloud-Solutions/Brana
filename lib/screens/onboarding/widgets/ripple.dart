@@ -5,7 +5,8 @@ import '../../../constants.dart';
 class Ripple extends StatelessWidget {
   final double radius;
 
-  const Ripple({super.key, 
+  const Ripple({
+    super.key,
     required this.radius,
   });
 
@@ -21,7 +22,7 @@ class Ripple extends StatelessWidget {
         height: 2 * radius,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: kWhite,
+          color: branaWhite,
         ),
       ),
     );

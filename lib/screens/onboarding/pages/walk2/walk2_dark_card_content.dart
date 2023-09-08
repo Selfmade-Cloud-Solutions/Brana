@@ -9,7 +9,7 @@ class Walk2DarkCardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Icon(
       Icons.android_outlined,
-      color: kWhite,
+      color: branaWhite,
       size: 96.0,
     );
   }

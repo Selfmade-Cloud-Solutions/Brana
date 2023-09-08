@@ -5,7 +5,8 @@ import '../../../constants.dart';
 class NextPageButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const NextPageButton({super.key, 
+  const NextPageButton({
+    super.key,
     required this.onPressed,
   });
 
@@ -15,11 +16,11 @@ class NextPageButton extends StatelessWidget {
       padding: const EdgeInsets.all(kPaddingM),
       elevation: 0.0,
       shape: const CircleBorder(),
-      fillColor: kWhite,
+      fillColor: branaWhite,
       onPressed: onPressed,
       child: const Icon(
         Icons.arrow_forward,
-        color: kBlue,
+        color: branaBlue,
         size: 32.0,
       ),
     );
