@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+
 
 class DisplayImage extends StatelessWidget {
   final String imagePath;
@@ -21,8 +21,8 @@ class DisplayImage extends StatelessWidget {
         child: Stack(children: [
       buildImage(color),
       Positioned(
-        right: 4,
-        top: 10,
+        right: 10,
+        top: 85,
         child: buildEditIcon(color),
       )
     ]));
@@ -35,11 +35,11 @@ class DisplayImage extends StatelessWidget {
         : FileImage(File(imagePath));
 
     return CircleAvatar(
-      radius: 75,
+      radius: 60,
       backgroundColor: color,
       child: CircleAvatar(
         backgroundImage: image as ImageProvider,
-        radius: 70,
+        radius: 55,
       ),
     );
   }
@@ -61,7 +61,7 @@ class DisplayImage extends StatelessWidget {
       ClipOval(
           child: Container(
         padding: EdgeInsets.all(all),
-        color: Colors.white,
+        color: const Color.fromARGB(255, 184, 208, 211),
         child: child,
       ));
 }
