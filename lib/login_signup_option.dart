@@ -26,7 +26,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
         backgroundColor: Colors.transparent,
         body: Stack(children: [
           Positioned(top: 80, child: _buildTop()),
-          Positioned(bottom: 350, left: 10, right: 10, child: _buildBottom()),
+          Positioned(bottom: 50, left: 10, right: 10, child: _buildBottom()),
         ]),
       ),
     );

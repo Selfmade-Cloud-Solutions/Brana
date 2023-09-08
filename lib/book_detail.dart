@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:brana_mobile/widgets/back_button.dart';
+// import 'package:brana_mobile/widgets/back_button.dart';
 import 'package:brana_mobile/audioplayer.dart';
 
 class BookDetail extends StatelessWidget {
