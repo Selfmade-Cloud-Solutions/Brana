@@ -1,0 +1,145 @@
+import 'package:flutter/material.dart';
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body : Expanded(
+                            child: Column(
+                              children: [
+                                Column(
+                                  children: [
+                                    if (_isExpanded)
+                                      Column(
+                                        children: [
+                                          (SizedBox(
+                                              height: 300,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 18.0),
+                                                child: Container(
+                                                  width: 250,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      image: DecorationImage(
+                                                        image: AssetImage(
+                                                          _currentSong
+                                                                  ?.albumCover ??
+                                                              "assets/books/ላስብበት.jpg",
+                                                        ),
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ),
+                                              ))),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 35, horizontal: 25),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        (Text(
+                                                          _currentSong?.title ??
+                                                              'Chapter 1',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14.0,
+                                                            color: Colors.white,
+                                                          ),
+                                                        )),
+                                                        Text(
+                                                          _currentSong
+                                                                  ?.artist ??
+                                                              'Chapter 1',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14.0,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    IconButton(
+                                                        onPressed: () {},
+                                                        color: Colors.white,
+                                                        icon: const Icon(Icons
+                                                            .favorite_border))
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    Slider(
+                                      thumbColor: Colors.white,
+                                      activeColor: Colors.amber,
+                                      inactiveColor: const Color.fromARGB(
+                                          31, 206, 198, 198),
+                                      value: position.inMilliseconds.toDouble(),
+                                      min: 0.0,
+                                      max: audioPlayer.duration?.inMilliseconds
+                                              .toDouble() ??
+                                          0.0,
+                                      // buffered:
+                                      onChanged: (value) {
+                                        final newPosition = Duration(
+                                            milliseconds: value.floor());
+                                        audioPlayer.seek(newPosition);
+                                      },
+                                      onChangeEnd: (value) {
+                                        final newPosition = Duration(
+                                            milliseconds: value.floor());
+                                        audioPlayer.seek(newPosition);
+                                      },
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            formatDuration(position),
+                                            style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.white),
+                                          ),
+                                          Text(
+                                            formatDuration(duration - position),
+                                            style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                   
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+    );
+  }
+}

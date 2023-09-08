@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/gk/Documents/Github/brana_mobile/linux"
+    "cmake.sourceDirectory": "/home/gk/Documents/Github/brana_mobile/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
