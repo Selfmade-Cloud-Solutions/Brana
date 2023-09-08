@@ -1,16 +1,16 @@
 import 'dart:async';
-// import 'dart:convert';
-// import 'package:brana_mobile/data.dart';
+import 'dart:convert';
+import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/screens/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:flutter/services.dart' show rootBundle;
-// import 'dart:typed_data';
-// import 'dart:io';
-// import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 
 class AudioPlayerPage extends StatefulWidget {
   // final Book book;
@@ -30,7 +30,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   Icon iconview = const Icon(Icons.arrow_back);
   // late AudioPlayer audioPlayer;
   final AudioPlayer audioPlayer = AudioPlayer();
-  double _sliderValue = 0.0;
+  final double _sliderValue = 0.0;
   bool isFetching = false;
   int currentIndex = 0;
 
@@ -45,7 +45,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
     try {
       final playlist = ConcatenatingAudioSource(
         useLazyPreparation: true,
-        shuffleOrder: DefaultShuffleOrder(),
+        // shuffleOrder: ,
         children: [
           for (var i = 0; i < songs.length; i++)
             AudioSource.uri(Uri.parse(songs[i].links)),
@@ -53,31 +53,36 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
       );
       await audioPlayer.setAudioSource(playlist, initialIndex: 0);
       await audioPlayer.setLoopMode(LoopMode.all);
-      await audioPlayer.setShuffleModeEnabled(true);
+      await audioPlayer.setShuffleModeEnabled(false);
       audioPlayer.play();
       setState(() {
         currentIndex = index;
       });
-    } on PlayerException catch (e) {
-      print("Error code: ${e.code}");
-
-      print("Error message: ${e.message}");
-    } on PlayerInterruptedException catch (e) {
-      print("Connection aborted: ${e.message}");
     } catch (e) {
       print("Error loading audio source: $e");
     }
-
-    audioPlayer.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace st) {
-      if (e is PlayerException) {
-        print('Error code: ${e.code}');
-        print('Error message: ${e.message}');
-      } else {
-        print('An error occurred: $e');
-      }
-    });
   }
+  // Future<Uint8List> loadAudioBytes(String assetPath) async {
+  //   final byteData = await rootBundle.load(assetPath);
+  //   return byteData.buffer.asUint8List();
+  // }
+
+  // Future<String> createTemporaryFile(Uint8List audioBytes) async {
+  //   final Directory tempDir = await getTemporaryDirectory();
+  //   final String tempPath = tempDir.path;
+  //   final File tempFile = File('$tempPath/3.mp3');
+  //   await tempFile.writeAsBytes(audioBytes);
+  //   return tempFile.path;
+  // }
+
+  // void playAudioFromBytes(Uint8List audioBytes) async {
+  //   final String tempFilePath = await createTemporaryFile(audioBytes);
+  //   final audioSource = AudioSource.uri(Uri.file(tempFilePath));
+
+  //   await audioPlayer.setAudioSource(audioSource);
+  //   audioPlayer.play();
+  //   _isPlaying = true;
+  // }
 
   @override
   void initState() {
@@ -88,14 +93,15 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
         isFetching = true;
       });
     });
-    audioPlayer.positionStream.listen((position) {
-      setState(() {
-        _sliderValue = position.inMilliseconds.toDouble();
-      });
-    });
+    // audioPlayer.positionStream.listen((position) {
+    //   setState(() {
+    //     _sliderValue = position.inMilliseconds.toDouble();
+    //   });
+    // });
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      init(currentIndex);
+      init(currentIndex); // Play the first song by default
     });
+    //
   }
 
   void seekTo(double value) async {
@@ -111,14 +117,14 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   void playAudio() async {
     await audioPlayer.play();
     setState(() {
-      _isPlaying = !_isPlaying;
+      _isPlaying = false;
     });
   }
 
   void pauseAudio() async {
     await audioPlayer.pause();
     setState(() {
-      _isPlaying = !_isPlaying;
+      _isPlaying = true;
     });
   }
 
@@ -127,9 +133,9 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   }
 
   void seekAudio() async {
-    // await audioPlayer.seekToNext();
-    await audioPlayer
-        .seek(Duration(seconds: audioPlayer.position.inSeconds + 15));
+    await audioPlayer.seekToNext();
+    // await audioPlayer
+    //     .seek(Duration(seconds: audioPlayer.position.inSeconds + 15));
   }
 
   void _selectSong(Song song) {
@@ -216,6 +222,9 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                             onTap: () async {
                               _selectSong(song);
                               init(index);
+                              // final audioBytes =
+                              //     await loadAudioBytes(song.links);
+                              // playAudioFromBytes(audioBytes);
                             },
                           );
                         },
@@ -421,9 +430,13 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                                                   ? Icons.play_arrow
                                                   : Icons.pause,
                                             ),
-                                            onPressed: () => _isPlaying
-                                                ? playAudio()
-                                                : pauseAudio(),
+                                            onPressed: () {
+                                              if (!_isPlaying) {
+                                                playAudio();
+                                              } else {
+                                                pauseAudio();
+                                              }
+                                            },
                                             color: Colors.white,
                                           ),
                                           if (_isExpanded)

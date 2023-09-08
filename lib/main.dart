@@ -1,7 +1,7 @@
-
 // import 'package:brana_mobile/audioplayer.dart';
 // import 'package:brana_mobile/audioplayer.dart';
 // import 'package:brana_mobile/test.dart';
+import 'package:brana_mobile/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'screens/onboarding/onboarding.dart';
 
@@ -53,13 +53,13 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  Builder(
+      body: Builder(
         builder: (BuildContext context) {
           final screenHeight = MediaQuery.of(context).size.height;
 
           return Onboarding(screenHeight: screenHeight);
         },
-    ),
+      ),
     );
   }
 }
@@ -75,8 +75,8 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const Splashscreen(),
-          // home: const AudioPlayerPage(),
+      // home: const Splashscreen(),
+      home: const AudioPlayerPage(),
 
       debugShowCheckedModeBanner: false,
     );
