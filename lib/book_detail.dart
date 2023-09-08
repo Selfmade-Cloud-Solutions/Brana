@@ -14,7 +14,7 @@ class BookDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -78,168 +78,116 @@ class BookDetail extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 100,
-                  width: size.width,
-                  padding: const EdgeInsets.only(
-                    top: 16,
-                    left: 32,
-                    right: 32,
-                    bottom: 32,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize:
-                              Size(MediaQuery.of(context).size.width * 0.4, 20),
-                          textStyle: const TextStyle(fontSize: 16),
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.teal,
-                          shadowColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          elevation: 5,
                         ),
-                        onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => const AudioPlayerPage())),
-                        // onPressed: () {
-                        //   // String dataToSend = "This Is the Data to send";
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           AudioPlayerPage(book: book),
-                        //     ),
-                        //   );
-                        // },
-                        icon: const Icon(Icons.play_arrow_rounded, size: 30),
-                        label: const Center(child: Text('Listen')),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        book.title,
-                        style: GoogleFonts.jost(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white,
+                        const SizedBox(height: 16),
+                        Text(
+                          book.title,
+                          style: GoogleFonts.jost(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        book.author.fullname,
-                        style: GoogleFonts.jost(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                        const SizedBox(height:4),
+                        Text(
+                          book.author.fullname,
+                          style: GoogleFonts.jost(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      const SizedBox(height: 4),
-                      Text(
-                        book.description,
-                        style: GoogleFonts.jost(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w200,
-                          color: Colors.white,
-                        ),
-                      ),
+                        const SizedBox(height: 4),
+                        const SizedBox(height:4),
+                        Text(
+                          book.description,
+                          style: GoogleFonts.jost(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.white,
+                          ),),
+                      
+                    
                       Container(
-                        height: 200,
-                        width: size.width,
-                        padding: const EdgeInsets.only(
-                          top: 100,
-                          left: 32,
-                          right: 32,
-                          bottom: 40,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(
-                                    MediaQuery.of(context).size.width * 0.4,
-                                    20),
-                                textStyle: const TextStyle(fontSize: 16),
-                                foregroundColor: Colors.white,
-                                backgroundColor: Colors.teal,
-                                shadowColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                elevation: 5,
-                              ),
-                              onPressed: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AudioPlayerPage())),
-                              // onPressed: () {
-                              //   // String dataToSend = "This Is the Data to send";
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           AudioPlayerPage(book: book),
-                              //     ),
-                              //   );
-                              // },
-                              icon: const Icon(Icons.play_arrow_rounded,
-                                  size: 30),
-                              label: const Center(child: Text('Listen')),
-                            ),
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(
-                                    MediaQuery.of(context).size.width * 0.4,
-                                    20),
-                                textStyle: const TextStyle(fontSize: 16),
-                                foregroundColor: Colors.white,
-                                backgroundColor: Colors.teal,
-                                shadowColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                elevation: 5,
-                              ),
-                              onPressed: () {},
-                              // onPressed: () {
-                              //   // String dataToSend = "This Is the Data to send";
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => const AudioPlayer(),
-                              //     ),
-                              //   );
-                              // },
-                              icon: const Icon(Icons.bookmark_add, size: 30),
-                              label:
-                                  const Center(child: Text('Add to Wishlist')),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+      height: 200,
+      width: size.width,
+      padding: const EdgeInsets.only(
+        top: 100,
+        left: 32,
+        right: 32,
+        bottom: 40,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(
+                  MediaQuery.of(context).size.width * 0.4, 20),
+              textStyle: const TextStyle(fontSize: 16),
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.teal,
+              shadowColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              elevation: 5,
+            ),
+            onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => AudioPlayerPage())),
+            // onPressed: () {
+            //   // String dataToSend = "This Is the Data to send";
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) =>
+            //           AudioPlayerPage(book: book),
+            //     ),
+            //   );
+            // },
+            icon: const Icon(Icons.play_arrow_rounded, size: 30),
+            label: const Center(child: Text('Listen')),
+          ),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(
+                  MediaQuery.of(context).size.width * 0.4, 20),
+              textStyle: const TextStyle(fontSize: 16),
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.teal,
+              shadowColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              elevation: 5,
+            ),
+            onPressed: () {},
+            // onPressed: () {
+            //   // String dataToSend = "This Is the Data to send";
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => const AudioPlayer(),
+            //     ),
+            //   );
+            // },
+            icon: const Icon(Icons.bookmark_add, size: 30),
+            label: const Center(child: Text('Add to Wishlist')),
+          ),
+        ],
+      ),
+    ),],),
                   ),
                 ),
               ],
             ),
+            
           ],
+          
         ),
+        
       ),
+      
     );
   }
 }

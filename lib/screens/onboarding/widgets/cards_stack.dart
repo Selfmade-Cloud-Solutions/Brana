@@ -9,7 +9,8 @@ class CardsStack extends StatelessWidget {
   final Animation<Offset> lightCardOffsetAnimation;
   final Animation<Offset> darkCardOffsetAnimation;
 
-  const CardsStack({super.key, 
+  const CardsStack({
+    super.key,
     required this.pageNumber,
     required this.lightCardChild,
     required this.darkCardChild,
@@ -36,7 +37,7 @@ class CardsStack extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
-              color: kDarkBlue,
+              color: branaDarkBlue,
               child: Container(
                 width: darkCardWidth,
                 height: darkCardHeight,

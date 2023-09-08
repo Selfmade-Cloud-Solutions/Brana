@@ -10,37 +10,37 @@ class Walk3DarkCardContent extends StatelessWidget {
     return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-      //   Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //     children: <Widget>[
-      //       Icon(
-      //         Icons.person_pin,
-      //         color: kWhite,
-      //         size: 32.0,
-      //       ),
-      //     ],
-      //   ),
-      //   SizedBox(height: kSpaceM),
-      //   Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //     children: <Widget>[
-      //       Icon(
-      //         Icons.person,
-      //         color: kWhite,
-      //         size: 32.0,
-      //       ),
-      //       Icon(
-      //         Icons.group,
-      //         color: kWhite,
-      //         size: 32.0,
-      //       ),
-      //       Icon(
-      //         Icons.insert_emoticon,
-      //         color: kWhite,
-      //         size: 32.0,
-      //       ),
-      //     ],
-      //   ),
+        //   Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: <Widget>[
+        //       Icon(
+        //         Icons.person_pin,
+        //         color: branaWhite,
+        //         size: 32.0,
+        //       ),
+        //     ],
+        //   ),
+        //   SizedBox(height: kSpaceM),
+        //   Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: <Widget>[
+        //       Icon(
+        //         Icons.person,
+        //         color: branaWhite,
+        //         size: 32.0,
+        //       ),
+        //       Icon(
+        //         Icons.group,
+        //         color: branaWhite,
+        //         size: 32.0,
+        //       ),
+        //       Icon(
+        //         Icons.insert_emoticon,
+        //         color: branaWhite,
+        //         size: 32.0,
+        //       ),
+        //     ],
+        //   ),
       ],
     );
   }

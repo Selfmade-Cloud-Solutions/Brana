@@ -20,19 +20,13 @@ class _MyWidgetState extends State<LoginSignupOption> {
     mediaSize = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color: kPrimaryColor,
-        image: DecorationImage(
-          image: const AssetImage("assets/images/bg.png"),
-          fit: BoxFit.cover,
-          colorFilter:
-              ColorFilter.mode(kPrimaryColor.withOpacity(1), BlendMode.color),
-        ),
+        color: branaPrimaryColor,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
-          Positioned(top: 30, child: _buildTop()),
-          Positioned(bottom: 150, child: _buildBottom()),
+          Positioned(top: 80, child: _buildTop()),
+          Positioned(bottom: 350, left: 10, right: 10, child: _buildBottom()),
         ]),
       ),
     );
@@ -41,6 +35,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
   Widget _buildTop() {
     return SizedBox(
       width: mediaSize.width,
+      height: mediaSize.height,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -61,6 +56,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
+        color: kLightBlue.withOpacity(0.1),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: _buildForm(),
@@ -74,9 +70,15 @@ class _MyWidgetState extends State<LoginSignupOption> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 40),
-        _buildLoginButton(),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 60),
+        child: _buildLoginButton(),
+      ),
         const SizedBox(height: 40),
-        _buildSignupButton(),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 60),
+        child: _buildSignupButton(),
+      ),
         const SizedBox(height: 30),
         _buildOtherLogin(),
         const SizedBox(height: 10),
@@ -84,10 +86,10 @@ class _MyWidgetState extends State<LoginSignupOption> {
     );
   }
 
-  Widget _buildGreyText(String text) {
+  Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: Colors.grey),
+      style: const TextStyle(color: branaWhite),
     );
   }
 
@@ -102,11 +104,16 @@ class _MyWidgetState extends State<LoginSignupOption> {
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 10,
-        backgroundColor:  kPrimaryColor,
-        shadowColor: const Color.fromARGB(255, 110, 105, 105),
+        backgroundColor: branaPrimaryColor.withBlue(90),
+        shadowColor: const Color.fromARGB(50, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
-      child: const Text("LOGIN"),
+      child: const Text(
+        "LOGIN",
+        style: TextStyle(
+          color: branaWhite,
+        fontWeight:FontWeight.w800,
+        )),
     );
   }
 
@@ -121,11 +128,15 @@ class _MyWidgetState extends State<LoginSignupOption> {
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 10,
-        backgroundColor: const Color.fromARGB(255, 7, 243, 204),
-        shadowColor: const Color.fromARGB(255, 110, 105, 105),
+        backgroundColor: branaWhite,
+        shadowColor: const Color.fromARGB(50, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
-      child: const Text("SIGN UP"),
+      child:  Text("SIGN UP",
+      style: TextStyle(
+        color: branaPrimaryColor,
+        fontWeight:FontWeight.w800,
+      )),
     );
   }
 
@@ -133,15 +144,14 @@ class _MyWidgetState extends State<LoginSignupOption> {
     return Center(
       child: Column(
         children: [
-          _buildGreyText("Or Login with"),
+          _buildPrimaryText("Or Login with"),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: 
-                Tab(icon: Image.asset("assets/images/google.png")),
+                child: Tab(icon: Image.asset("assets/images/google.png")),
               ),
               Tab(icon: Image.asset("assets/images/facebook.png")),
               Tab(icon: Image.asset("assets/images/twitter.png"))
