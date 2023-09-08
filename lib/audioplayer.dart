@@ -65,7 +65,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
       builder: (context) {
         return const Center(
             child: CircularProgressIndicator(
-          color: kBlue,
+          color: branaDarkBlue,
         ));
       },
     );
@@ -251,7 +251,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                       style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
-                        color: kDarkBlue,
+                        color: branaDarkBlue,
                       ),
                     ),
                     subtitle: Text(song.title),
@@ -268,7 +268,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
               onTap: () {
                 setState(() {
                   _isExpanded = true;
-                  appBarColor = kDarkBlue;
+                  appBarColor = branaDarkBlue;
                   iconview = const Icon(Icons.view_list);
                 });
               },
@@ -279,7 +279,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                 height:
                     _isExpanded ? MediaQuery.of(context).size.height - 56 : 120,
                 child: Container(
-                  color: kDarkBlue,
+                  color: branaDarkBlue,
                   child: Column(children: [
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
