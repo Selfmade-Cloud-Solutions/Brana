@@ -9,6 +9,7 @@ import 'package:brana_mobile/pages/profile/edit_phone.dart';
 import '../user/user.dart';
 import '../widgets/display_image_widget.dart';
 import '../user/user_data.dart';
+import 'package:brana_mobile/pages/settings.dart';
 
 // This class handles the Page to dispaly the user's info on the "Edit Profile" Screen
 class ProfilePage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final user = UserData.myUser;
-
+    const color = Color.fromRGBO(64, 105, 225, 1);
     return Scaffold(
       body: Column(
         children: [
@@ -31,17 +32,34 @@ class _ProfilePageState extends State<ProfilePage> {
             elevation: 0,
             toolbarHeight: 10,
           ),
-          const Center(
-              child: Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromRGBO(64, 105, 225, 1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      'Edit Profile',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black54,
+                      ),
                     ),
-                  ))),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  navigateSecondPage(const SettingsPage());
+                },
+                child: buildSettingsIcon(color),
+              )
+              
+            ],
+          ),
           InkWell(
               onTap: () {
                 navigateSecondPage(const EditImagePage());
@@ -62,6 +80,25 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Widget buildSettingsIcon(Color color) => buildCircle(
+      all: 0,
+      child: const Icon(
+        Icons.settings,
+        color: Colors.black54,
+        size: 35,
+      ));
+
+  // Builds/Makes Circle for Edit Icon on Profile Picture
+  Widget buildCircle({
+    required Widget child,
+    required double all,
+  }) =>
+      ClipOval(
+          child: Container(
+        padding: EdgeInsets.all(all),
+        // color: const Color.fromARGB(255, 184, 208, 211),
+        child: child,
+      ));
   // Widget builds the display item with the proper formatting to display the user's info
   Widget buildUserInfoDisplay(String getValue, String title, Widget editPage) =>
       Padding(
@@ -99,7 +136,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               getValue,
                               style: const TextStyle(fontSize: 16, height: 1.4),
                             ))),
-                    
                   ]))
             ],
           ));
@@ -145,7 +181,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     height: 1.80,
                                   ),
                                 ))))),
-              
               ]))
         ],
       ));
@@ -160,4 +195,6 @@ class _ProfilePageState extends State<ProfilePage> {
     Route route = MaterialPageRoute(builder: (context) => editForm);
     Navigator.push(context, route).then(onGoBack);
   }
+  
+  buildProfileCard() {}
 }
