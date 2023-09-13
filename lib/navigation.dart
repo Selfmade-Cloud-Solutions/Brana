@@ -4,7 +4,7 @@ import 'package:brana_mobile/navigation_pages/home_page.dart';
 // import 'package:brana_mobile/navigation_pages/library.dart';
 import 'package:brana_mobile/navigation_pages/explore.dart';
 import 'package:brana_mobile/navigation_pages/profile.dart';
-
+import 'package:brana_mobile/constants.dart';
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
 
@@ -35,16 +35,14 @@ class _MyWidgetState extends State<Navigation> {
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: Color.fromARGB(20, 0, 13, 24),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+            topLeft: Radius.circular(0),
+            topRight: Radius.circular(0),
           ),
           boxShadow: [
             BoxShadow(
-              blurRadius: 20,
-              color: Color.fromARGB(100, 255, 255,
-                  255), // Adjust the opacity (alpha value) and color as needed
+              blurRadius: 0,
+              color: branaWhite, // Adjust the opacity (alpha value) and color as needed
               spreadRadius: 1,
             ),
           ],
@@ -54,8 +52,8 @@ class _MyWidgetState extends State<Navigation> {
           child: GNav(
             gap: 8,
             color: const Color.fromARGB(255, 7, 7, 7),
-            activeColor: Colors.white,
-            tabBackgroundColor: Colors.grey,
+            activeColor: branaWhite,
+            tabBackgroundColor: branaPrimaryColor,
             padding: const EdgeInsets.all(10),
             selectedIndex: _currentIndex,
             onTabChange: (index) {

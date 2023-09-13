@@ -45,7 +45,7 @@ List<Book> getBookList() {
       "assets/books/እስረኞቹ.jpg",
     ),
     Book(
-      "ሀብት_ያለው_አእምሮህ",
+      "ሀብት ያለው አእምሮህ",
       "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
       Author(
         "መለሰ እሸቱ",
@@ -78,7 +78,7 @@ List<Book> getBookList() {
       "assets/books/ልጅነት.jpg",
     ),
     Book(
-      "ወንጀለኛው_ዳኛ",
+      "ወንጀለኛው ዳኛ",
       "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
       Author(
         "ሀዲስ አለማየሁ ",
@@ -189,9 +189,9 @@ List<Author> getAuthorList() {
 }
 
 class Filter {
-  String name;
+  String title;
 
-  Filter(this.name);
+  Filter(this.title);
 }
 
 List<Filter> getFilterListHome() {
@@ -207,3 +207,58 @@ List<Filter> getFilterListExplore() {
     Filter("PODCASTS"),
   ];
 }
+const booksExplore = [
+  {
+    "title":"ላስብበት",
+    "author":"ፍሬዓለም ሺባባው",
+    "length":"22:49",
+    "image":"ላስብበት.jpg"
+  },{
+    "title":"ስቅታ",
+    "author":"ሮማን አፈወርቅ",
+    "length":"64:11",
+    "image":"ስቅታ.jpg"
+  },
+  {
+    "title":"እስረኞቹ",
+    "author":"እንዳለጌታ ከበደ",
+    "length":"51:49",
+    "image":"እስረኞቹ.jpg"
+  },
+  {
+    "title":"ሀብት ያለው አእምሮህ",
+    "author":"መለሰ እሸቱ",
+    "length":"72:19",
+    "image":"ሀብት_ያለው_አእምሮህ.jpg"
+  },
+  {
+    "title":"ቴሎስ",
+    "author":"ናሁሰናይ ፀዳሉ",
+    "length":"19:49",
+    "image":"ቴሎስ.jpg"
+  },
+  {
+    "title":"ልጅነት",
+    "author":"ዘነበ ወላ",
+    "length":"34:49",
+    "image":"ልጅነት.jpg"
+  },
+  {
+    "title":"ወንጀለኛው ዳኛ",
+    "author":"ሀዲስ አለማየሁ ",
+    "length":"17:99",
+    "image":"ወንጀለኛው_ዳኛ.jpg"
+  },
+  {
+    "title":"ማሃትማ ጋንዲ",
+    "author":"ሙሉቀን ታሪኩ",
+    "length":"82:29",
+    "image":"ማሃትማ_ጋንዲ.jpg"
+  },
+  {
+    "title":"ጠበሳ",
+    "author":"ጥቁማለት",
+    "length":"46:49",
+    "image":"ጠበሳ.jpg"
+  }
+];
