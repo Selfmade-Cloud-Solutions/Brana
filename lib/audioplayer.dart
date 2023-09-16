@@ -1,11 +1,16 @@
 import 'dart:async';
 // import 'dart:convert';
 // import 'package:brana_mobile/data.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/screens/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
+// import 'package:path/path.dart';
+import 'package:logger/logger.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:flutter/services.dart' show rootBundle;
 // import 'dart:typed_data';
@@ -20,6 +25,17 @@ class AudioPlayerPage extends StatefulWidget {
   State<AudioPlayerPage> createState() => _AudioPlayerPageState();
 }
 
+class AudioPosition {
+  const AudioPosition(
+    this.position,
+    this.bufferedPosition,
+    this.duration,
+  );
+  final Duration position;
+  final Duration bufferedPosition;
+  final Duration duration;
+}
+
 class _AudioPlayerPageState extends State<AudioPlayerPage>
     with WidgetsBindingObserver {
   Song? _currentSong;
@@ -30,17 +46,35 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   Icon iconview = const Icon(Icons.arrow_back);
   // late AudioPlayer audioPlayer;
   final AudioPlayer audioPlayer = AudioPlayer();
+  var logger = Logger(
+      printer: PrettyPrinter(
+    methodCount: 0,
+    errorMethodCount: 3,
+    lineLength: 50,
+    colors: true,
+    printEmojis: true,
+    printTime: true,
+  ));
   double _sliderValue = 0.0;
   bool isFetching = false;
   int currentIndex = 0;
 
   void init(int index) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+            child: CircularProgressIndicator(
+          color: branaDarkBlue,
+        ));
+      },
+    );
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
     // Listen to errors during playback.
     audioPlayer.playbackEventStream.listen((event) {},
         onError: (Object e, StackTrace stackTrace) {
-      print('A stream error occurred: $e');
+      logger.e('A stream error occurred: $e');
     });
     try {
       final playlist = ConcatenatingAudioSource(
@@ -54,31 +88,43 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
       await audioPlayer.setAudioSource(playlist, initialIndex: 0);
       await audioPlayer.setLoopMode(LoopMode.all);
       await audioPlayer.setShuffleModeEnabled(true);
-      audioPlayer.play();
+      await audioPlayer.play();
       setState(() {
         currentIndex = index;
       });
     } on PlayerException catch (e) {
-      print("Error code: ${e.code}");
-
-      print("Error message: ${e.message}");
+      logger.e("Error code: ${e.code}");
+      logger.i("Error message: ${e.message}");
     } on PlayerInterruptedException catch (e) {
-      print("Connection aborted: ${e.message}");
+      logger.e("Connection aborted: ${e.message}");
     } catch (e) {
-      print("Error loading audio source: $e");
+      logger.e("Error loading audio source: $e");
     }
 
     audioPlayer.playbackEventStream.listen((event) {},
         onError: (Object e, StackTrace st) {
       if (e is PlayerException) {
-        print('Error code: ${e.code}');
-        print('Error message: ${e.message}');
+        logger.e('Error code: ${e.code}');
+        logger.i('Error message: ${e.message}');
       } else {
-        print('An error occurred: $e');
+        logger.e('An error occurred: $e');
       }
     });
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
   }
 
+  Stream<AudioPosition> get _AudioPositionStream =>
+      Rx.combineLatest3<Duration, Duration, Duration?, AudioPosition>(
+          audioPlayer.positionStream,
+          audioPlayer.bufferedPositionStream,
+          audioPlayer.durationStream,
+          (position, bufferedPosition, duration) => AudioPosition(
+                position,
+                bufferedPosition,
+                duration ?? Duration.zero,
+              ));
   @override
   void initState() {
     super.initState();
@@ -157,304 +203,254 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: isFetching == false
-          ? const Loading()
-          : Scaffold(
-              appBar: AppBar(
-                  backgroundColor: appBarColor,
-                  // shadowColor: appBarColor,
-                  title: _isExpanded ? null : const Text("widget.book.title"),
-                  leading: IconButton(
-                    icon: iconview,
-                    color: _isExpanded ? Colors.white : Colors.black,
-                    onPressed: () {
-                      if (_isExpanded) {
-                        setState(() {
-                          _isExpanded = !_isExpanded;
-                          appBarColor = Colors.white;
-                          iconview = const Icon(Icons.arrow_back);
-                        });
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.more_vert_outlined),
-                      color: _isExpanded ? Colors.white : Colors.black,
-                      onPressed: () {
-                        // Handle search icon press
-                      },
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: appBarColor,
+          // shadowColor: appBarColor,
+          title: _isExpanded ? null : const Text("widget.book.title"),
+          leading: IconButton(
+            icon: iconview,
+            color: _isExpanded ? Colors.white : Colors.black,
+            onPressed: () {
+              if (_isExpanded) {
+                setState(() {
+                  _isExpanded = !_isExpanded;
+                  appBarColor = Colors.white;
+                  iconview = const Icon(Icons.arrow_back);
+                });
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.more_vert_outlined),
+              color: _isExpanded ? Colors.white : Colors.black,
+              onPressed: () {
+                // Handle search icon press
+              },
+            ),
+          ]),
+      body: Column(
+        children: [
+          if (!_isExpanded)
+            (Expanded(
+              child: ListView.builder(
+                itemCount: songs.length,
+                itemBuilder: (context, index) {
+                  final song = songs[index];
+                  return ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 1.0),
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage(song.albumCover),
                     ),
-                  ]),
-              body: Column(
-                children: [
-                  if (!_isExpanded)
-                    (Expanded(
-                      child: ListView.builder(
-                        itemCount: songs.length,
-                        itemBuilder: (context, index) {
-                          final song = songs[index];
-                          return ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 1.0),
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage(song.albumCover),
+                    title: Text(
+                      song.artist,
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: branaDarkBlue,
+                      ),
+                    ),
+                    subtitle: Text(song.title),
+                    trailing: Text(song.time),
+                    onTap: () async {
+                      _selectSong(song);
+                      init(index);
+                    },
+                  );
+                },
+              ),
+            )),
+          GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isExpanded = true;
+                  appBarColor = branaDarkBlue;
+                  iconview = const Icon(Icons.view_list);
+                });
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 100),
+                curve: Curves.easeIn,
+                width: double.infinity,
+                height:
+                    _isExpanded ? MediaQuery.of(context).size.height - 56 : 120,
+                child: Container(
+                  color: branaDarkBlue,
+                  child: Column(children: [
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: 4.0,
+                        thumbShape: const RoundSliderThumbShape(
+                            enabledThumbRadius: 8.0),
+                        rangeThumbShape: const RoundRangeSliderThumbShape(),
+                        rangeValueIndicatorShape:
+                            const PaddleRangeSliderValueIndicatorShape(),
+                      ),
+                      child: StreamBuilder<AudioPosition>(
+                        stream: _AudioPositionStream,
+                        builder: (context, snapshot) {
+                          final Audioposition = snapshot.data;
+                          return Expanded(
+                            child: Column(
+                              children: [
+                                if (_isExpanded)
+                                  Column(
+                                    children: [
+                                      (SizedBox(
+                                          height: 300,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 18.0),
+                                            child: Container(
+                                              width: 250,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  image: DecorationImage(
+                                                    image: AssetImage(
+                                                      _currentSong
+                                                              ?.albumCover ??
+                                                          "assets/books/ላስብበት.jpg",
+                                                    ),
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                            ),
+                                          ))),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 35, horizontal: 25),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    (Text(
+                                                      _currentSong?.title ??
+                                                          'Chapter 1',
+                                                      style: const TextStyle(
+                                                        fontSize: 14.0,
+                                                        color: Colors.white,
+                                                      ),
+                                                    )),
+                                                    Text(
+                                                      _currentSong?.artist ??
+                                                          'Chapter 1',
+                                                      style: const TextStyle(
+                                                        fontSize: 14.0,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    color: Colors.white,
+                                                    icon: const Icon(
+                                                        Icons.favorite_border))
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                  child: ProgressBar(
+                                    barHeight: 6,
+                                    baseBarColor: Colors.white,
+                                    bufferedBarColor: Colors.grey,
+                                    progressBarColor: Colors.yellow,
+                                    thumbColor: Colors.yellow,
+                                    timeLabelTextStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w200,
+                                    ),
+                                    progress: Audioposition?.position ??
+                                        Duration.zero,
+                                    total: Audioposition?.duration ??
+                                        Duration.zero,
+                                    buffered: Audioposition?.bufferedPosition ??
+                                        Duration.zero,
+                                    onSeek: audioPlayer.seek,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                          size: 25,
+                                          CupertinoIcons.gobackward_30),
+                                      onPressed: () {},
+                                      color: Colors.white,
+                                    ),
+                                    if (_isExpanded)
+                                      (IconButton(
+                                        icon: const Icon(
+                                          Icons.skip_previous,
+                                          size: 35,
+                                        ),
+                                        onPressed: () {},
+                                        color: Colors.white,
+                                      )),
+                                    IconButton(
+                                      icon: Icon(
+                                        _isPlaying
+                                            ? Icons.play_arrow
+                                            : Icons.pause,
+                                        size: 35,
+                                      ),
+                                      onPressed: () => _isPlaying
+                                          ? playAudio()
+                                          : pauseAudio(),
+                                      color: Colors.white,
+                                    ),
+                                    if (_isExpanded)
+                                      (IconButton(
+                                        icon: const Icon(
+                                          Icons.skip_next,
+                                          size: 35,
+                                        ),
+                                        onPressed: () {},
+                                        color: Colors.white,
+                                      )),
+                                    IconButton(
+                                      icon: const Icon(
+                                          size: 25,
+                                          CupertinoIcons.goforward_15),
+                                      onPressed: () {
+                                        seekAudio();
+                                      },
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            title: Text(
-                              song.artist,
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.teal,
-                              ),
-                            ),
-                            subtitle: Text(song.title),
-                            trailing: const Text("af"),
-                            onTap: () async {
-                              _selectSong(song);
-                              init(index);
-                            },
                           );
                         },
                       ),
-                    )),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = true;
-                        appBarColor = Colors.teal;
-                        iconview = const Icon(Icons.view_list);
-                      });
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      width: double.infinity,
-                      height: _isExpanded
-                          ? MediaQuery.of(context).size.height - 56
-                          : 142,
-                      child: Container(
-                        color: Colors.teal,
-                        padding: const EdgeInsets.all(0),
-                        child: Stack(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                if (_isExpanded)
-                                  (Expanded(
-                                      child: CircleAvatar(
-                                    radius: 100,
-                                    backgroundImage: AssetImage(
-                                        _currentSong?.albumCover ??
-                                            "assets/books/ላስብበት.jpg"),
-                                  ))),
-                                Expanded(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        if (_isExpanded)
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 25),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        (Text(
-                                                          _currentSong?.title ??
-                                                              'Chapter 1',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14.0,
-                                                            color: Colors.white,
-                                                          ),
-                                                        )),
-                                                        Text(
-                                                          _currentSong
-                                                                  ?.artist ??
-                                                              'Chapter 1',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14.0,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    IconButton(
-                                                        onPressed: () {},
-                                                        color: Colors.white,
-                                                        icon: const Icon(Icons
-                                                            .favorite_border))
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                    SliderTheme(
-                                      data: SliderTheme.of(context).copyWith(
-                                        trackHeight: 4.0,
-                                        // thumbShape: const RoundSliderThumbShape(
-                                        //     enabledThumbRadius: 6.0),
-                                        // rangeThumbShape: const RoundRangeSliderThumbShape(),
-                                        // rangeValueIndicatorShape:
-                                        //     const PaddleRangeSliderValueIndicatorShape(),
-                                      ),
-                                      child: StreamBuilder<Duration>(
-                                        stream: audioPlayer.positionStream,
-                                        builder: (context, snapshot) {
-                                          final position =
-                                              snapshot.data ?? Duration.zero;
-                                          final duration =
-                                              audioPlayer.duration ??
-                                                  Duration.zero;
-                                          return Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Slider(
-                                                  thumbColor: Colors.white,
-                                                  activeColor: Colors.amber,
-                                                  inactiveColor:
-                                                      const Color.fromARGB(
-                                                          31, 230, 11, 11),
-                                                  value: position.inMilliseconds
-                                                      .toDouble(),
-                                                  min: 0.0,
-                                                  max: audioPlayer.duration
-                                                          ?.inMilliseconds
-                                                          .toDouble() ??
-                                                      0.0,
-                                                  onChanged: (value) {
-                                                    final newPosition =
-                                                        Duration(
-                                                            milliseconds:
-                                                                value.floor());
-                                                    audioPlayer
-                                                        .seek(newPosition);
-                                                  },
-                                                  onChangeEnd: (value) {
-                                                    final newPosition =
-                                                        Duration(
-                                                            milliseconds:
-                                                                value.floor());
-                                                    audioPlayer
-                                                        .seek(newPosition);
-                                                  },
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 22),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        formatDuration(
-                                                            position),
-                                                        style: const TextStyle(
-                                                            fontSize: 16),
-                                                      ),
-                                                      Text(
-                                                        formatDuration(
-                                                            duration -
-                                                                position),
-                                                        style: const TextStyle(
-                                                            fontSize: 16),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(
-                                                CupertinoIcons.gobackward_15),
-                                            onPressed: () {},
-                                            color: Colors.white,
-                                          ),
-                                          if (_isExpanded)
-                                            (IconButton(
-                                              icon: const Icon(
-                                                  Icons.skip_previous),
-                                              onPressed: () {},
-                                              color: Colors.white,
-                                            )),
-                                          IconButton(
-                                            icon: Icon(
-                                              _isPlaying
-                                                  ? Icons.play_arrow
-                                                  : Icons.pause,
-                                            ),
-                                            onPressed: () => _isPlaying
-                                                ? playAudio()
-                                                : pauseAudio(),
-                                            color: Colors.white,
-                                          ),
-                                          if (_isExpanded)
-                                            (IconButton(
-                                              icon: const Icon(Icons.skip_next),
-                                              onPressed: () {},
-                                              color: Colors.white,
-                                            )),
-                                          IconButton(
-                                            icon: const Icon(
-                                                CupertinoIcons.goforward_15),
-                                            onPressed: () {
-                                              seekAudio();
-                                            },
-                                            color: Colors.white,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  ]),
+                ),
+              ))
+        ],
+      ),
     );
   }
 
@@ -496,7 +492,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   //     print("fatching audiobooks completed...");
   //   } catch (e) {
   //     print("fatching audiobooks error...");
-  //   }
+  // }
   // }
 }
 
@@ -505,12 +501,15 @@ class Song {
   final String artist;
   final String albumCover;
   final String links;
+  final String time;
 
-  Song(
-      {required this.title,
-      required this.artist,
-      required this.albumCover,
-      required this.links});
+  Song({
+    required this.title,
+    required this.artist,
+    required this.albumCover,
+    required this.links,
+    required this.time,
+  });
 }
 
 final List<Song> songs = [
@@ -521,6 +520,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/1.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_01_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -529,6 +529,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/3.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_02_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -537,6 +538,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/4.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_03_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -545,6 +547,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/5.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_04_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -553,6 +556,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/6.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -561,6 +565,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/6.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_06_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -569,6 +574,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/2.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_07_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -577,6 +583,7 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/2.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_08_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
   Song(
     title: 'ላስብበት',
@@ -585,5 +592,6 @@ final List<Song> songs = [
     // links: 'assets/audiobooks/2.mp3',
     links:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_09_fitzgerald_64kb.mp3',
+    time: '00:29:24',
   ),
 ];
