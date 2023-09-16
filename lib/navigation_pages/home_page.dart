@@ -64,9 +64,9 @@ class _MyWidgetState extends State<HomePage> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withOpacity(0.1),
                   spreadRadius: 8,
-                  blurRadius: 12,
+                  blurRadius: 5,
                   offset: const Offset(0, 3),
                 ),
               ],
@@ -162,9 +162,9 @@ class _MyWidgetState extends State<HomePage> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withOpacity(0.1),
                   spreadRadius: 8,
-                  blurRadius: 12,
+                  blurRadius: 5,
                   offset: const Offset(0, 3),
                 ),
               ],
@@ -176,7 +176,95 @@ class _MyWidgetState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
+                        "Editors Picks",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Show all",
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 18,
+                            color: branaPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+          SizedBox(
+            height: 200,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: buildBooks(),
+            ),
+          ),
+          Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
                         "Podcasts",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Show all",
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 18,
+                            color: branaPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+          SizedBox(
+            height: 200,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: buildBooks(),
+            ),
+          ),
+          Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Children",
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -249,9 +337,9 @@ class _MyWidgetState extends State<HomePage> {
                   boxShadow: [
                     BoxShadow(
                       color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
                       spreadRadius: 8,
-                      blurRadius: 12,
+                      blurRadius: 5,
                       offset: const Offset(0, 3),
                     ),
                   ],
@@ -395,9 +483,9 @@ class _MyWidgetState extends State<HomePage> {
                   boxShadow: [
                     BoxShadow(
                       color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
                       spreadRadius: 8,
-                      blurRadius: 12,
+                      blurRadius: 5,
                       offset: const Offset(0, 3),
                     ),
                   ],

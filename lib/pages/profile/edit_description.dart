@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:brana_mobile/widgets/appbar_widget.dart';
-
+import 'package:intl/intl.dart';
 // This class handles the Page to edit the About Me Section of the User Profile.
 class EditDescriptionFormPage extends StatefulWidget {
   const EditDescriptionFormPage({super.key});
 
   @override
-  State<EditDescriptionFormPage>  createState() =>
+  State<EditDescriptionFormPage> createState() =>
       _EditDescriptionFormPageState();
 }
 
@@ -15,6 +15,7 @@ class _EditDescriptionFormPageState extends State<EditDescriptionFormPage> {
   final _formKey = GlobalKey<FormState>();
   final descriptionController = TextEditingController();
   var user = UserData.myUser;
+  DateTime? _selectedDate;
 
   @override
   void dispose() {
@@ -39,35 +40,41 @@ class _EditDescriptionFormPageState extends State<EditDescriptionFormPage> {
                 const SizedBox(
                     width: 350,
                     child: Text(
-                      "What type of Listener\nare you?",
+                      "Update your birthday",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     )),
                 Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: SizedBox(
-                        height: 250,
-                        width: 350,
-                        child: TextFormField(
-                          // Handles Form Validation
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                value.length > 200) {
-                              return 'Please describe yourself but keep it under 200 characters.';
-                            }
-                            return null;
-                          },
-                          controller: descriptionController,
-                          textAlignVertical: TextAlignVertical.top,
-                          decoration: const InputDecoration(
-                              alignLabelWithHint: true,
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(10, 15, 10, 100),
-                              hintMaxLines: 3,
-                              hintText:
-                                  'Write a little bit about yourself'),
-                        ))),
+  padding: const EdgeInsets.all(20),
+  child: SizedBox(
+    height: 50,
+    width: 350,
+    child: TextButton(
+      onPressed: () async {
+        final DateTime? pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime.now(),
+        );
+        if (pickedDate != null && pickedDate != _selectedDate) {
+          setState(() {
+            _selectedDate = pickedDate;
+          });
+        }
+      },
+      child: Text(
+        _selectedDate != null
+            ? 'Selected Date: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}'
+            : 'Select your birthday',
+        style: TextStyle(
+          color: _selectedDate != null ? Colors.black : Colors.grey,
+          fontSize: 16,
+        ),
+      ),
+    ),
+  ),
+),
                 Padding(
                     padding: const EdgeInsets.only(top: 50),
                     child: Align(
