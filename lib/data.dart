@@ -1,4 +1,3 @@
-
 class Book {
   String title;
   String description;
@@ -147,42 +146,42 @@ List<Author> getAuthorList() {
   return <Author>[
     Author(
       "ፍሬዓለም ሺባባው",
-      108,
+      18,
       "assets/authors/ፍሬዓለምሺባባው.jpg",
     ),
     Author(
       "እንዳለጌታከበደ",
-      99,
+      12,
       "assets/authors/እንዳለጌታከበደ.jpg",
     ),
     Author(
       "ዘነበ ወላ",
-      90,
+      9,
       "assets/authors/ዘነበወላ.jpg",
     ),
     Author(
       " ሀዲስ አለማየሁ",
-      87,
+      7,
       "assets/authors/ ሀዲስአለማየሁ.jpeg",
     ),
     Author(
       "ሰለሞን ሙሉጌታ ካሳ",
-      77,
+      3,
       "assets/authors/ሰለሞንሙሉጌታካሳ.jpg",
     ),
     Author(
       "በዓሉ ግርማ",
-      75,
+      5,
       "assets/authors/bealu.jpeg",
     ),
     Author(
       "መለሰ እሸቱ",
-      70,
+      10,
       "assets/authors/መለሰእሸቱ.jpg",
     ),
     Author(
       "አለማየሁ ዋሴ",
-      65,
+      15,
       "assets/authors/ አለማየሁዋሴ.jpg",
     ),
   ];
@@ -201,64 +200,157 @@ List<Filter> getFilterListHome() {
     Filter("UPCOMING"),
   ];
 }
+
 List<Filter> getFilterListExplore() {
   return <Filter>[
     Filter("AUDIOBOOKS"),
     Filter("PODCASTS"),
   ];
 }
+
 const booksExplore = [
   {
-    "title":"ላስብበት",
-    "author":"ፍሬዓለም ሺባባው",
-    "length":"22:49",
-    "image":"ላስብበት.jpg"
-  },{
-    "title":"ስቅታ",
-    "author":"ሮማን አፈወርቅ",
-    "length":"64:11",
-    "image":"ስቅታ.jpg"
+    "genre": "Children",
+    "subGenre": "folk tales, fairy tales, fables",
+    "length": "34:49",
+    "image": "ልጅነት.jpg"
   },
   {
-    "title":"እስረኞቹ",
-    "author":"እንዳለጌታ ከበደ",
-    "length":"51:49",
-    "image":"እስረኞቹ.jpg"
+    "genre": "Fiction / Folklore",
+    "subGenre": "Short stories",
+    "length": "22:49",
+    "image": "ላስብበት.jpg"
   },
   {
-    "title":"ሀብት ያለው አእምሮህ",
-    "author":"መለሰ እሸቱ",
-    "length":"72:19",
-    "image":"ሀብት_ያለው_አእምሮህ.jpg"
+    "genre": "Telenovela",
+    "subGenre": "Romantic comedy",
+    "length": "64:11",
+    "image": "ስቅታ.jpg"
   },
   {
-    "title":"ቴሎስ",
-    "author":"ናሁሰናይ ፀዳሉ",
-    "length":"19:49",
-    "image":"ቴሎስ.jpg"
+    "genre": "Comedic Literature ",
+    "subGenre": "Satire",
+    "length": "51:49",
+    "image": "እስረኞቹ.jpg"
   },
   {
-    "title":"ልጅነት",
-    "author":"ዘነበ ወላ",
-    "length":"34:49",
-    "image":"ልጅነት.jpg"
+    "genre": "Adult",
+    "subGenre": "Erotica",
+    "length": "72:19",
+    "image": "ሀብት_ያለው_አእምሮህ.jpg"
   },
   {
-    "title":"ወንጀለኛው ዳኛ",
-    "author":"ሀዲስ አለማየሁ ",
-    "length":"17:99",
-    "image":"ወንጀለኛው_ዳኛ.jpg"
+    "genre": "Poetry",
+    "subGenre": "Sonnets",
+    "length": "19:49",
+    "image": "ቴሎስ.jpg"
   },
   {
-    "title":"ማሃትማ ጋንዲ",
-    "author":"ሙሉቀን ታሪኩ",
-    "length":"82:29",
-    "image":"ማሃትማ_ጋንዲ.jpg"
+    "genre": "Journal",
+    "subGenre": "Memoir",
+    "length": "17:99",
+    "image": "ወንጀለኛው_ዳኛ.jpg"
   },
   {
-    "title":"ጠበሳ",
-    "author":"ጥቁማለት",
-    "length":"46:49",
-    "image":"ጠበሳ.jpg"
-  }
+    "genre": "Biography",
+    "subGenre": "Political biography",
+    "length": "82:29",
+    "image": "ማሃትማ_ጋንዲ.jpg"
+  },
+  {
+    "genre": "Fantasy",
+    "subGenre": "High fantasy",
+    "length": "46:49",
+    "image": "ጠበሳ.jpg"
+  },
+  {
+    "genre": "Thriller",
+    "subGenre": "Police procedural",
+    "length": "34:49",
+    "image": "ልጅነት.jpg"
+  },
+  {
+    "genre": "Philosophy",
+    "subGenre": "Political philosophy",
+    "length": "22:49",
+    "image": "ላስብበት.jpg"
+  },
 ];
+
+class CourseModel {
+  String name;
+  String description;
+  String author;
+  String duration;
+  String chapters;
+  String episodes;
+  String thumbnail;
+
+  CourseModel(
+      {required this.name,
+      required this.description,
+      required this.duration,
+      required this.author,
+      required this.chapters,
+      required this.episodes,
+      required this.thumbnail});
+}
+
+class CourseList {
+  static List<CourseModel> list = [
+    CourseModel(
+        name: "ላስብበት",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ፍሬዓለም ሺባባው",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ላስብበት.jpg"),
+    CourseModel(
+        name: "ስቅታ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ሮማን አፈወርቅ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ስቅታ.jpg"),
+    CourseModel(
+        name: "እስረኞቹ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "እንዳለጌታ ከበደ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/እስረኞቹ.jpg"),
+    CourseModel(
+        name: "ልጅነት",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ፍሬዓለም ሺባባው",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ልጅነት.jpg"),
+    CourseModel(
+        name: "ሀብት ያለው አእምሮህ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ሮማን አፈወርቅ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ሀብት_ያለው_አእምሮህ.jpg"),
+    CourseModel(
+        name: "ቴሎስ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "እንዳለጌታ ከበደ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ቴሎስ.jpg"),
+  ];
+}

@@ -133,7 +133,7 @@ class BookDetail extends StatelessWidget {
                         ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(
-                                MediaQuery.of(context).size.width * 0.4, 20),
+                                MediaQuery.of(context).size.width * 0.7, 20),
                             textStyle: const TextStyle(fontSize: 16),
                             foregroundColor: branaWhite,
                             backgroundColor: branaPrimaryColor,
@@ -154,7 +154,7 @@ class BookDetail extends StatelessWidget {
                         ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(
-                                MediaQuery.of(context).size.width * 0.4, 5),
+                                MediaQuery.of(context).size.width * 0.1, 20),
                             textStyle: const TextStyle(fontSize: 16),
                             foregroundColor: branaWhite,
                             backgroundColor: branaPrimaryColor,
@@ -165,8 +165,8 @@ class BookDetail extends StatelessWidget {
                             elevation: 5,
                           ),
                           onPressed: () {},
-                          icon: const Icon(Icons.bookmark_add, size: 30),
-                          label: const Center(child: Text('')),
+                          icon: const Icon(Icons.bookmark_add, size: 0),
+                          label: const Center(child: Icon(Icons.bookmark_add, size: 30)),
                         ),
                       ],
                     ),

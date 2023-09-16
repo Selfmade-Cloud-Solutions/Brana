@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:brana_mobile/constants.dart';
+import 'package:brana_mobile/src/pages/genreList.dart';
 import 'package:brana_mobile/data.dart';
-
-
-
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
 
   @override
-  State<ExplorePage>  createState() => _HomeScreenState();
+  State<ExplorePage> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<ExplorePage> {
@@ -17,7 +14,7 @@ class _HomeScreenState extends State<ExplorePage> {
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
-  
+
   List<Book> books = getBookList();
   List<Author> authors = getAuthorList();
   List<Widget> itemsData = [];
@@ -26,12 +23,25 @@ class _HomeScreenState extends State<ExplorePage> {
     List<dynamic> responseList = booksExplore;
     List<Widget> listItems = [];
     for (var post in responseList) {
-      listItems.add(Container(
-          height: 150,
+      listItems.add(
+        GestureDetector(
+          onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  const RecomendedPage()),
+        );
+      },
+        child: Container(
+          height: 130,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(20.0)), color: Colors.white, boxShadow: [
-            BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-          ]),
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: const Color.fromARGB(255, 53, 43, 43).withAlpha(100),
+                    blurRadius: 10.0),
+              ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: Row(
@@ -41,20 +51,21 @@ class _HomeScreenState extends State<ExplorePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      post["title"],
-                      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                      post["genre"],
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      post["author"],
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
+                    Flexible(
+                      flex: 0,
+                      child: Text(
+                        post["subGenre"],
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      post["length"],
-                      style: const TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
-                    )
                   ],
                 ),
                 Image.asset(
@@ -63,7 +74,7 @@ class _HomeScreenState extends State<ExplorePage> {
                 )
               ],
             ),
-          )));
+          ))));
     }
     setState(() {
       itemsData = listItems;
@@ -75,8 +86,7 @@ class _HomeScreenState extends State<ExplorePage> {
     super.initState();
     getPostsData();
     controller.addListener(() {
-
-      double value = controller.offset/119;
+      double value = controller.offset / 119;
 
       setState(() {
         topContainer = value;
@@ -88,7 +98,6 @@ class _HomeScreenState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final double categoryHeight = size.height*0.30;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -96,25 +105,19 @@ class _HomeScreenState extends State<ExplorePage> {
           height: size.height,
           child: Column(
             children: <Widget>[
-              AnimatedOpacity(
-                duration: const Duration(milliseconds: 200),
-                opacity: closeTopContainer?0:1,
-                child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: size.width,
-                    alignment: Alignment.topCenter,
-                    height: closeTopContainer?0:categoryHeight,
-                    child: categoriesScroller),
-              ),
+              Container(
+                  width: size.width,
+                  alignment: Alignment.topCenter,
+                  child: categoriesScroller),
               Expanded(
                   child: ListView.builder(
-                    controller: controller,
+                      controller: controller,
                       itemCount: itemsData.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         double scale = 1.0;
-                        if (topContainer > 0.5) {
-                          scale = index + 0.5 - topContainer;
+                        if (topContainer > 0.9) {
+                          scale = index + 0.9 - topContainer;
                           if (scale < 0) {
                             scale = 0;
                           } else if (scale > 1) {
@@ -124,7 +127,7 @@ class _HomeScreenState extends State<ExplorePage> {
                         return Opacity(
                           opacity: scale,
                           child: Transform(
-                            transform:  Matrix4.identity()..scale(scale,scale),
+                            transform: Matrix4.identity()..scale(scale, scale),
                             alignment: Alignment.bottomCenter,
                             child: Align(
                                 heightFactor: 0.7,
@@ -146,7 +149,7 @@ class CategoriesScroller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double categoryHeight = MediaQuery.of(context).size.height * 0.30 - 50;
+    // final double categoryHeight = MediaQuery.of(context).size.height * 0.30 - 50;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
@@ -159,17 +162,24 @@ class CategoriesScroller extends StatelessWidget {
             children: <Widget>[
               Container(
                 width: 150,
+                height: 100,
                 margin: const EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(color: Colors.orange.shade400, borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+                // height: categoryHeight,
+                decoration: BoxDecoration(
+                    color: Colors.orange.shade400,
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(20.0))),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Most\nFavorites",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                        "Liked",
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
@@ -184,17 +194,24 @@ class CategoriesScroller extends StatelessWidget {
               ),
               Container(
                 width: 150,
+                height: 100,
                 margin: const EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(color: Colors.blue.shade400, borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+                // height: categoryHeight,
+                decoration: BoxDecoration(
+                    color: Colors.blue.shade400,
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(20.0))),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Newest",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                        "Latest",
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
@@ -209,17 +226,24 @@ class CategoriesScroller extends StatelessWidget {
               ),
               Container(
                 width: 150,
+                height: 100,
                 margin: const EdgeInsets.only(right: 20),
-                height: categoryHeight,
-                decoration: BoxDecoration(color: Colors.lightBlueAccent.shade400, borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+                // height: categoryHeight,
+                decoration: BoxDecoration(
+                    color: Colors.lightBlueAccent.shade400,
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(20.0))),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Super\nSaving",
-                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                        "Wishlist",
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,

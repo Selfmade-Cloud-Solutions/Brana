@@ -14,7 +14,7 @@ class UserData {
     email: 'test.gk@gmail.com',
     phone: '(251) 9206-5039',
     aboutMeDescription:
-        'Lorem ipsum dolor sit amet, consecteturtiomodo consequat...',
+        '12 Jan 1994',
   );
 
   static Future init() async =>

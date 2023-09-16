@@ -80,13 +80,17 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildSettingsIcon(Color color) => buildCircle(
-      all: 0,
-      child: const Icon(
-        Icons.settings,
-        color: Colors.black54,
-        size: 35,
-      ));
+Widget buildSettingsIcon(Color color) {
+  return Container(
+    padding: const EdgeInsets.only(right: 10), 
+    
+    child: const Icon(
+      Icons.settings,
+      color: Colors.black54, 
+      size: 35,
+    ),
+  );
+}
 
   // Builds/Makes Circle for Edit Icon on Profile Picture
   Widget buildCircle({
@@ -147,7 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Tell Us About Yourself',
+            'Date of birth',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -157,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 1),
           Container(
               width: 350,
-              height: 200,
+              height: 50,
               decoration: const BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
