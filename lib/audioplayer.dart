@@ -1,14 +1,16 @@
 import 'dart:async';
 // import 'dart:convert';
 // import 'package:brana_mobile/data.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:brana_mobile/constants.dart';
-import 'package:brana_mobile/screens/Loading.dart';
+// import 'package:brana_mobile/screens/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+// import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:audio_session/audio_session.dart';
+// import 'package:audio_session/audio_session.dart';
 // import 'package:path/path.dart';
 import 'package:logger/logger.dart';
 // import 'package:path_provider/path_provider.dart';
@@ -45,7 +47,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   late String appBarText;
   Icon iconview = const Icon(Icons.arrow_back);
   // late AudioPlayer audioPlayer;
-  final AudioPlayer audioPlayer = AudioPlayer();
+  final audioPlayer = AudioPlayer();
   var logger = Logger(
       printer: PrettyPrinter(
     methodCount: 0,
@@ -58,40 +60,45 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   double _sliderValue = 0.0;
   bool isFetching = false;
   int currentIndex = 0;
-
-  void init(int index) async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-            child: CircularProgressIndicator(
-          color: branaDarkBlue,
-        ));
-      },
-    );
-    final session = await AudioSession.instance;
-    await session.configure(const AudioSessionConfiguration.speech());
+  final playlist = ConcatenatingAudioSource(
+    useLazyPreparation: true,
+    shuffleOrder: DefaultShuffleOrder(),
+    children: [
+      for (var i = 0; i < songs.length; i++)
+        AudioSource.uri(Uri.parse(songs[i].audiolinks),
+            tag: MediaItem(id: songs[i].id, title: songs[i].title)),
+    ],
+  );
+  Future<void> init() async {
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return const Center(
+    //         child: CircularProgressIndicator(
+    //       color: branaDarkBlue,
+    //     ));
+    //   },
+    // );
+    // final session = await AudioSession.instance;
+    // await session.configure(const AudioSessionConfiguration.speech());
     // Listen to errors during playback.
-    audioPlayer.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace stackTrace) {
-      logger.e('A stream error occurred: $e');
-    });
+    // audioPlayer.playbackEventStream.listen((event) {},
+    //     onError: (Object e, StackTrace stackTrace) {
+    //   logger.e('A stream error occurred: $e');
+    // });
+    // await audioPlayer.setAudioSource(playlist);
+    // await audioPlayer.setLoopMode(LoopMode.all);
+    // await audioPlayer.setShuffleModeEnabled(true);
+    // await audioPlayer.play();
+
     try {
-      final playlist = ConcatenatingAudioSource(
-        useLazyPreparation: true,
-        shuffleOrder: DefaultShuffleOrder(),
-        children: [
-          for (var i = 0; i < songs.length; i++)
-            AudioSource.uri(Uri.parse(songs[i].links)),
-        ],
-      );
-      await audioPlayer.setAudioSource(playlist, initialIndex: 0);
+      await audioPlayer.setAudioSource(playlist);
       await audioPlayer.setLoopMode(LoopMode.all);
-      await audioPlayer.setShuffleModeEnabled(true);
+      // await audioPlayer.setShuffleModeEnabled(true);
       await audioPlayer.play();
-      setState(() {
-        currentIndex = index;
-      });
+      // setState(() {
+      //   currentIndex = index;
+      // });
     } on PlayerException catch (e) {
       logger.e("Error code: ${e.code}");
       logger.i("Error message: ${e.message}");
@@ -101,18 +108,18 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
       logger.e("Error loading audio source: $e");
     }
 
-    audioPlayer.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace st) {
-      if (e is PlayerException) {
-        logger.e('Error code: ${e.code}');
-        logger.i('Error message: ${e.message}');
-      } else {
-        logger.e('An error occurred: $e');
-      }
-    });
+    // audioPlayer.playbackEventStream.listen((event) {},
+    //     onError: (Object e, StackTrace st) {
+    //   if (e is PlayerException) {
+    //     logger.e('Error code: ${e.code}');
+    //     logger.i('Error message: ${e.message}');
+    //   } else {
+    //     logger.e('An error occurred: $e');
+    //   }
+    // });
 
     // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   Stream<AudioPosition> get _AudioPositionStream =>
@@ -125,23 +132,24 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                 bufferedPosition,
                 duration ?? Duration.zero,
               ));
+
   @override
   void initState() {
     super.initState();
-    // audioPlayer = AudioPlayer();
-    Timer(const Duration(seconds: 3), () {
-      setState(() {
-        isFetching = true;
-      });
-    });
-    audioPlayer.positionStream.listen((position) {
-      setState(() {
-        _sliderValue = position.inMilliseconds.toDouble();
-      });
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      init(currentIndex);
-    });
+    // Timer(const Duration(seconds: 3), () {
+    //   setState(() {
+    //     isFetching = true;
+    //   });
+    // });
+    // audioPlayer.positionStream.listen((position) {
+    //   setState(() {
+    //     _sliderValue = position.inMilliseconds.toDouble();
+    //   });
+    // });
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    // init();
+    // });
   }
 
   void seekTo(double value) async {
@@ -255,10 +263,11 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                       ),
                     ),
                     subtitle: Text(song.title),
-                    trailing: Text(song.time),
+                    trailing: Text(song.duration),
                     onTap: () async {
                       _selectSong(song);
-                      init(index);
+                      // init(index);
+                      audioPlayer.stop();
                     },
                   );
                 },
@@ -281,170 +290,67 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                 child: Container(
                   color: branaDarkBlue,
                   child: Column(children: [
-                    SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        trackHeight: 4.0,
-                        thumbShape: const RoundSliderThumbShape(
-                            enabledThumbRadius: 8.0),
-                        rangeThumbShape: const RoundRangeSliderThumbShape(),
-                        rangeValueIndicatorShape:
-                            const PaddleRangeSliderValueIndicatorShape(),
-                      ),
-                      child: StreamBuilder<AudioPosition>(
-                        stream: _AudioPositionStream,
-                        builder: (context, snapshot) {
-                          final Audioposition = snapshot.data;
-                          return Expanded(
-                            child: Column(
-                              children: [
-                                if (_isExpanded)
-                                  Column(
-                                    children: [
-                                      (SizedBox(
-                                          height: 300,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 18.0),
-                                            child: Container(
-                                              width: 250,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  image: DecorationImage(
-                                                    image: AssetImage(
-                                                      _currentSong
-                                                              ?.albumCover ??
-                                                          "assets/books/ላስብበት.jpg",
-                                                    ),
-                                                    fit: BoxFit.cover,
-                                                  )),
-                                            ),
-                                          ))),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 35, horizontal: 25),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    (Text(
-                                                      _currentSong?.title ??
-                                                          'Chapter 1',
-                                                      style: const TextStyle(
-                                                        fontSize: 14.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                    )),
-                                                    Text(
-                                                      _currentSong?.artist ??
-                                                          'Chapter 1',
-                                                      style: const TextStyle(
-                                                        fontSize: 14.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    color: Colors.white,
-                                                    icon: const Icon(
-                                                        Icons.favorite_border))
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                    StreamBuilder<PlayerState>(
+                      stream: audioPlayer.playerStateStream,
+                      builder: (context, snapshot) {
+                        final playerState = snapshot.data;
+                        final processingState = playerState?.processingState;
+                        final playing = playerState?.playing;
+                        if (!(playing ?? false)) {
+                          return IconButton(
+                              onPressed: () {
+                                audioPlayer.play();
+                              },
+                              iconSize: 80,
+                              icon: const Icon(Icons.play_arrow_rounded));
+                        } else if (processingState != ProcessingState.completed) {
+                          return IconButton(
+                              onPressed: () {
+                                audioPlayer.pause();
+                              },
+                              iconSize: 80,
+                              icon: const Icon(Icons.pause_rounded));
+                        }
+                        return const Icon(
+                          Icons.play_arrow_rounded,
+                          color: Colors.white,
+                          size: 80,
+                        );
+                      },
+                    ),
+                    StreamBuilder<AudioPosition>(
+                      stream: _AudioPositionStream,
+                      builder: (context, snapshot) {
+                        final Audioposition = snapshot.data;
+                        return Expanded(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                                child: ProgressBar(
+                                  barHeight: 6,
+                                  baseBarColor: Colors.white,
+                                  bufferedBarColor: Colors.grey,
+                                  progressBarColor: Colors.yellow,
+                                  thumbColor: Colors.yellow,
+                                  timeLabelTextStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w200,
                                   ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                  child: ProgressBar(
-                                    barHeight: 6,
-                                    baseBarColor: Colors.white,
-                                    bufferedBarColor: Colors.grey,
-                                    progressBarColor: Colors.yellow,
-                                    thumbColor: Colors.yellow,
-                                    timeLabelTextStyle: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w200,
-                                    ),
-                                    progress: Audioposition?.position ??
-                                        Duration.zero,
-                                    total: Audioposition?.duration ??
-                                        Duration.zero,
-                                    buffered: Audioposition?.bufferedPosition ??
-                                        Duration.zero,
-                                    onSeek: audioPlayer.seek,
-                                  ),
+                                  progress:
+                                      Audioposition?.position ?? Duration.zero,
+                                  total:
+                                      Audioposition?.duration ?? Duration.zero,
+                                  buffered: Audioposition?.bufferedPosition ??
+                                      Duration.zero,
+                                  onSeek: audioPlayer.seek,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                          size: 25,
-                                          CupertinoIcons.gobackward_30),
-                                      onPressed: () {},
-                                      color: Colors.white,
-                                    ),
-                                    if (_isExpanded)
-                                      (IconButton(
-                                        icon: const Icon(
-                                          Icons.skip_previous,
-                                          size: 35,
-                                        ),
-                                        onPressed: () {},
-                                        color: Colors.white,
-                                      )),
-                                    IconButton(
-                                      icon: Icon(
-                                        _isPlaying
-                                            ? Icons.play_arrow
-                                            : Icons.pause,
-                                        size: 35,
-                                      ),
-                                      onPressed: () => _isPlaying
-                                          ? playAudio()
-                                          : pauseAudio(),
-                                      color: Colors.white,
-                                    ),
-                                    if (_isExpanded)
-                                      (IconButton(
-                                        icon: const Icon(
-                                          Icons.skip_next,
-                                          size: 35,
-                                        ),
-                                        onPressed: () {},
-                                        color: Colors.white,
-                                      )),
-                                    IconButton(
-                                      icon: const Icon(
-                                          size: 25,
-                                          CupertinoIcons.goforward_15),
-                                      onPressed: () {
-                                        seekAudio();
-                                      },
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ]),
                 ),
@@ -497,101 +403,115 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
 }
 
 class Song {
+  final String id;
+  final String album;
   final String title;
   final String artist;
   final String albumCover;
-  final String links;
-  final String time;
+  final String audiolinks;
+  final String duration;
 
   Song({
+    required this.id,
+    required this.album,
     required this.title,
     required this.artist,
     required this.albumCover,
-    required this.links,
-    required this.time,
+    required this.audiolinks,
+    required this.duration,
   });
 }
 
 final List<Song> songs = [
   Song(
+    id: '1',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 1',
     albumCover: 'assets/books/ላስብበት.jpg',
     // links: 'assets/audiobooks/1.mp3',
-    links:
+    audiolinks:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_01_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    duration: '00:29:24',
   ),
   Song(
+    id: '2',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 2',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/3.mp3',
-    links:
+    audiolinks:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_02_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    duration: '00:39:24',
   ),
   Song(
+    id: '3',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 3',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/4.mp3',
-    links:
+    audiolinks:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_03_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    duration: '00:35:24',
   ),
   Song(
+    id: '4',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 4',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/5.mp3',
-    links:
+    audiolinks:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_04_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    duration: '00:35:24',
   ),
   Song(
+    id: '5',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 5',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/6.mp3',
-    links:
+    audiolinks:
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    duration: '00:35:24',
   ),
   Song(
+    id: '6',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 6',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/6.mp3',
-    links:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_06_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    audiolinks:
+        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
+    duration: '00:35:24',
   ),
   Song(
+    id: '7',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 7',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/2.mp3',
-    links:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_07_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    audiolinks:
+        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
+    duration: '00:35:24',
   ),
   Song(
+    id: '8',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 8',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/2.mp3',
-    links:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_08_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    audiolinks:
+        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
+    duration: '00:35:24',
   ),
   Song(
+    id: '9',
+    album: 'ላስብበት',
     title: 'ላስብበት',
     artist: 'Chapter 9',
     albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/2.mp3',
-    links:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_09_fitzgerald_64kb.mp3',
-    time: '00:29:24',
+    audiolinks:
+        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
+    duration: '00:35:24',
   ),
 ];

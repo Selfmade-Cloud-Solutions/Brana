@@ -600,3 +600,218 @@ final List<Song> songs = [
         'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_09_fitzgerald_64kb.mp3',
   ),
 ];
+
+
+
+one
+
+ if (_isExpanded)
+                                  Column(
+                                    children: [
+                                      (SizedBox(
+                                          height: 280,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 20.0),
+                                            child: Container(
+                                              width: 250,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  image: DecorationImage(
+                                                    image: AssetImage(
+                                                      _currentSong
+                                                              ?.albumCover ??
+                                                          "assets/books/ላስብበት.jpg",
+                                                    ),
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                            ),
+                                          ))),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 35, horizontal: 25),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    (Text(
+                                                      _currentSong?.title ??
+                                                          'Chapter 1',
+                                                      style: const TextStyle(
+                                                        fontSize: 14.0,
+                                                        color: Colors.white,
+                                                      ),
+                                                    )),
+                                                    Text(
+                                                      _currentSong?.artist ??
+                                                          'Chapter 1',
+                                                      style: const TextStyle(
+                                                        fontSize: 14.0,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    color: Colors.white,
+                                                    icon: const Icon(
+                                                        Icons.favorite_border))
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+
+                                  Two
+
+                                  Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                          size: 25,
+                                          CupertinoIcons.gobackward_30),
+                                      onPressed: () {},
+                                      color: Colors.white,
+                                    ),
+                                    if (_isExpanded)
+                                      (IconButton(
+                                        icon: const Icon(
+                                          Icons.skip_previous,
+                                          size: 35,
+                                        ),
+                                        onPressed: () {},
+                                        color: Colors.white,
+                                      )),
+                                    IconButton(
+                                      icon: Icon(
+                                        _isPlaying
+                                            ? Icons.play_arrow
+                                            : Icons.pause,
+                                        size: 35,
+                                      ),
+                                      onPressed: () => _isPlaying
+                                          ? playAudio()
+                                          : pauseAudio(),
+                                      color: Colors.white,
+                                    ),
+                                    if (_isExpanded)
+                                      (IconButton(
+                                        icon: const Icon(
+                                          Icons.skip_next,
+                                          size: 35,
+                                        ),
+                                        onPressed: () {},
+                                        color: Colors.white,
+                                      )),
+                                    IconButton(
+                                      icon: const Icon(
+                                          size: 25,
+                                          CupertinoIcons.goforward_15),
+                                      onPressed: () {
+                                        seekAudio();
+                                      },
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+
+                                Three
+                                    // GestureDetector(
+          //     onTap: () {
+          //       setState(() {
+          //         _isExpanded = true;
+          //         appBarColor = branaDarkBlue;
+          //         iconview = const Icon(Icons.view_list);
+          //       });
+          //     },
+          //     child: AnimatedContainer(
+          //       duration: const Duration(milliseconds: 100),
+          //       curve: Curves.easeIn,
+          //       width: double.infinity,
+          //       height:
+          //           _isExpanded ? MediaQuery.of(context).size.height - 56 : 120,
+          //       child: Container(
+          //         color: branaDarkBlue,
+          //         child: Column(children: [
+          //           StreamBuilder<PlayerState>(
+          //             stream: _audioPlayer.playerStateStream,
+          //             builder: (context, snapshot) {
+          //               final playerState = snapshot.data;
+          //               final processingState = playerState?.processingState;
+          //               final playing = playerState?.playing;
+          //               if (!(playing ?? false)) {
+          //                 return IconButton(
+          //                     onPressed: () {
+          //                       _audioPlayer.play();
+          //                     },
+          //                     iconSize: 80,
+          //                     icon: const Icon(Icons.play_arrow_rounded));
+          //               } else if (processingState !=
+          //                   ProcessingState.completed) {
+          //                 return IconButton(
+          //                     onPressed: () {
+          //                       _audioPlayer.pause();
+          //                     },
+          //                     iconSize: 80,
+          //                     icon: const Icon(Icons.pause_rounded));
+          //               }
+          //               return const Icon(
+          //                 Icons.play_arrow_rounded,
+          //                 color: Colors.white,
+          //                 size: 80,
+          //               );
+          //             },
+          //           ),
+          //           StreamBuilder<AudioPosition>(
+          //             stream: _AudioPositionStream,
+          //             builder: (context, snapshot) {
+          //               final Audioposition = snapshot.data;
+          //               return Expanded(
+          //                 child: Column(
+          //                   children: [
+          //                     Padding(
+          //                       padding:
+          //                           const EdgeInsets.fromLTRB(15, 10, 15, 0),
+          //                       child: ProgressBar(
+          //                         barHeight: 6,
+          //                         baseBarColor: Colors.white,
+          //                         bufferedBarColor: Colors.grey,
+          //                         progressBarColor: Colors.yellow,
+          //                         thumbColor: Colors.yellow,
+          //                         timeLabelTextStyle: const TextStyle(
+          //                           color: Colors.white,
+          //                           fontWeight: FontWeight.w200,
+          //                         ),
+          //                         progress:
+          //                             Audioposition?.position ?? Duration.zero,
+          //                         total:
+          //                             Audioposition?.duration ?? Duration.zero,
+          //                         buffered: Audioposition?.bufferedPosition ??
+          //                             Duration.zero,
+          //                         onSeek: _audioPlayer.seek,
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               );
+          //             },
+          //           ),
+          //         ]),
+          //       ),
+          //     ))

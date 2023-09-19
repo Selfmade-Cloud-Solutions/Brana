@@ -1,4 +1,3 @@
-
 class Book {
   String title;
   String description;
@@ -45,7 +44,7 @@ List<Book> getBookList() {
       "assets/books/እስረኞቹ.jpg",
     ),
     Book(
-      "ሀብት_ያለው_አእምሮህ",
+      "ሀብት ያለው አእምሮህ",
       "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
       Author(
         "መለሰ እሸቱ",
@@ -78,7 +77,7 @@ List<Book> getBookList() {
       "assets/books/ልጅነት.jpg",
     ),
     Book(
-      "ወንጀለኛው_ዳኛ",
+      "ወንጀለኛው ዳኛ",
       "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
       Author(
         "ሀዲስ አለማየሁ ",
@@ -201,6 +200,7 @@ List<Filter> getFilterListHome() {
     Filter("UPCOMING"),
   ];
 }
+
 List<Filter> getFilterListExplore() {
   return <Filter>[
     Filter("AUDIOBOOKS"),
