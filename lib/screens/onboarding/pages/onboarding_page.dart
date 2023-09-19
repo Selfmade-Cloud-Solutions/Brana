@@ -5,7 +5,7 @@ import '../widgets/cards_stack.dart';
 
 class OnboardingPage extends StatelessWidget {
   final int number;
-  final Widget lightCardChild;
+  // final Widget lightCardChild;
   final Widget darkCardChild;
   final Animation<Offset> lightCardOffsetAnimation;
   final Animation<Offset> darkCardOffsetAnimation;
@@ -14,7 +14,7 @@ class OnboardingPage extends StatelessWidget {
   const OnboardingPage({
     super.key,
     required this.number,
-    required this.lightCardChild,
+    // required this.lightCardChild,
     required this.darkCardChild,
     required this.lightCardOffsetAnimation,
     required this.darkCardOffsetAnimation,
@@ -27,7 +27,7 @@ class OnboardingPage extends StatelessWidget {
       children: <Widget>[
         CardsStack(
           pageNumber: number,
-          lightCardChild: lightCardChild,
+          // lightCardChild: lightCardChild,
           darkCardChild: darkCardChild,
           lightCardOffsetAnimation: lightCardOffsetAnimation,
           darkCardOffsetAnimation: darkCardOffsetAnimation,

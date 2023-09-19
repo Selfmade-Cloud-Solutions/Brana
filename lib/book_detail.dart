@@ -117,6 +117,7 @@ class BookDetail extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  
                   Container(
                     height: 200,
                     width: size.width,

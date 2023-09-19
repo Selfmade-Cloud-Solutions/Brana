@@ -49,7 +49,6 @@ dependencies:
   string_validator:
   path:
   intl:
-
   logger: ^2.0.2
 
 
@@ -69,6 +68,7 @@ flutter:
     - assets/books/
     - assets/images/
     - assets/audiobooks/
+    - assets/images/image2.png
     - assets/audiobooks/GetachewKassa.mp3
   #   - images/a_dot_ham.jpeg
 

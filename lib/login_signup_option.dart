@@ -157,7 +157,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
               Tab(icon: Image.asset("assets/images/twitter.png"))
             ],
           ),
-        ],
+        ], 
       ),
     );
   }

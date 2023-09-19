@@ -299,7 +299,7 @@ class CourseModel {
 class CourseList {
   static List<CourseModel> list = [
     CourseModel(
-        name: "ላስብበት",
+        name: "ላስብበት ",
         description:
             "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
         author: "ፍሬዓለም ሺባባው",

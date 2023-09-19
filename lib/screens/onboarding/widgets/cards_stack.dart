@@ -4,7 +4,7 @@ import '../../../constants.dart';
 
 class CardsStack extends StatelessWidget {
   final int pageNumber;
-  final Widget lightCardChild;
+  // final Widget lightCardChild;
   final Widget darkCardChild;
   final Animation<Offset> lightCardOffsetAnimation;
   final Animation<Offset> darkCardOffsetAnimation;
@@ -12,7 +12,7 @@ class CardsStack extends StatelessWidget {
   const CardsStack({
     super.key,
     required this.pageNumber,
-    required this.lightCardChild,
+    // required this.lightCardChild,
     required this.darkCardChild,
     required this.lightCardOffsetAnimation,
     required this.darkCardOffsetAnimation,
@@ -37,7 +37,7 @@ class CardsStack extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
-              color: branaDarkBlue,
+              color: Colors.transparent,
               child: Container(
                 width: darkCardWidth,
                 height: darkCardHeight,
@@ -49,25 +49,25 @@ class CardsStack extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: !isOddPageNumber ? -25.0 : null,
-            bottom: isOddPageNumber ? -25.0 : null,
-            child: SlideTransition(
-              position: lightCardOffsetAnimation,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                color: kLightBlue,
-                child: Container(
-                  width: darkCardWidth * 0.8,
-                  height: darkCardHeight * 0.5,
-                  padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-                  child: Center(child: lightCardChild),
-                ),
-              ),
-            ),
-          ),
+        //   Positioned(
+        //     top: !isOddPageNumber ? -25.0 : null,
+        //     bottom: isOddPageNumber ? -25.0 : null,
+        //     child: SlideTransition(
+        //       position: lightCardOffsetAnimation,
+        //       child: Card(
+        //         shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(16.0),
+        //         ),
+        //         color: kLightBlue,
+        //         child: Container(
+        //           width: darkCardWidth * 0.8,
+        //           height: darkCardHeight * 0.5,
+        //           padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+        //           // child: Center(child: lightCardChild),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
         ],
       ),
     );

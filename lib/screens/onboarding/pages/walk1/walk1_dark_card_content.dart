@@ -5,9 +5,10 @@ class Walk1DarkCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[],
+    return  Image.asset(
+    "assets/images/map1.png",
+    height: 500,
+    width: 500,
     );
   }
 }
