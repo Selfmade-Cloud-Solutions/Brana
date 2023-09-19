@@ -3,8 +3,10 @@ import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:brana_mobile/widgets/back_button.dart';
+// import 'package:brana_mobile/widgets/back_button.dart';
 import 'package:brana_mobile/audioplayer.dart';
+import 'package:brana_mobile/constants.dart';
+import 'package:brana_mobile/widgets/back_button.dart';
 
 class BookDetail extends StatelessWidget {
   const BookDetail({

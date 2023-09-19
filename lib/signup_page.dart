@@ -32,8 +32,8 @@ class _MyWidgetState extends State<SignupPage> {
       child: Scaffold(
         backgroundColor: branaPrimaryColor,
         body: Stack(children: [
-          Positioned(top: 80, child: _buildTop()),
-          Positioned(bottom: 150, left: 10, right: 10, child: _buildBottom()),
+          Positioned(top: 60, child: _buildTop()),
+          Positioned(bottom: 5, left: 10, right: 10, child: _buildBottom()),
         ]),
       ),
     );

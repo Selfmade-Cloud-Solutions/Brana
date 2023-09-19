@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
-import 'package:anim_search_bar/anim_search_bar.dart';
+// import 'package:anim_search_bar/anim_search_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,63 +14,59 @@ class HomePage extends StatefulWidget {
 
 class _MyWidgetState extends State<HomePage> {
   TextEditingController textController = TextEditingController();
-  List<Filter> filters = getFilterListHome();
-  late Filter selectedFilter;
 
   List<Book> books = getBookList();
   List<Author> authors = getAuthorList();
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      selectedFilter = filters[0];
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            child: AnimSearchBar(
-              width: 350,
-              textController: textController,
-              onSuffixTap: () {
-                setState(() {
-                  textController.clear();
-                });
-              },
-              helpText: "Search",
-              autoFocus: true,
-              closeSearchOnSuffixTap: true,
-              animationDurationInMilli: 1500,
-              rtl: false,
-              onSubmitted: (string) {},
-            ),
-          ),
-        ],
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
-      body: Column(
+        // appBar: AppBar(
+        //   backgroundColor: branaBlue,
+        //   elevation: 0,
+
+        //   // #Animated Search
+
+        //   // actions: [
+        //   //   Padding(
+        //   //     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        //   //     child: AnimSearchBar(
+        //   //       width: 350,
+        //   //       textController: textController,
+        //   //       onSuffixTap: () {
+        //   //         setState(() {
+        //   //           textController.clear();
+        //   //         });
+        //   //       },
+        //   //       helpText: "Search",
+        //   //       autoFocus: true,
+        //   //       closeSearchOnSuffixTap: true,
+        //   //       animationDurationInMilli: 1500,
+        //   //       rtl: false,
+        //   //       onSubmitted: (string) {},
+        //   //     ),
+        //   //   ),
+        //   // ],
+        //   systemOverlayStyle: SystemUiOverlayStyle.dark,
+        // ),
+        body: SingleChildScrollView(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: branaBlue,
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(40),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withOpacity(0.1),
                   spreadRadius: 8,
-                  blurRadius: 12,
+                  blurRadius: 5,
                   offset: const Offset(0, 3),
                 ),
               ],
@@ -83,24 +78,20 @@ class _MyWidgetState extends State<HomePage> {
                   "Discover Audiobooks",
                   style: GoogleFonts.jost(
                     fontWeight: FontWeight.w900,
-                    fontSize: 12,
+                    fontSize: 30,
                     height: 1,
+                    color: branaWhite,
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 75),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: buildFilters(),
-                  ),
-                ),
+                
               ],
             ),
           ),
-          Expanded(
+          SizedBox(
+            height: 300,
             child: ListView(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -109,7 +100,7 @@ class _MyWidgetState extends State<HomePage> {
           ),
           Container(
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: branaWhite,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40),
               ),
@@ -122,7 +113,7 @@ class _MyWidgetState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Authors to follow",
+                        "Authors",
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -131,12 +122,12 @@ class _MyWidgetState extends State<HomePage> {
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             "Show all",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: branaPrimaryColor,
+                              color: Colors.black,
                             ),
                           ),
                           const SizedBox(
@@ -164,58 +155,158 @@ class _MyWidgetState extends State<HomePage> {
               ],
             ),
           ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(40),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 8,
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Editors Picks",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Show all",
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 18,
+                            color: branaPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+          SizedBox(
+            height: 200,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: buildBooks(),
+            ),
+          ),
+          Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Podcasts",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Show all",
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 18,
+                            color: branaPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+          SizedBox(
+            height: 200,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: buildBooks(),
+            ),
+          ),
+          Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Children",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Show all",
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 18,
+                            color: branaPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+          SizedBox(
+            height: 200,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: buildBooks(),
+            ),
+          ),
         ],
       ),
-    );
+    ));
   }
 
-  List<Widget> buildFilters() {
-    List<Widget> list = [];
-    for (var i = 0; i < filters.length; i++) {
-      list.add(buildFilter(filters[i]));
-    }
-    return list;
-  }
-
-  Widget buildFilter(Filter item) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedFilter = item;
-        });
-      },
-      child: SizedBox(
-        height: 50,
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                width: 30,
-                height: 3,
-                color: selectedFilter == item
-                    ? branaPrimaryColor
-                    : Colors.transparent,
-              ),
-            ),
-            Center(
-              child: Text(
-                item.name,
-                style: GoogleFonts.jost(
-                  color: selectedFilter == item
-                      ? branaPrimaryColor
-                      : Colors.grey[400],
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 3,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   List<Widget> buildBooks() {
     List<Widget> list = [];
@@ -245,9 +336,10 @@ class _MyWidgetState extends State<HomePage> {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color:
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
                       spreadRadius: 8,
-                      blurRadius: 12,
+                      blurRadius: 5,
                       offset: const Offset(0, 3),
                     ),
                   ],
@@ -365,6 +457,69 @@ class _MyWidgetState extends State<HomePage> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildBooktwo(Book book, int index) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+        );
+      },
+      child: Container(
+        margin:
+            EdgeInsets.only(right: 32, left: index == 0 ? 16 : 0, bottom: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 200,
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
+                      spreadRadius: 8,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                margin: const EdgeInsets.only(
+                  bottom: 16,
+                  top: 24,
+                ),
+                child: Hero(
+                  tag: book.title,
+                  child: Image.asset(
+                    book.image,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              book.title,
+              style: GoogleFonts.jost(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              book.author.fullname,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
