@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants.dart';
+// import '../../../../constants.dart';
 
 class Walk2DarkCardContent extends StatelessWidget {
   const Walk2DarkCardContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Icon(
-      Icons.android_outlined,
-      color: branaWhite,
-      size: 96.0,
+    return  Image.asset(
+    "assets/images/africa.png",
+    height: 500,
+    width: 500,
     );
   }
 }

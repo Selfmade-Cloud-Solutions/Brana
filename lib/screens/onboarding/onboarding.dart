@@ -6,8 +6,8 @@ import '../../constants.dart';
 import '../../login_signup_option.dart';
 import 'pages/walk1/index.dart';
 import 'pages/walk2/index.dart';
-import 'pages/onboarding_page.dart';
 import 'pages/walk3/index.dart';
+import 'pages/onboarding_page.dart';
 import 'widgets/header.dart';
 import 'widgets/next_page_button.dart';
 import 'widgets/onboarding_page_indicator.dart';
@@ -81,7 +81,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       case 1:
         return OnboardingPage(
           number: 3,
-          lightCardChild: const Walk1LightCardContent(),
+          // lightCardChild: const Walk1LightCardContent(),
           darkCardChild: const Walk1DarkCardContent(),
           lightCardOffsetAnimation: _slideAnimationLightCard,
           darkCardOffsetAnimation: _slideAnimationDarkCard,
@@ -90,7 +90,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       case 2:
         return OnboardingPage(
           number: 3,
-          lightCardChild: const Walk2LightCardContent(),
           darkCardChild: const Walk2DarkCardContent(),
           lightCardOffsetAnimation: _slideAnimationLightCard,
           darkCardOffsetAnimation: _slideAnimationDarkCard,
@@ -99,7 +98,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       case 3:
         return OnboardingPage(
           number: 3,
-          lightCardChild: const Walk3LightCardContent(),
+          // lightCardChild: const Walk3LightCardContent(),
           darkCardChild: const Walk3DarkCardContent(),
           lightCardOffsetAnimation: _slideAnimationLightCard,
           darkCardOffsetAnimation: _slideAnimationDarkCard,
