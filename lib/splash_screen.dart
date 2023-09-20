@@ -1,7 +1,7 @@
 import 'package:brana_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:brana_mobile/navigation.dart';
+// import 'package:brana_mobile/navigation.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});

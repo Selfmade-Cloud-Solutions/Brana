@@ -1,3 +1,101 @@
+import 'package:brana_mobile/models/category.dart';
+
+class FakeData {
+  final List<Category> _categoriesList = <Category>[
+    Category(name: ' ፍሬዓለም ሺባባው', image: 'assets/authors/ፍሬዓለምሺባባው.jpg'),
+    Category(name: 'ሮማን አፈወርቅ ', image: 'assets/authors/ፍሬዓለምሺባባው.jpg'),
+    Category(name: 'እንዳለጌታ ከበደ', image: 'assets/authors/እንዳለጌታከበደ.jpg'),
+    Category(name: 'መለሰ እሸቱ', image: 'assets/authors/መለሰእሸቱ.jpg'),
+    Category(name: 'ናሁሰናይ ፀዳሉ', image: 'assets/authors/ዘነበወላ.jpg'),
+    Category(name: 'ዘነበ ወላ', image: 'assets/authors/ዘነበወላ.jpg'),
+    Category(name: 'ሀዲስ አለማየሁ', image: 'assets/authors/መለሰእሸቱ.jpg'),
+    Category(name: 'ሙሉቀን ታሪኩ', image: 'assets/authors/መለሰእሸቱ.jpg'),
+    Category(name: ' ደረጀ ለማ ደገፉ', image: 'assets/authors/ዘነበወላ.jpg'),
+    Category(name: 'ሰለሞን ሙሉጌታ ካሳ', image: 'assets/authors/ሰለሞንሙሉጌታካሳ.jpg'),
+    Category(name: 'ሙሉቀን ታሪኩ', image: 'assets/authors/ዘነበወላ.jpg'),
+    Category(name: 'ሀዲስ አለማየሁ ', image: 'assets/authors/ዘነበወላ.jpg'),
+    Category(name: 'ዘነበ ወላ', image: 'assets/authors/ዘነበወላ.jpg'),
+    Category(name: 'ዘነበ ወላ', image: 'assets/authors/ዘነበወላ.jpg'),
+  ];
+  List<Category> get categoriesList => _categoriesList;
+}
+class CourseModel {
+  String name;
+  String description;
+  String author;
+  String duration;
+  String chapters;
+  String episodes;
+  String thumbnail;
+
+  CourseModel(
+      {required this.name,
+      required this.description,
+      required this.duration,
+      required this.author,
+      required this.chapters,
+      required this.episodes,
+      required this.thumbnail});
+}
+
+class CourseList {
+  static List<CourseModel> list = [
+    CourseModel(
+        name: "ላስብበት ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ፍሬዓለም ሺባባው",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ላስብበት.jpg"),
+    CourseModel(
+        name: "ስቅታ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ሮማን አፈወርቅ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ስቅታ.jpg"),
+    CourseModel(
+        name: "እስረኞቹ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "እንዳለጌታ ከበደ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/እስረኞቹ.jpg"),
+    CourseModel(
+        name: "ልጅነት",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ፍሬዓለም ሺባባው",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ልጅነት.jpg"),
+    CourseModel(
+        name: "ሀብት ያለው አእምሮህ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "ሮማን አፈወርቅ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ሀብት_ያለው_አእምሮህ.jpg"),
+    CourseModel(
+        name: "ቴሎስ",
+        description:
+            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
+        author: "እንዳለጌታ ከበደ",
+        duration: "210 minutes",
+        chapters: "12 chapters",
+        episodes: "56 Episodes",
+        thumbnail: "assets/books/ቴሎስ.jpg"),
+  ];
+}
 class Book {
   String title;
   String description;
@@ -277,80 +375,4 @@ const booksExplore = [
   },
 ];
 
-class CourseModel {
-  String name;
-  String description;
-  String author;
-  String duration;
-  String chapters;
-  String episodes;
-  String thumbnail;
 
-  CourseModel(
-      {required this.name,
-      required this.description,
-      required this.duration,
-      required this.author,
-      required this.chapters,
-      required this.episodes,
-      required this.thumbnail});
-}
-
-class CourseList {
-  static List<CourseModel> list = [
-    CourseModel(
-        name: "ላስብበት ",
-        description:
-            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
-        author: "ፍሬዓለም ሺባባው",
-        duration: "210 minutes",
-        chapters: "12 chapters",
-        episodes: "56 Episodes",
-        thumbnail: "assets/books/ላስብበት.jpg"),
-    CourseModel(
-        name: "ስቅታ",
-        description:
-            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
-        author: "ሮማን አፈወርቅ",
-        duration: "210 minutes",
-        chapters: "12 chapters",
-        episodes: "56 Episodes",
-        thumbnail: "assets/books/ስቅታ.jpg"),
-    CourseModel(
-        name: "እስረኞቹ",
-        description:
-            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
-        author: "እንዳለጌታ ከበደ",
-        duration: "210 minutes",
-        chapters: "12 chapters",
-        episodes: "56 Episodes",
-        thumbnail: "assets/books/እስረኞቹ.jpg"),
-    CourseModel(
-        name: "ልጅነት",
-        description:
-            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
-        author: "ፍሬዓለም ሺባባው",
-        duration: "210 minutes",
-        chapters: "12 chapters",
-        episodes: "56 Episodes",
-        thumbnail: "assets/books/ልጅነት.jpg"),
-    CourseModel(
-        name: "ሀብት ያለው አእምሮህ",
-        description:
-            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
-        author: "ሮማን አፈወርቅ",
-        duration: "210 minutes",
-        chapters: "12 chapters",
-        episodes: "56 Episodes",
-        thumbnail: "assets/books/ሀብት_ያለው_አእምሮህ.jpg"),
-    CourseModel(
-        name: "ቴሎስ",
-        description:
-            "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
-        author: "እንዳለጌታ ከበደ",
-        duration: "210 minutes",
-        chapters: "12 chapters",
-        episodes: "56 Episodes",
-        thumbnail: "assets/books/ቴሎስ.jpg"),
-  ];
-}
