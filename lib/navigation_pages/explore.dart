@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:brana_mobile/src/pages/genreList.dart';
+import 'package:brana_mobile/navigation_pages/genreList.dart';
 import 'package:brana_mobile/data.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<ExplorePage> {
           onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>  const RecomendedPage()),
+          MaterialPageRoute(builder: (context) =>   GenreListPage()),
         );
       },
         child: Container(

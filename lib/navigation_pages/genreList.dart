@@ -3,14 +3,14 @@ import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 // import 'package:brana_mobile/src/theme/theme.dart';
 
-class RecomendedPage extends StatefulWidget {
-  const RecomendedPage({super.key});
+class GenreListPage extends StatefulWidget {
+  const GenreListPage({super.key});
 
   @override
-  State<RecomendedPage> createState() => _RecomendedPageState();
+  State<GenreListPage> createState() => _RecomendedPageState();
 }
 
-class _RecomendedPageState extends State<RecomendedPage> {
+class _RecomendedPageState extends State<GenreListPage> {
   Widget _header(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return ClipRRect(
@@ -97,9 +97,21 @@ class _RecomendedPageState extends State<RecomendedPage> {
                   model.author,
                   style: TextStyle(fontSize: 14, color: branaPrimaryColor),
                 ),
-                const SizedBox(height: 15),
-                Text(model.description, style: const TextStyle(fontSize: 14)),
-                const SizedBox(height: 5),
+                SizedBox(
+  height: 80,
+  child: LayoutBuilder(
+    builder: (context, constraints) {
+      if(constraints.constrainHeight(20) < 20) {
+        return SingleChildScrollView(
+          controller: ScrollController(), 
+          child: Text(model.description),
+        );  
+      } else {
+        return Text(model.description);
+      }
+    },
+  ),
+),
                 Row(
                   children: <Widget>[
                     _chip(model.chapters, branaPrimaryColor, height: 5),
@@ -114,7 +126,7 @@ class _RecomendedPageState extends State<RecomendedPage> {
           ],
         ));
   }
-
+  
   Widget _chip(String text, Color textColor,
       {double height = 0, bool isPrimaryCard = false}) {
     return Container(
