@@ -55,9 +55,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
       //   end: const Duration(seconds: 90),
       //   child:
       AudioSource.uri(
-        Uri.parse('asset:/assets/audiobooks/6.mp3'
-            // "https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_01_fitzgerald_64kb.mp3"
-            ),
+        Uri.parse(
+            // 'asset:/assets/audiobooks/6.mp3'
+            "https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_01_fitzgerald_64kb.mp3"),
         tag: MediaItem(
           id: '1',
           album: "ላስብበት",
@@ -69,9 +69,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
       ),
       // ),
       AudioSource.uri(
-        Uri.parse('asset:/assets/audiobooks/4.mp3'
-            // "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3"
-            ),
+        Uri.parse(
+            // 'asset:/assets/audiobooks/4.mp3'
+            "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3"),
         tag: MediaItem(
           id: '2',
           album: "ላስብበት",
@@ -82,9 +82,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
         ),
       ),
       AudioSource.uri(
-        Uri.parse('asset:/assets/audiobooks/3.mp3'
-            // "https://s3.amazonaws.com/scifri-segments/scifri201711241.mp3"
-            ),
+        Uri.parse(
+            // 'asset:/assets/audiobooks/3.mp3'
+            "https://s3.amazonaws.com/scifri-segments/scifri201711241.mp3"),
         tag: MediaItem(
           id: '3',
           album: "ላስብበት",
@@ -105,7 +105,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
         builder: (context) {
           return const Center(child: CircularProgressIndicator());
         });
-    // Navigator.of(context).pop();
+    Navigator.of(context).pop();
     // await DefaultCacheManager().emptyCache();
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
@@ -123,7 +123,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
       logger.e(stackTrace);
     }
     // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   Stream<AudioPosition> get _audioPositionStream =>
@@ -495,78 +495,78 @@ class MediaMetadata extends StatelessWidget {
   }
 }
 
-class Controls extends StatelessWidget {
-  const Controls({super.key, required this.audioPlayer});
-  final AudioPlayer audioPlayer;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-            onPressed: () async {
-              await audioPlayer.seekToPrevious();
-            },
-            iconSize: 30,
-            color: Colors.white,
-            icon: const Icon(Icons.skip_previous_rounded)),
-        IconButton(
-            onPressed: () async {
-              await audioPlayer
-                  .seek(Duration(seconds: audioPlayer.position.inSeconds - 15));
-            },
-            iconSize: 35,
-            color: Colors.white,
-            icon: const Icon(CupertinoIcons.gobackward_15)),
-        StreamBuilder<PlayerState>(
-          stream: audioPlayer.playerStateStream,
-          builder: (context, snapshot) {
-            final playerState = snapshot.data;
-            final processingState = playerState?.processingState;
-            final playing = playerState?.playing;
-            if (!(playing ?? false)) {
-              return IconButton(
-                  onPressed: () {
-                    audioPlayer.play();
-                  },
-                  iconSize: 80,
-                  color: Colors.yellow,
-                  icon: const Icon(Icons.play_arrow_sharp));
-            } else if (processingState != ProcessingState.completed) {
-              return IconButton(
-                  onPressed: () {
-                    audioPlayer.pause();
-                  },
-                  iconSize: 80,
-                  color: Colors.yellow,
-                  icon: const Icon(Icons.pause_sharp));
-            }
-            return const Icon(
-              Icons.play_arrow_sharp,
-              color: Colors.yellow,
-              size: 80,
-            );
-          },
-        ),
-        IconButton(
-            onPressed: () async {
-              await audioPlayer
-                  .seek(Duration(seconds: audioPlayer.position.inSeconds + 15));
-            },
-            iconSize: 35,
-            color: Colors.white,
-            icon: const Icon(CupertinoIcons.goforward_15)),
-        IconButton(
-            onPressed: () async {
-              await audioPlayer.seekToNext();
-            },
-            iconSize: 30,
-            color: Colors.white,
-            icon: const Icon(Icons.skip_next_rounded))
-      ],
-    );
-  }
-}
+// class Controls extends StatelessWidget {
+//   const Controls({super.key, required this.audioPlayer});
+//   final AudioPlayer audioPlayer;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         IconButton(
+//             onPressed: () async {
+//               await audioPlayer.seekToPrevious();
+//             },
+//             iconSize: 30,
+//             color: Colors.white,
+//             icon: const Icon(Icons.skip_previous_rounded)),
+//         IconButton(
+//             onPressed: () async {
+//               await audioPlayer
+//                   .seek(Duration(seconds: audioPlayer.position.inSeconds - 15));
+//             },
+//             iconSize: 35,
+//             color: Colors.white,
+//             icon: const Icon(CupertinoIcons.gobackward_15)),
+//         StreamBuilder<PlayerState>(
+//           stream: audioPlayer.playerStateStream,
+//           builder: (context, snapshot) {
+//             final playerState = snapshot.data;
+//             final processingState = playerState?.processingState;
+//             final playing = playerState?.playing;
+//             if (!(playing ?? false)) {
+//               return IconButton(
+//                   onPressed: () {
+//                     audioPlayer.play();
+//                   },
+//                   iconSize: 80,
+//                   color: Colors.yellow,
+//                   icon: const Icon(Icons.play_arrow_sharp));
+//             } else if (processingState != ProcessingState.completed) {
+//               return IconButton(
+//                   onPressed: () {
+//                     audioPlayer.pause();
+//                   },
+//                   iconSize: 80,
+//                   color: Colors.yellow,
+//                   icon: const Icon(Icons.pause_sharp));
+//             }
+//             return const Icon(
+//               Icons.play_arrow_sharp,
+//               color: Colors.yellow,
+//               size: 80,
+//             );
+//           },
+//         ),
+//         IconButton(
+//             onPressed: () async {
+//               await audioPlayer
+//                   .seek(Duration(seconds: audioPlayer.position.inSeconds + 15));
+//             },
+//             iconSize: 35,
+//             color: Colors.white,
+//             icon: const Icon(CupertinoIcons.goforward_15)),
+//         IconButton(
+//             onPressed: () async {
+//               await audioPlayer.seekToNext();
+//             },
+//             iconSize: 30,
+//             color: Colors.white,
+//             icon: const Icon(Icons.skip_next_rounded))
+//       ],
+//     );
+//   }
+// }
 
 final List<Song> songs = [
   Song(

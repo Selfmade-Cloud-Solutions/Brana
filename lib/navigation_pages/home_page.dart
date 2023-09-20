@@ -18,8 +18,6 @@ class _MyWidgetState extends State<HomePage> {
   List<Book> books = getBookList();
   List<Author> authors = getAuthorList();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +84,6 @@ class _MyWidgetState extends State<HomePage> {
                 const SizedBox(
                   height: 16,
                 ),
-                
               ],
             ),
           ),
@@ -171,41 +168,41 @@ class _MyWidgetState extends State<HomePage> {
             ),
           ),
           Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Editors Picks",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Show all",
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 18,
-                            color: branaPrimaryColor,
-                          ),
-                        ],
-                      ),
-                    ],
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Editors Picks",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
+                Row(
+                  children: [
+                    const Text(
+                      "Show all",
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 18,
+                      color: branaPrimaryColor,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           SizedBox(
             height: 200,
             child: ListView(
@@ -215,41 +212,41 @@ class _MyWidgetState extends State<HomePage> {
             ),
           ),
           Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Podcasts",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Show all",
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 18,
-                            color: branaPrimaryColor,
-                          ),
-                        ],
-                      ),
-                    ],
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Podcasts",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
+                Row(
+                  children: [
+                    const Text(
+                      "Show all",
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 18,
+                      color: branaPrimaryColor,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           SizedBox(
             height: 200,
             child: ListView(
@@ -259,41 +256,41 @@ class _MyWidgetState extends State<HomePage> {
             ),
           ),
           Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Children",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Show all",
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 18,
-                            color: branaPrimaryColor,
-                          ),
-                        ],
-                      ),
-                    ],
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Children",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
+                Row(
+                  children: [
+                    const Text(
+                      "Show all",
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 18,
+                      color: branaPrimaryColor,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           SizedBox(
             height: 200,
             child: ListView(
@@ -306,7 +303,6 @@ class _MyWidgetState extends State<HomePage> {
       ),
     ));
   }
-
 
   List<Widget> buildBooks() {
     List<Widget> list = [];
