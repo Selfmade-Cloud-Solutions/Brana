@@ -188,7 +188,94 @@ class BookDetail extends StatelessWidget {
                       ),
                     ],
                   ),
+<<<<<<< HEAD
+                  const SizedBox(height: 16),
+                  Text(
+                    book.title,
+                    style: GoogleFonts.jost(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    book.author.fullname,
+                    style: GoogleFonts.jost(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  const SizedBox(height: 4),
+                  Text(
+                    book.description,
+                    style: GoogleFonts.jost(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                      color: Colors.white,
+                    ),
+                  ),
+                  
+                  Container(
+                    height: 200,
+                    width: size.width,
+                    padding: const EdgeInsets.only(
+                      top: 110,
+                      left: 10,
+                      right: 10,
+                      bottom: 40,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.width * 0.7, 20),
+                            textStyle: const TextStyle(fontSize: 16),
+                            foregroundColor: branaWhite,
+                            backgroundColor: branaPrimaryColor,
+                            shadowColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            elevation: 5,
+                          ),
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const AudioPlayerPage(),
+                            ),
+                          ),
+                          icon: const Icon(Icons.play_arrow_rounded, size: 30),
+                          label: const Center(child: Text('Listen')),
+                        ),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.width * 0.1, 20),
+                            textStyle: const TextStyle(fontSize: 16),
+                            foregroundColor: branaWhite,
+                            backgroundColor: branaPrimaryColor,
+                            shadowColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            elevation: 5,
+                          ),
+                          onPressed: () {},
+                          icon: const Icon(Icons.bookmark_add, size: 0),
+                          label: const Center(child: Icon(Icons.bookmark_add, size: 30)),
+                        ),
+                      ],
+                    ),
+                  ),
+    ],
+=======
                 ),
+>>>>>>> main
               ),
             )
           ]),
