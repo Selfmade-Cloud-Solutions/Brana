@@ -3,6 +3,7 @@ import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'screens/onboarding/onboarding.dart';
+import 'package:flutter/services.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({Key? key}) : super(key: key);
@@ -42,6 +43,11 @@ class App extends StatelessWidget {
 }
 
 Future<void> main() async {
+  // Lock the app in portrait orientation
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
