@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/signup_page.dart';
 import 'package:brana_mobile/login_page.dart';
 import 'package:brana_mobile/constants.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginSignupOption extends StatefulWidget {
   const LoginSignupOption({super.key, required double screenHeight});
@@ -11,26 +12,9 @@ class LoginSignupOption extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<LoginSignupOption> {
-  late Color myColor;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   late Size mediaSize;
-
-  @override
-  Widget build(BuildContext context) {
-    myColor = Theme.of(context).primaryColorLight;
-    mediaSize = MediaQuery.of(context).size;
-    return Container(
-      decoration: BoxDecoration(
-        color: branaPrimaryColor,
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(children: [
-          Positioned(top: 80, child: _buildTop()),
-          Positioned(bottom: 50, left: 10, right: 10, child: _buildBottom()),
-        ]),
-      ),
-    );
-  }
+  late Color myColor;
 
   Widget _buildTop() {
     return SizedBox(
@@ -71,14 +55,14 @@ class _MyWidgetState extends State<LoginSignupOption> {
       children: [
         const SizedBox(height: 40),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 60),
-        child: _buildLoginButton(),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 60),
+          child: _buildLoginButton(),
+        ),
         const SizedBox(height: 40),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 60),
-        child: _buildSignupButton(),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 60),
+          child: _buildSignupButton(),
+        ),
         const SizedBox(height: 30),
         _buildOtherLogin(),
         const SizedBox(height: 10),
@@ -108,12 +92,11 @@ class _MyWidgetState extends State<LoginSignupOption> {
         shadowColor: const Color.fromARGB(50, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
-      child: const Text(
-        "LOGIN",
-        style: TextStyle(
-          color: branaWhite,
-        fontWeight:FontWeight.w800,
-        )),
+      child: const Text("LOGIN",
+          style: TextStyle(
+            color: branaWhite,
+            fontWeight: FontWeight.w800,
+          )),
     );
   }
 
@@ -132,11 +115,11 @@ class _MyWidgetState extends State<LoginSignupOption> {
         shadowColor: const Color.fromARGB(50, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
-      child:  Text("SIGN UP",
-      style: TextStyle(
-        color: branaPrimaryColor,
-        fontWeight:FontWeight.w800,
-      )),
+      child: Text("SIGN UP",
+          style: TextStyle(
+            color: branaPrimaryColor,
+            fontWeight: FontWeight.w800,
+          )),
     );
   }
 
@@ -149,15 +132,43 @@ class _MyWidgetState extends State<LoginSignupOption> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Tab(icon: Image.asset("assets/images/google.png")),
+              Tab(
+                icon: InkWell(
+                    onTap: () async {
+                      final GoogleSignInAccount? googleUser =
+                          await googleSignIn.signIn();
+
+                      if (googleUser != null) {
+                        // user signed in
+                      } else {
+                        // user canceled
+                      }
+                    },
+                    child: Image.asset("assets/images/google.png")),
               ),
               Tab(icon: Image.asset("assets/images/facebook.png")),
               Tab(icon: Image.asset("assets/images/twitter.png"))
             ],
           ),
-        ], 
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    myColor = Theme.of(context).primaryColorLight;
+    mediaSize = MediaQuery.of(context).size;
+    return Container(
+      decoration: BoxDecoration(
+        color: branaPrimaryColor,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(children: [
+          Positioned(top: 80, child: _buildTop()),
+          Positioned(bottom: 10, left: 10, right: 10, child: _buildBottom()),
+        ]),
       ),
     );
   }
