@@ -42,10 +42,13 @@ class CardsStack extends StatelessWidget {
                 width: darkCardWidth,
                 height: darkCardHeight,
                 padding: EdgeInsets.only(
-                  top: !isOddPageNumber ? 100.0 : 0.0,
-                  bottom: isOddPageNumber ? 100.0 : 0.0,
+                  top: !isOddPageNumber ? 1.0 : 0.0,
+                  bottom: isOddPageNumber ? 1.0 : 0.0,
                 ),
-                child: Center(child: darkCardChild),
+                child: Align(
+        alignment: Alignment.bottomCenter,
+        child: darkCardChild,
+      ),
               ),
             ),
           ),

@@ -8,7 +8,7 @@ class Walk3DarkCardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Image.asset(
-    "assets/images/map2.png",
+    "assets/images/walk3.png",
     height: 500,
     width: 500,
     );
