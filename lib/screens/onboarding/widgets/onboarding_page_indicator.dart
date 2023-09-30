@@ -17,7 +17,7 @@ class OnboardingPageIndicator extends StatelessWidget {
   });
 
   Color _getPageIndicatorColor(int pageIndex) {
-    return currentPage > pageIndex ? branaWhite : branaWhite.withOpacity(0.25);
+    return currentPage > pageIndex ? branaDark : branaDark.withOpacity(0.25);
   }
 
   double get indicatorGap => pi / 12;

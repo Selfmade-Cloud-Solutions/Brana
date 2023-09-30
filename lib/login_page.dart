@@ -69,55 +69,55 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Widget _buildForm() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          "Welcome Back",
-          style: TextStyle(
-            color: branaWhite,
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            "Welcome Back",
+            style: TextStyle(
+              color: branaDark,
+              fontSize: 32,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
-      ),
-      const SizedBox(height: 10),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildPrimaryText("Please login to Brana"),
-      ),
-      const SizedBox(height: 15),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldEmail(emailController),
-      ),
-      const SizedBox(height: 30),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldPassword(passwordController, isPassword: true),
-      ),
-      const SizedBox(height: 5),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildRememberForgot(),
-      ),
-      const SizedBox(height: 15),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 80),
-        child: _buildLoginButton(),
-      ),
-      const SizedBox(height: 35),
-    ],
-  );
-}
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildPrimaryText("Please login to Brana"),
+        ),
+        const SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldEmail(emailController),
+        ),
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldPassword(passwordController, isPassword: true),
+        ),
+        const SizedBox(height: 5),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildRememberForgot(),
+        ),
+        const SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 80),
+          child: _buildLoginButton(),
+        ),
+        const SizedBox(height: 35),
+      ],
+    );
+  }
 
   Widget _buildPrimaryText(String text) {
     return Text(
       text,
       style: const TextStyle(
-        color: branaWhite,
+        color: branaDark,
       ),
     );
   }
@@ -128,7 +128,7 @@ class _MyWidgetState extends State<LoginPage> {
       decoration: const InputDecoration(
           suffixIcon: Icon(Icons.done),
           hintText: 'Email',
-          hintStyle: TextStyle(color: branaWhite)),
+          hintStyle: TextStyle(color: branaDark)),
     );
   }
 
@@ -148,7 +148,7 @@ class _MyWidgetState extends State<LoginPage> {
                 : const Icon(Icons.visibility_off),
           ),
           hintText: 'Password',
-          hintStyle: const TextStyle(color: branaWhite)),
+          hintStyle: const TextStyle(color: branaDark)),
       obscureText: !isPasswordVisible,
     );
   }
@@ -195,7 +195,7 @@ class _MyWidgetState extends State<LoginPage> {
       child: const Text(
         "LOGIN",
         style: TextStyle(
-          color: branaWhite,
+          color: branaDark,
         ),
       ),
     );

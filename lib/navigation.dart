@@ -5,6 +5,7 @@ import 'package:brana_mobile/navigation_pages/home_page.dart';
 import 'package:brana_mobile/navigation_pages/explore.dart';
 import 'package:brana_mobile/navigation_pages/profile.dart';
 import 'package:brana_mobile/constants.dart';
+
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
 
@@ -42,7 +43,8 @@ class _MyWidgetState extends State<Navigation> {
           boxShadow: [
             BoxShadow(
               blurRadius: 0,
-              color: branaWhite, // Adjust the opacity (alpha value) and color as needed
+              color:
+                  branaDark, // Adjust the opacity (alpha value) and color as needed
               spreadRadius: 1,
             ),
           ],
@@ -51,8 +53,8 @@ class _MyWidgetState extends State<Navigation> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(
             gap: 8,
-            color: const Color.fromARGB(255, 7, 7, 7),
-            activeColor: branaWhite,
+            color: branaBlue,
+            activeColor: Colors.white,
             tabBackgroundColor: branaPrimaryColor,
             padding: const EdgeInsets.all(10),
             selectedIndex: _currentIndex,
@@ -71,7 +73,6 @@ class _MyWidgetState extends State<Navigation> {
                 icon: Icons.explore_outlined,
                 text: 'Explore',
               ),
-              
               GButton(icon: Icons.person, text: 'Profile'),
             ],
           ),
