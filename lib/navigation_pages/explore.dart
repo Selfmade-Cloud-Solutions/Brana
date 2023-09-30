@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/navigation_pages/genreList.dart';
 import 'package:brana_mobile/data.dart';
+import 'package:brana_mobile/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -23,58 +25,66 @@ class _HomeScreenState extends State<ExplorePage> {
     List<dynamic> responseList = booksExplore;
     List<Widget> listItems = [];
     for (var post in responseList) {
-      listItems.add(
-        GestureDetector(
+      listItems.add(GestureDetector(
           onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>   GenreListPage()),
-        );
-      },
-        child: Container(
-          height: 130,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: const Color.fromARGB(255, 53, 43, 43).withAlpha(100),
-                    blurRadius: 10.0),
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const GenreListPage()),
+            );
+          },
+          child: Container(
+              height: 130,
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  color: branaDark,
+                  boxShadow: [
+                    BoxShadow(
+                        color: const Color.fromARGB(255, 3, 3, 3)
+                            .withAlpha(100),
+                        blurRadius: 10.0),
+                  ]),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      post["genre"],
-                      style: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                    Flexible(
-                      flex: 0,
-                      child: Text(
-                        post["subGenre"],
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          post["genre"],
+                          style: GoogleFonts.jost(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 28,
+                        height: 1,
+                        color: Colors.white,
+                      ),),
+                        Flexible(
+                          flex: 0,
+                          child: Text(
+                            post["subGenre"],
+                            style: GoogleFonts.jost(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 17,
+                        height: 1,
+                        color: Colors.white,
                       ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    Image.asset(
+                      "assets/books/${post["image"]}",
+                      height: double.infinity,
+                    )
                   ],
                 ),
-                Image.asset(
-                  "assets/books/${post["image"]}",
-                  height: double.infinity,
-                )
-              ],
-            ),
-          ))));
+              ))));
     }
     setState(() {
       itemsData = listItems;
@@ -99,8 +109,10 @@ class _HomeScreenState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
+      child: Container(
+        color:branaDeepBlack,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: branaDeepBlack,
         body: SizedBox(
           height: size.height,
           child: Column(
@@ -140,7 +152,7 @@ class _HomeScreenState extends State<ExplorePage> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -165,28 +177,32 @@ class CategoriesScroller extends StatelessWidget {
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
                 // height: categoryHeight,
-                decoration: BoxDecoration(
-                    color: Colors.orange.shade400,
+                decoration: const BoxDecoration(
+                    color: branaDark,
                     borderRadius:
-                        const BorderRadius.all(Radius.circular(20.0))),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
+                        BorderRadius.all(Radius.circular(20.0))),
+                child:  Padding(
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         "Liked",
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                        style: GoogleFonts.jost(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
                       ),
-                      SizedBox(
+                      ),
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
+                    Text(
                         "20 Books",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: GoogleFonts.jost(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                       ),
                     ],
                   ),
@@ -197,28 +213,31 @@ class CategoriesScroller extends StatelessWidget {
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
                 // height: categoryHeight,
-                decoration: BoxDecoration(
-                    color: Colors.blue.shade400,
+                decoration: const BoxDecoration(
+                    color: branaDark,
                     borderRadius:
-                        const BorderRadius.all(Radius.circular(20.0))),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
+                        BorderRadius.all(Radius.circular(20.0))),
+                child:  Padding(
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         "Latest",
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
+                        style: GoogleFonts.jost(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      ),),
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "20 Books",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: GoogleFonts.jost(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                       ),
                     ],
                   ),
@@ -229,28 +248,32 @@ class CategoriesScroller extends StatelessWidget {
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
                 // height: categoryHeight,
-                decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent.shade400,
+                decoration: const BoxDecoration(
+                    color: branaDark,
                     borderRadius:
-                        const BorderRadius.all(Radius.circular(20.0))),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
+                        BorderRadius.all(Radius.circular(20.0))),
+                child:  Padding(
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         "Wishlist",
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                        style: GoogleFonts.jost(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
                       ),
-                      SizedBox(
+                      ),
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "20 Books",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: GoogleFonts.jost(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                       ),
                     ],
                   ),

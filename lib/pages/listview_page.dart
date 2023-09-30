@@ -14,7 +14,7 @@ class ListViewPage extends StatelessWidget {
         textDirection: TextDirection.ltr,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('دسته بندی ها'),
+            title: const Text('Lorem'),
             centerTitle: true,
           ),
           body: Padding(

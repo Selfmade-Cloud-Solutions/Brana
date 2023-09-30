@@ -1,8 +1,9 @@
 import 'package:brana_mobile/data.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
+
 class genreBookDetail extends StatelessWidget {
-  final CourseModel ? model;
+  final CourseModel? model;
 
   const genreBookDetail({required this.model});
 
@@ -20,7 +21,7 @@ class genreBookDetail extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: branaPrimaryColor,
         leading: IconButton(
-          color: branaWhite,
+          color: branaDark,
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();

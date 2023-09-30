@@ -44,6 +44,8 @@ class App extends StatelessWidget {
 
 Future<void> main() async {
   // Lock the app in portrait orientation
+  
+  runApp(const App());
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -53,5 +55,4 @@ Future<void> main() async {
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
-  runApp(const App());
 }

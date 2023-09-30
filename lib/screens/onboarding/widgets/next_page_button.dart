@@ -16,7 +16,7 @@ class NextPageButton extends StatelessWidget {
       padding: const EdgeInsets.all(kPaddingM),
       elevation: 0.0,
       shape: const CircleBorder(),
-      fillColor: branaWhite,
+      fillColor: branaDark,
       onPressed: onPressed,
       child: const Icon(
         Icons.arrow_forward,

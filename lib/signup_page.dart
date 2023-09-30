@@ -76,48 +76,56 @@ class _MyWidgetState extends State<SignupPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          "Welcome",
-          style: TextStyle(
-            color: branaWhite,
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            "Welcome",
+            style: TextStyle(
+              color: branaDark,
+              fontSize: 32,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
-      ),
-      const SizedBox(height: 10),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildPrimaryText("Fill Form To Register"),),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildPrimaryText("Fill Form To Register"),
+        ),
         const SizedBox(height: 20),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldFirstName(firstnameController),),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldFirstName(firstnameController),
+        ),
         const SizedBox(height: 5),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldLastName(lastnameController),),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldLastName(lastnameController),
+        ),
         const SizedBox(height: 5),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldPhoneNumber(phonenumberController),),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldPhoneNumber(phonenumberController),
+        ),
         const SizedBox(height: 5),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldEmail(emailController),),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldEmail(emailController),
+        ),
         const SizedBox(height: 5),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldDateOfBirth(dateofbirthController),),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldDateOfBirth(dateofbirthController),
+        ),
         const SizedBox(height: 5),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildInputFieldPassword(passwordController, isPassword: true),),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldPassword(passwordController, isPassword: true),
+        ),
         const SizedBox(height: 15),
         Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 80),
-        child: _buildSignupButton(),),
+          padding: const EdgeInsets.symmetric(horizontal: 80),
+          child: _buildSignupButton(),
+        ),
         const SizedBox(height: 15),
       ],
     );
@@ -126,7 +134,7 @@ class _MyWidgetState extends State<SignupPage> {
   Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: branaWhite),
+      style: const TextStyle(color: branaDark),
     );
   }
 
@@ -134,30 +142,27 @@ class _MyWidgetState extends State<SignupPage> {
     return TextField(
         controller: controller,
         decoration: const InputDecoration(
-          suffixIcon: Icon(Icons.done),
-          hintText: 'First Name',
-          hintStyle: TextStyle(color: branaWhite)
-        ));
+            suffixIcon: Icon(Icons.done),
+            hintText: 'First Name',
+            hintStyle: TextStyle(color: branaDark)));
   }
 
   Widget _buildInputFieldLastName(TextEditingController controller) {
     return TextField(
         controller: controller,
         decoration: const InputDecoration(
-          suffixIcon: Icon(Icons.done),
-          hintText: 'Last Name',
-          hintStyle: TextStyle(color: branaWhite)
-        ));
+            suffixIcon: Icon(Icons.done),
+            hintText: 'Last Name',
+            hintStyle: TextStyle(color: branaDark)));
   }
 
   Widget _buildInputFieldEmail(TextEditingController controller) {
     return TextField(
       controller: controller,
       decoration: const InputDecoration(
-        suffixIcon: Icon(Icons.done),
-        hintText: 'Email',
-          hintStyle: TextStyle(color: branaWhite)
-      ),
+          suffixIcon: Icon(Icons.done),
+          hintText: 'Email',
+          hintStyle: TextStyle(color: branaDark)),
     );
   }
 
@@ -166,19 +171,18 @@ class _MyWidgetState extends State<SignupPage> {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              isPasswordVisible = !isPasswordVisible;
-            });
-          },
-          icon: isPasswordVisible
-              ? const Icon(Icons.visibility)
-              : const Icon(Icons.visibility_off),
-        ),
-        hintText: 'Password',
-          hintStyle: const TextStyle(color: branaWhite)
-      ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                isPasswordVisible = !isPasswordVisible;
+              });
+            },
+            icon: isPasswordVisible
+                ? const Icon(Icons.visibility)
+                : const Icon(Icons.visibility_off),
+          ),
+          hintText: 'Password',
+          hintStyle: const TextStyle(color: branaDark)),
       obscureText: !isPasswordVisible,
     );
   }
@@ -187,20 +191,18 @@ class _MyWidgetState extends State<SignupPage> {
     return TextField(
         controller: controller,
         decoration: const InputDecoration(
-          suffixIcon: Icon(Icons.done),
-          hintText: 'Phone Number',
-          hintStyle: TextStyle(color: branaWhite)
-        ));
+            suffixIcon: Icon(Icons.done),
+            hintText: 'Phone Number',
+            hintStyle: TextStyle(color: branaDark)));
   }
 
   Widget _buildInputFieldDateOfBirth(TextEditingController controller) {
     return TextField(
         controller: controller,
         decoration: const InputDecoration(
-          suffixIcon: Icon(Icons.done),
-          hintText: 'Date of Birth',
-          hintStyle: TextStyle(color: branaWhite)
-        ));
+            suffixIcon: Icon(Icons.done),
+            hintText: 'Date of Birth',
+            hintStyle: TextStyle(color: branaDark)));
   }
 
   Widget _buildSignupButton() {
@@ -212,18 +214,22 @@ class _MyWidgetState extends State<SignupPage> {
         debugPrint("Password : ${passwordController.text}");
         debugPrint("Phone Number : ${phonenumberController.text}");
         debugPrint("Date of Birth : ${dateofbirthController.text}");
-      Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const Navigation()),
-        );},
+        );
+      },
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 20,
         minimumSize: const Size.fromHeight(60),
       ),
-      child: Text("SignUp",
+      child: Text(
+        "SignUp",
         style: TextStyle(
-          color: branaPrimaryColor,),),
+          color: branaPrimaryColor,
+        ),
+      ),
     );
   }
 }

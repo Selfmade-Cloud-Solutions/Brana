@@ -17,13 +17,13 @@ class IconContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: branaWhite.withOpacity(0.25),
+        color: branaDark.withOpacity(0.25),
         shape: BoxShape.circle,
       ),
       child: Icon(
         icon,
         size: 32.0,
-        color: branaWhite,
+        color: branaDark,
       ),
     );
   }
