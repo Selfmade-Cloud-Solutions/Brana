@@ -40,7 +40,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        color: branaPrimaryColor.withOpacity(0.1),
+        color: kLightBlue.withOpacity(0.1),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: _buildForm(),
@@ -73,7 +73,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
   Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: branaDark),
+      style: const TextStyle(color: branaWhite),
     );
   }
 
@@ -94,7 +94,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
       ),
       child: const Text("LOGIN",
           style: TextStyle(
-            color: branaDark,
+            color: branaWhite,
             fontWeight: FontWeight.w800,
           )),
     );
@@ -111,7 +111,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
         elevation: 10,
-        backgroundColor: branaDark,
+        backgroundColor: branaWhite,
         shadowColor: const Color.fromARGB(50, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
@@ -160,8 +160,8 @@ class _MyWidgetState extends State<LoginSignupOption> {
     myColor = Theme.of(context).primaryColorLight;
     mediaSize = MediaQuery.of(context).size;
     return Container(
-      decoration: BoxDecoration(
-        color: branaPrimaryColor,
+      decoration: const BoxDecoration(
+        color: branaDeepBlack,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,

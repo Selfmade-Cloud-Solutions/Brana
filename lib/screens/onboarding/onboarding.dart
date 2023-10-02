@@ -81,7 +81,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       case 1:
         return OnboardingPage(
           number: 3,
-          // lightCardChild: const Walk1LightCardContent(),
           darkCardChild: const Walk1DarkCardContent(),
           lightCardOffsetAnimation: _slideAnimationLightCard,
           darkCardOffsetAnimation: _slideAnimationDarkCard,
@@ -98,7 +97,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
       case 3:
         return OnboardingPage(
           number: 3,
-          // lightCardChild: const Walk3LightCardContent(),
           darkCardChild: const Walk3DarkCardContent(),
           lightCardOffsetAnimation: _slideAnimationLightCard,
           darkCardOffsetAnimation: _slideAnimationDarkCard,
@@ -215,7 +213,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: branaBlue,
+      backgroundColor: branaDeepBlack,
       body: Stack(
         children: <Widget>[
           SafeArea(

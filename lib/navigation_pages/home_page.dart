@@ -24,26 +24,29 @@ class _MyWidgetState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.black,
+          backgroundColor: branaDeepBlack,
           elevation: 0,
         ),
-        body: SingleChildScrollView(
+        body: Container(
+          color:  branaDeepBlack,
+        
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
                 padding: const EdgeInsets.only(top: 0, left: 16, right: 16),
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.only(
+                decoration:   BoxDecoration(
+                  color: branaDeepBlack,
+                  borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(40),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: branaDark,
+                      color:   kLightBlue.withOpacity(0.1),
                       spreadRadius: 38,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -65,25 +68,27 @@ class _MyWidgetState extends State<HomePage> {
                   ],
                 ),
               ),
-              SizedBox(
+              Container(
+                color: branaDeepBlack,
+              child: SizedBox(
                 height: 300,
                 child: Container(
-                  color: branaDark,
+                  color:  kLightBlue.withOpacity(0.1),
                   child: ListView(
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     children: buildBooks(),
                   ),
                 ),
-              ),
+              )),
               Container(
                 color:Colors.black,
               child:  Padding(
                 padding: const EdgeInsets.only(top:5),
               child: Container(
-                decoration: const BoxDecoration(
-                  color: branaDark,
-                  borderRadius: BorderRadius.only(
+                decoration:  BoxDecoration(
+                  color:  kLightBlue.withOpacity(0.1),
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(40),
                   ),
                 ),
@@ -150,14 +155,6 @@ class _MyWidgetState extends State<HomePage> {
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(40),
                   ),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.grey.withOpacity(0.1),
-                  //     spreadRadius: 20,
-                  //     blurRadius: 5,
-                  //     offset: const Offset(0, 3),
-                  //   ),
-                  // ],
                 ),
               ),
               Container(
@@ -202,7 +199,7 @@ class _MyWidgetState extends State<HomePage> {
               SizedBox(
                   height: 200,
                   child: Container(
-                    color: branaDark,
+                    color: kLightBlue.withOpacity(0.1),
                     child: ListView(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
@@ -249,7 +246,7 @@ class _MyWidgetState extends State<HomePage> {
                 ),
               ),
               Container(
-                color: branaDark,
+                color: kLightBlue.withOpacity(0.1),
                 child: SizedBox(
                   height: 200,
                   child: ListView(
@@ -298,7 +295,7 @@ class _MyWidgetState extends State<HomePage> {
                     ),
                   )),
               Container(
-                color: branaDark,
+                color: kLightBlue.withOpacity(0.1),
                 child: SizedBox(
                   height: 200,
                   child: ListView(
@@ -310,7 +307,7 @@ class _MyWidgetState extends State<HomePage> {
               )
             ],
           ),
-        ));
+        )));
   }
 
   List<Widget> buildBooks() {

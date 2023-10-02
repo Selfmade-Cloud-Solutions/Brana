@@ -34,10 +34,10 @@ class _HomeScreenState extends State<ExplorePage> {
           },
           child: Container(
               height: 130,
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                  color: branaDark,
+                  color: branaDarkBlue,
                   boxShadow: [
                     BoxShadow(
                         color: const Color.fromARGB(255, 3, 3, 3)
@@ -177,10 +177,10 @@ class CategoriesScroller extends StatelessWidget {
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
                 // height: categoryHeight,
-                decoration: const BoxDecoration(
-                    color: branaDark,
+                decoration:  BoxDecoration(
+                    color: branaDarkBlue,
                     borderRadius:
-                        BorderRadius.all(Radius.circular(20.0))),
+                        const BorderRadius.all(Radius.circular(20.0))),
                 child:  Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -213,10 +213,10 @@ class CategoriesScroller extends StatelessWidget {
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
                 // height: categoryHeight,
-                decoration: const BoxDecoration(
-                    color: branaDark,
+                decoration:  BoxDecoration(
+                    color: branaDarkBlue,
                     borderRadius:
-                        BorderRadius.all(Radius.circular(20.0))),
+                        const BorderRadius.all(Radius.circular(20.0))),
                 child:  Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -248,10 +248,10 @@ class CategoriesScroller extends StatelessWidget {
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
                 // height: categoryHeight,
-                decoration: const BoxDecoration(
-                    color: branaDark,
+                decoration:  BoxDecoration(
+                    color: branaDarkBlue,
                     borderRadius:
-                        BorderRadius.all(Radius.circular(20.0))),
+                        const BorderRadius.all(Radius.circular(20.0))),
                 child:  Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
