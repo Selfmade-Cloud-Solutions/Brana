@@ -26,7 +26,7 @@ class _MyWidgetState extends State<LoginPage> {
         color: branaPrimaryColor,
       ),
       child: Scaffold(
-        backgroundColor: branaPrimaryColor,
+        backgroundColor: branaDeepBlack,
         body: Stack(children: [
           Positioned(top: 80, child: _buildTop()),
           Positioned(bottom: 50, left: 10, right: 10, child: _buildBottom()),
@@ -77,7 +77,7 @@ class _MyWidgetState extends State<LoginPage> {
           child: Text(
             "Welcome Back",
             style: TextStyle(
-              color: branaDark,
+              color: branaWhite,
               fontSize: 32,
               fontWeight: FontWeight.w900,
             ),
@@ -96,7 +96,7 @@ class _MyWidgetState extends State<LoginPage> {
         const SizedBox(height: 30),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _buildInputFieldPassword(passwordController, isPassword: true),
+          child: _buildInputFieldPassword(passwordController, isPassword: false),
         ),
         const SizedBox(height: 5),
         Padding(
@@ -117,41 +117,62 @@ class _MyWidgetState extends State<LoginPage> {
     return Text(
       text,
       style: const TextStyle(
-        color: branaDark,
+        color: branaWhite,
       ),
     );
   }
 
-  Widget _buildInputFieldEmail(TextEditingController controller) {
-    return TextField(
-      controller: controller,
-      decoration: const InputDecoration(
-          suffixIcon: Icon(Icons.done),
-          hintText: 'Email',
-          hintStyle: TextStyle(color: branaDark)),
-    );
-  }
+ Widget _buildInputFieldEmail(TextEditingController controller) {
+  return TextField(
+    controller: controller, 
+    decoration: InputDecoration(
+      labelText: 'Email',
+      labelStyle: const TextStyle(color: Colors.white),
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(8)  
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(8)
+      ),
+    ),
+  );
+}
 
   Widget _buildInputFieldPassword(TextEditingController controller,
-      {isPassword = false}) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                isPasswordVisible = !isPasswordVisible;
-              });
-            },
-            icon: isPasswordVisible
-                ? const Icon(Icons.visibility)
-                : const Icon(Icons.visibility_off),
-          ),
-          hintText: 'Password',
-          hintStyle: const TextStyle(color: branaDark)),
-      obscureText: !isPasswordVisible,
-    );
-  }
+   {isPassword = false}) {
+
+  return TextField(
+    controller: controller,
+    decoration: InputDecoration(
+      labelText: 'Password', 
+      labelStyle: const TextStyle(color: Colors.white),
+
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(8)  
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white), 
+        borderRadius: BorderRadius.circular(8)
+      ),
+
+      suffixIcon: IconButton(
+        onPressed: () {
+          setState(() {
+            isPasswordVisible = !isPasswordVisible; 
+          });
+        },
+        icon: isPasswordVisible  
+          ? const Icon(Icons.visibility) 
+          : const Icon(Icons.visibility_off),
+      ),
+    ),
+
+    obscureText: !isPasswordVisible,
+  );
+}
 
   Widget _buildRememberForgot() {
     return Row(
@@ -195,7 +216,7 @@ class _MyWidgetState extends State<LoginPage> {
       child: const Text(
         "LOGIN",
         style: TextStyle(
-          color: branaDark,
+          color: branaWhite,
         ),
       ),
     );

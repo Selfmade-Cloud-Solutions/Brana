@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 
 class OnboardingPageIndicator extends StatelessWidget {
   final double angle;
@@ -17,7 +16,7 @@ class OnboardingPageIndicator extends StatelessWidget {
   });
 
   Color _getPageIndicatorColor(int pageIndex) {
-    return currentPage > pageIndex ? branaDark : branaDark.withOpacity(0.25);
+    return currentPage > pageIndex ? Colors.white : const Color.fromARGB(255, 39, 38, 38);
   }
 
   double get indicatorGap => pi / 12;

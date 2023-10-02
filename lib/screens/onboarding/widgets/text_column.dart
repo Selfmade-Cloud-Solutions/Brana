@@ -22,7 +22,7 @@ class TextColumn extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .headlineSmall!
-              .copyWith(color: branaDark, fontWeight: FontWeight.bold),
+              .copyWith(color: branaWhite, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: kSpaceS),
         Text(
@@ -31,7 +31,7 @@ class TextColumn extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleMedium!
-              .copyWith(color: branaDark),
+              .copyWith(color: branaWhite),
         ),
       ],
     );
