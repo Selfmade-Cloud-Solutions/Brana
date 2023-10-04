@@ -18,15 +18,13 @@ class _MyWidgetState extends State<LoginSignupOption> {
 
   Widget _buildTop() {
     return SizedBox(
-      width: mediaSize.width,
-      height: mediaSize.height,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             "assets/images/logo.png",
-            width: 100,
-            height: 100,
+            width:100,
+            height:100,
           ),
         ],
       ),
@@ -53,6 +51,12 @@ class _MyWidgetState extends State<LoginSignupOption> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Center(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 60),
+      child: _buildTop(),
+    ),  
+  ),
         const SizedBox(height: 40),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 60),
@@ -165,10 +169,16 @@ class _MyWidgetState extends State<LoginSignupOption> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(children: [
-          Positioned(top: 80, child: _buildTop()),
-          Positioned(bottom: 10, left: 10, right: 10, child: _buildBottom()),
-        ]),
+        body: Stack(
+    children: <Widget>[
+      Positioned(
+        bottom: 10, 
+        left: 10,
+        right: 10, 
+        child: _buildBottom()
+      )
+    ]
+  )
       ),
     );
   }

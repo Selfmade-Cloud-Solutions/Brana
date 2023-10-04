@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:brana_mobile/src/theme/theme.dart';
 
 class GenreListPage extends StatefulWidget {
@@ -11,18 +12,6 @@ class GenreListPage extends StatefulWidget {
 }
 
 class _RecomendedPageState extends State<GenreListPage> {
-  Widget _header(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    return ClipRRect(
-        child: Container(
-      height: 60,
-      width: width,
-      decoration: BoxDecoration(
-        color: branaPrimaryColor,
-      ),
-    ));
-  }
-
   Set<CourseModel> courseSet = {};
 
   Widget _courseList(BuildContext context) {
@@ -31,7 +20,7 @@ class _RecomendedPageState extends State<GenreListPage> {
     return SingleChildScrollView(
         child: Column(
             children: courseSet.map((course) {
-      return _courceInfo(context, course);
+      return _bookInfo(context, course);
     }).toList()));
   }
 
@@ -54,7 +43,7 @@ class _RecomendedPageState extends State<GenreListPage> {
     );
   }
 
-  Widget _courceInfo(BuildContext context, CourseModel model) {
+  Widget _bookInfo(BuildContext context, CourseModel model) {
     return SizedBox(
         height: 170,
         width: MediaQuery.of(context).size.width - 20,
@@ -77,11 +66,17 @@ class _RecomendedPageState extends State<GenreListPage> {
                   children: <Widget>[
                     Expanded(
                       child: Text(model.name,
-                          style: TextStyle(
-                              color: branaPrimaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)),
+                          style: GoogleFonts.jost(
+                fontSize: 15,
+                height: 1,
+                color: branaWhite,
+                fontWeight: FontWeight.bold
+              ),),
+              
                     ),
+                    const SizedBox(
+                  height: 10,
+                ),
                     const SizedBox(
                       width: 5,
                     ),
@@ -95,30 +90,47 @@ class _RecomendedPageState extends State<GenreListPage> {
                 ),
                 Text(
                   model.author,
-                  style: TextStyle(fontSize: 14, color: branaPrimaryColor),
+                  style: GoogleFonts.jost(
+                fontSize: 15,
+                height: 1,
+                color: branaWhite,
+                fontWeight: FontWeight.bold
+              ),
+                ),const SizedBox(
+                  height: 10,
                 ),
                 SizedBox(
-  height: 80,
-  child: LayoutBuilder(
-    builder: (context, constraints) {
-      if(constraints.constrainHeight(20) < 20) {
-        return SingleChildScrollView(
-          controller: ScrollController(), 
-          child: Text(model.description),
-        );  
-      } else {
-        return Text(model.description);
-      }
-    },
-  ),
-),
+                  height: 80,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.constrainHeight(20) < 20) {
+                        return SingleChildScrollView(
+                          controller: ScrollController(),
+                          child: Text(
+                            model.description, 
+                          style: GoogleFonts.jost(
+                fontSize: 12,
+                height: 1,
+                color: branaWhite,
+              ),),
+                        );
+                      } else {
+                        return Text(model.description,style: GoogleFonts.jost(
+                fontSize: 12,
+                height: 1,
+                color: branaWhite,
+              ),);
+                      }
+                    },
+                  ),
+                ),
                 Row(
                   children: <Widget>[
-                    _chip(model.chapters, branaPrimaryColor, height: 5),
+                    _chip(model.chapters, branaWhite, height: 5),
                     const SizedBox(
                       width: 10,
                     ),
-                    _chip(model.episodes, branaPrimaryColor, height: 5),
+                    _chip(model.episodes, branaWhite, height: 5),
                   ],
                 )
               ],
@@ -126,7 +138,7 @@ class _RecomendedPageState extends State<GenreListPage> {
           ],
         ));
   }
-  
+
   Widget _chip(String text, Color textColor,
       {double height = 0, bool isPrimaryCard = false}) {
     return Container(
@@ -147,15 +159,42 @@ class _RecomendedPageState extends State<GenreListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            _header(context),
-            const SizedBox(height: 20),
-            _courseList(context)
-          ],
+      backgroundColor: branaDeepBlack,
+      appBar: AppBar(
+        backgroundColor: branaDeepBlack,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Colors.white,
         ),
+        flexibleSpace: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Genre Name",
+              style: GoogleFonts.jost(
+                fontSize: 20,
+                height: 1,
+                color: branaWhite,
+              ),
+            ),
+          ],
+        )),
       ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          color: kLightBlue.withOpacity(0.1),
+        child: Column(
+  children: <Widget>[
+    _courseList(context),
+    SizedBox(height: 40, width: double.infinity, child: Container(color: Colors.black)),
+  ],
+),
+      )),
     );
   }
 }

@@ -242,15 +242,16 @@ class Author {
 
 List<Author> getAuthorList() {
   return <Author>[
+    
+    Author(
+      "እንዳለጌታ ከበደ",
+      12,
+      "assets/authors/እንዳለጌታከበደ.jpg",
+    ),
     Author(
       "ፍሬዓለም ሺባባው",
       18,
       "assets/authors/ፍሬዓለምሺባባው.jpg",
-    ),
-    Author(
-      "እንዳለጌታከበደ",
-      12,
-      "assets/authors/እንዳለጌታከበደ.jpg",
     ),
     Author(
       "ዘነበ ወላ",
@@ -278,9 +279,9 @@ List<Author> getAuthorList() {
       "assets/authors/መለሰእሸቱ.jpg",
     ),
     Author(
-      "አለማየሁ ዋሴ",
-      15,
-      "assets/authors/ አለማየሁዋሴ.jpg",
+      "ለምን ሲሳይ",
+      5,
+      "assets/authors/lemnsisay.jpg",
     ),
   ];
 }
