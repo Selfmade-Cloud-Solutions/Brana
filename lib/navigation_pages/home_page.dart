@@ -17,297 +17,352 @@ class _MyWidgetState extends State<HomePage> {
   TextEditingController textController = TextEditingController();
 
   List<Book> books = getBookList();
+  List<Book> books2 = getBookList();
+  List<Book> books3 = getBookList();
+  List<Book> books4 = getBookList();
   List<Author> authors = getAuthorList();
+  ThemeData theme = ThemeData();
+
+  bool isDarkMode = true;
+  bool appBarVisible = true;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.offset >= 50) {
+        setState(() {
+          appBarVisible = false;
+        });
+      } else {
+        setState(() {
+          appBarVisible = true;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: branaDeepBlack,
-          elevation: 0,
-        ),
-        body: Container(
-          color:  branaDeepBlack,
-        
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 0, left: 16, right: 16),
-                decoration:   BoxDecoration(
-                  color: branaDeepBlack,
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(40),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color:   kLightBlue.withOpacity(0.1),
-                      spreadRadius: 38,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: appBarVisible
+            ? AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: branaDeepBlack,
+                flexibleSpace: Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Discover Audiobooks",
+                      "Brana Audiobooks",
                       style: GoogleFonts.jost(
                         fontWeight: FontWeight.w900,
-                        fontSize: 30,
+                        fontSize: 25,
                         height: 1,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
                   ],
-                ),
-              ),
+                )),
+              )
+            : null,
+        body: NotificationListener<ScrollNotification>(
+            onNotification: (scrollDetails) {
+              return true;
+            },
+            child: ListView(controller: _scrollController, children: [
               Container(
-                color: branaDeepBlack,
-              child: SizedBox(
-                height: 300,
-                child: Container(
-                  color:  kLightBlue.withOpacity(0.1),
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    children: buildBooks(),
-                  ),
-                ),
-              )),
-              Container(
-                color:Colors.black,
-              child:  Padding(
-                padding: const EdgeInsets.only(top:5),
-              child: Container(
-                decoration:  BoxDecoration(
-                  color:  kLightBlue.withOpacity(0.1),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Authors",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                  color: branaDeepBlack,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 0, left: 16, right: 16),
+                          decoration: BoxDecoration(
+                            color: branaDeepBlack,
+                            borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(40),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: kLightBlue.withOpacity(0.1),
+                                spreadRadius: 38,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            color: branaDeepBlack,
+                            child: SizedBox(
+                              height: 300,
+                              child: Container(
+                                color: kLightBlue.withOpacity(0.1),
+                                child: ListView(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  children: buildBooks(),
+                                ),
+                              ),
+                            )),
+                        Container(
+                          color: Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: kLightBlue.withOpacity(0.1),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(40),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "Authors",
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const GridViewPage()));
+                                          },
+                                          child: const Row(
+                                            children: [
+                                              Text(
+                                                "Show all",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 18,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 100,
+                                    margin: const EdgeInsets.only(bottom: 16),
+                                    child: ListView(
+                                      physics: const BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      children: buildAuthors(),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const GridViewPage()));
-                            },
-                            child: const Row(
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(40),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: kLightBlue.withOpacity(0.1),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                            ),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, bottom: 0, top: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Show all",
+                                  "Editors Picks",
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  size: 18,
-                                  color: Colors.white,
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Show all",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward,
+                                      size: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 100,
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: buildAuthors(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),),),
-              Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(40),
-                  ),
-                ),
-              ),
-              Container(
-                color: Colors.black,
-                child: const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Editors Picks",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Show all",
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                        SizedBox(
+                            height: 200,
+                            child: Container(
+                              color: kLightBlue.withOpacity(0.1),
+                              child: ListView(
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                children: buildBooks(),
+                              ),
+                            )),
+                        const SizedBox(height: 5),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: kLightBlue.withOpacity(0.1),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(40),
                             ),
                           ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                  height: 200,
-                  child: Container(
-                    color: kLightBlue.withOpacity(0.1),
-                    child: ListView(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      children: buildBooks(),
-                    ),
-                  )),
-              Container(
-                color: Colors.black,
-                child: const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Podcasts",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Show all",
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                          child: const Padding(
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, bottom: 0, top: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Podcasts",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Show all",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward,
+                                      size: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                color: kLightBlue.withOpacity(0.1),
-                child: SizedBox(
-                  height: 200,
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    children: buildBooks(),
-                  ),
-                ),
-              ),
-              Container(
-                  color: Colors.black,
-                  child: const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Children",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        ),
+                        Container(
+                          color: kLightBlue.withOpacity(0.1),
+                          child: SizedBox(
+                            height: 200,
+                            child: ListView(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              children: buildBooks(),
+                            ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              "Show all",
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                        const SizedBox(height: 5),
+                        Container(
+                            decoration: BoxDecoration(
+                              color: kLightBlue.withOpacity(0.1),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(40),
                               ),
                             ),
-                            SizedBox(
-                              width: 8,
+                            child: const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 0, top: 16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Children",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Show all",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        size: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )),
+                        Container(
+                          color: kLightBlue.withOpacity(0.1),
+                          child: SizedBox(
+                            height: 200,
+                            child: ListView(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              children: buildBooks(),
                             ),
-                            Icon(
-                              Icons.arrow_forward,
-                              size: 18,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
+                          ),
+                        )
                       ],
                     ),
-                  )),
-              Container(
-                color: kLightBlue.withOpacity(0.1),
-                child: SizedBox(
-                  height: 200,
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    children: buildBooks(),
-                  ),
-                ),
-              )
-            ],
-          ),
-        )));
+                  ))
+            ])));
   }
 
   List<Widget> buildBooks() {
@@ -464,12 +519,12 @@ class _MyWidgetState extends State<HomePage> {
     );
   }
 
-  Widget buildBooktwo(Book book, int index) {
+  Widget buildBooktwo(Book book2, int index) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+          MaterialPageRoute(builder: (context) => BookDetail(book: book2)),
         );
       },
       child: Container(
@@ -498,23 +553,23 @@ class _MyWidgetState extends State<HomePage> {
                   top: 24,
                 ),
                 child: Hero(
-                  tag: book.title,
+                  tag: book2.title,
                   child: Image.asset(
-                    book.image,
+                    book2.image,
                     fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
             ),
             Text(
-              book.title,
+              book2.title,
               style: GoogleFonts.jost(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              book.author.fullname,
+              book2.author.fullname,
               style: const TextStyle(
                 fontSize: 14,
                 color: Colors.grey,

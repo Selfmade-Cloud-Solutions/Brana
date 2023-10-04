@@ -32,7 +32,6 @@ class _MyWidgetState extends State<SignupPage> {
       child: Scaffold(
         backgroundColor: branaDeepBlack,
         body: Stack(children: [
-          Positioned(top: 60, child: _buildTop()),
           Positioned(bottom: 5, left: 10, right: 10, child: _buildBottom()),
         ]),
       ),
@@ -63,6 +62,7 @@ class _MyWidgetState extends State<SignupPage> {
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         color: kLightBlue.withOpacity(0.1),
+        
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: _buildForm(),
@@ -75,8 +75,13 @@ class _MyWidgetState extends State<SignupPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+        Center(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 60),
+      child: _buildTop(),
+    ),  
+  ),
+        const Center(
           child: Text(
             "Welcome",
             style: TextStyle(
@@ -87,8 +92,7 @@ class _MyWidgetState extends State<SignupPage> {
           ),
         ),
         const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        Center(
           child: _buildPrimaryText("Fill Form To Register"),
         ),
         const SizedBox(height: 20),

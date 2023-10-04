@@ -28,7 +28,6 @@ class _MyWidgetState extends State<LoginPage> {
       child: Scaffold(
         backgroundColor: branaDeepBlack,
         body: Stack(children: [
-          Positioned(top: 80, child: _buildTop()),
           Positioned(bottom: 50, left: 10, right: 10, child: _buildBottom()),
         ]),
       ),
@@ -37,8 +36,6 @@ class _MyWidgetState extends State<LoginPage> {
 
   Widget _buildTop() {
     return SizedBox(
-      width: mediaSize.width,
-      height: mediaSize.height,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -72,8 +69,13 @@ class _MyWidgetState extends State<LoginPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+        Center(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 60),
+      child: _buildTop(),
+    ),  
+  ),
+        const Center(
           child: Text(
             "Welcome Back",
             style: TextStyle(
@@ -84,9 +86,8 @@ class _MyWidgetState extends State<LoginPage> {
           ),
         ),
         const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _buildPrimaryText("Please login to Brana"),
+        Center(
+          child: _buildPrimaryText("Please Login"),
         ),
         const SizedBox(height: 15),
         Padding(
@@ -122,7 +123,7 @@ class _MyWidgetState extends State<LoginPage> {
     );
   }
 
- Widget _buildInputFieldEmail(TextEditingController controller) {
+Widget _buildInputFieldEmail(TextEditingController controller) {
   return TextField(
     controller: controller, 
     decoration: InputDecoration(
@@ -141,7 +142,7 @@ class _MyWidgetState extends State<LoginPage> {
 }
 
   Widget _buildInputFieldPassword(TextEditingController controller,
-   {isPassword = false}) {
+  {isPassword = false}) {
 
   return TextField(
     controller: controller,

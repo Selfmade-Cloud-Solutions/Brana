@@ -1,4 +1,4 @@
-import 'package:brana_mobile/audioplayerscreen.dart';
+// import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -34,8 +34,6 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Splashscreen(),
-      // home: const AudioPlayerPage(),
-      // home: const AudioPlayerScreen(),
 
       debugShowCheckedModeBanner: false,
     );

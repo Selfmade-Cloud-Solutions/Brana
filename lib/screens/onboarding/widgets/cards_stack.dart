@@ -37,7 +37,7 @@ class CardsStack extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
-              color: Colors.transparent,
+              color: kLightBlue.withOpacity(0.2),
               child: Container(
                 width: darkCardWidth,
                 height: darkCardHeight,

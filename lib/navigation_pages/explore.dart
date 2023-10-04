@@ -40,8 +40,8 @@ class _HomeScreenState extends State<ExplorePage> {
                   color: branaDarkBlue,
                   boxShadow: [
                     BoxShadow(
-                        color: const Color.fromARGB(255, 3, 3, 3)
-                            .withAlpha(100),
+                        color:
+                            const Color.fromARGB(255, 3, 3, 3).withAlpha(100),
                         blurRadius: 10.0),
                   ]),
               child: Padding(
@@ -56,21 +56,22 @@ class _HomeScreenState extends State<ExplorePage> {
                         Text(
                           post["genre"],
                           style: GoogleFonts.jost(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 28,
-                        height: 1,
-                        color: Colors.white,
-                      ),),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 28,
+                            height: 1,
+                            color: Colors.white,
+                          ),
+                        ),
                         Flexible(
                           flex: 0,
                           child: Text(
                             post["subGenre"],
                             style: GoogleFonts.jost(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 17,
-                        height: 1,
-                        color: Colors.white,
-                      ),
+                              fontWeight: FontWeight.w200,
+                              fontSize: 17,
+                              height: 1,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -108,51 +109,71 @@ class _HomeScreenState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Container(
-        color:branaDeepBlack,
-      child: Scaffold(
-        backgroundColor: branaDeepBlack,
-        body: SizedBox(
-          height: size.height,
-          child: Column(
-            children: <Widget>[
-              Container(
-                  width: size.width,
-                  alignment: Alignment.topCenter,
-                  child: categoriesScroller),
-              Expanded(
-                  child: ListView.builder(
-                      controller: controller,
-                      itemCount: itemsData.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        double scale = 1.0;
-                        if (topContainer > 0.9) {
-                          scale = index + 0.9 - topContainer;
-                          if (scale < 0) {
-                            scale = 0;
-                          } else if (scale > 1) {
-                            scale = 1;
-                          }
-                        }
-                        return Opacity(
-                          opacity: scale,
-                          child: Transform(
-                            transform: Matrix4.identity()..scale(scale, scale),
-                            alignment: Alignment.bottomCenter,
-                            child: Align(
-                                heightFactor: 0.7,
-                                alignment: Alignment.topCenter,
-                                child: itemsData[index]),
-                          ),
-                        );
-                      })),
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: branaDeepBlack,
+          flexibleSpace: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Explore Audiobooks",
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 25,
+                  height: 1,
+                  color: Colors.white,
+                ),
+              ),
             ],
-          ),
+          )),
         ),
-      ),
-    ));
+        body: Container(
+          color: branaDeepBlack,
+          child: Scaffold(
+            backgroundColor: branaDeepBlack,
+            body: SizedBox(
+              height: size.height,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      width: size.width,
+                      alignment: Alignment.topCenter,
+                      child: categoriesScroller),
+                  Expanded(
+                      child: ListView.builder(
+                          controller: controller,
+                          itemCount: itemsData.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            double scale = 1.0;
+                            if (topContainer > 0.9) {
+                              scale = index + 0.9 - topContainer;
+                              if (scale < 0) {
+                                scale = 0;
+                              } else if (scale > 1) {
+                                scale = 1;
+                              }
+                            }
+                            return Opacity(
+                              opacity: scale,
+                              child: Transform(
+                                transform: Matrix4.identity()
+                                  ..scale(scale, scale),
+                                alignment: Alignment.bottomCenter,
+                                child: Align(
+                                    heightFactor: 0.7,
+                                    alignment: Alignment.topCenter,
+                                    child: itemsData[index]),
+                              ),
+                            );
+                          })),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 
@@ -161,7 +182,6 @@ class CategoriesScroller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final double categoryHeight = MediaQuery.of(context).size.height * 0.30 - 50;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
@@ -176,12 +196,10 @@ class CategoriesScroller extends StatelessWidget {
                 width: 150,
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
-                // height: categoryHeight,
-                decoration:  BoxDecoration(
+                decoration: const BoxDecoration(
                     color: branaDarkBlue,
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(20.0))),
-                child:  Padding(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,20 +207,19 @@ class CategoriesScroller extends StatelessWidget {
                       Text(
                         "Liked",
                         style: GoogleFonts.jost(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      ),
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                    Text(
+                      Text(
                         "20 Books",
                         style: GoogleFonts.jost(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -212,12 +229,10 @@ class CategoriesScroller extends StatelessWidget {
                 width: 150,
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
-                // height: categoryHeight,
-                decoration:  BoxDecoration(
+                decoration: const BoxDecoration(
                     color: branaDarkBlue,
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(20.0))),
-                child:  Padding(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,19 +240,19 @@ class CategoriesScroller extends StatelessWidget {
                       Text(
                         "Latest",
                         style: GoogleFonts.jost(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      ),),
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "20 Books",
                         style: GoogleFonts.jost(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -247,12 +262,10 @@ class CategoriesScroller extends StatelessWidget {
                 width: 150,
                 height: 100,
                 margin: const EdgeInsets.only(right: 20),
-                // height: categoryHeight,
-                decoration:  BoxDecoration(
+                decoration: const BoxDecoration(
                     color: branaDarkBlue,
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(20.0))),
-                child:  Padding(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,10 +273,9 @@ class CategoriesScroller extends StatelessWidget {
                       Text(
                         "Wishlist",
                         style: GoogleFonts.jost(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      ),
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -271,9 +283,9 @@ class CategoriesScroller extends StatelessWidget {
                       Text(
                         "20 Books",
                         style: GoogleFonts.jost(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

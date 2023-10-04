@@ -213,7 +213,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: branaDeepBlack,
+      backgroundColor: branaDeepBlack.withBlue(15),
       body: Stack(
         children: <Widget>[
           SafeArea(
