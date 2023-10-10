@@ -3,7 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
-import 'package:brana_mobile/pages/gridview_page.dart';
+import 'package:brana_mobile/pages/authors/authors_list.dart';
+import 'package:brana_mobile/pages/recomendations/editors_picks.dart';
+import 'package:brana_mobile/pages/recomendations/podcasts.dart';
+import 'package:brana_mobile/pages/recomendations/children.dart';
 // import 'package:anim_search_bar/anim_search_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -99,7 +102,7 @@ class _MyWidgetState extends State<HomePage> {
                         Container(
                             color: branaDeepBlack,
                             child: SizedBox(
-                              height: 300,
+                            height:300,
                               child: Container(
                                 color: kLightBlue.withOpacity(0.1),
                                 child: ListView(
@@ -142,7 +145,7 @@ class _MyWidgetState extends State<HomePage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (_) =>
-                                                        const GridViewPage()));
+                                                        const AuthorsListPage()));
                                           },
                                           child: const Row(
                                             children: [
@@ -197,13 +200,13 @@ class _MyWidgetState extends State<HomePage> {
                               topLeft: Radius.circular(40),
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.only(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
                                 left: 16, right: 16, bottom: 0, top: 16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   "Editors Picks",
                                   style: TextStyle(
                                     fontSize: 22,
@@ -213,22 +216,35 @@ class _MyWidgetState extends State<HomePage> {
                                 ),
                                 Row(
                                   children: [
-                                    Text(
-                                      "Show all",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const EditorsPicks()));
+                                      },
+                                      child: const Row(
+                                        children: [
+                                          Text(
+                                            "Show all",
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            size: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward,
-                                      size: 18,
-                                      color: Colors.white,
-                                    ),
+                                    )
                                   ],
                                 ),
                               ],
@@ -253,13 +269,13 @@ class _MyWidgetState extends State<HomePage> {
                               topLeft: Radius.circular(40),
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.only(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
                                 left: 16, right: 16, bottom: 0, top: 16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   "Podcasts",
                                   style: TextStyle(
                                     fontSize: 22,
@@ -269,22 +285,35 @@ class _MyWidgetState extends State<HomePage> {
                                 ),
                                 Row(
                                   children: [
-                                    Text(
-                                      "Show all",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward,
-                                      size: 18,
-                                      color: Colors.white,
-                                    ),
+                                    InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const Podcast()));
+                                          },
+                                          child: const Row(
+                                            children: [
+                                              Text(
+                                                "Show all",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 18,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                   ],
                                 ),
                               ],
@@ -310,14 +339,14 @@ class _MyWidgetState extends State<HomePage> {
                                 topLeft: Radius.circular(40),
                               ),
                             ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
                                   left: 16, right: 16, bottom: 0, top: 16),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Children",
                                     style: TextStyle(
                                       fontSize: 22,
@@ -327,22 +356,35 @@ class _MyWidgetState extends State<HomePage> {
                                   ),
                                   Row(
                                     children: [
-                                      Text(
-                                        "Show all",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        size: 18,
-                                        color: Colors.white,
-                                      ),
+                                      InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const Children()));
+                                          },
+                                          child: const Row(
+                                            children: [
+                                              Text(
+                                                "Show all",
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 18,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                     ],
                                   ),
                                 ],
@@ -428,8 +470,7 @@ class _MyWidgetState extends State<HomePage> {
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
-            ),
-          ],
+            ),]
         ),
       ),
     );

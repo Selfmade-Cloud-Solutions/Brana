@@ -6,14 +6,14 @@ import 'package:brana_mobile/constants.dart';
 // import 'package:brana_mobile/pages/gridview_page.dart';
 // import 'package:anim_search_bar/anim_search_bar.dart';
 
-class GridViewPage extends StatefulWidget {
-  const GridViewPage({super.key});
+class AuthorsListPage extends StatefulWidget {
+  const AuthorsListPage({super.key});
 
   @override
-  State<GridViewPage> createState() => _MyWidgetState();
+  State<AuthorsListPage> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<GridViewPage> {
+class _MyWidgetState extends State<AuthorsListPage> {
   TextEditingController textController = TextEditingController();
 
   List<Author> authors = getAuthorList();

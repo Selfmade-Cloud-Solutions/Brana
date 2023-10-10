@@ -3,6 +3,7 @@ import 'package:brana_mobile/navigation_pages/genreList.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:brana_mobile/pages/explore/latest.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -192,105 +193,126 @@ class CategoriesScroller extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Row(
             children: <Widget>[
-              Container(
-                width: 150,
-                height: 100,
-                margin: const EdgeInsets.only(right: 20),
-                decoration: const BoxDecoration(
-                    color: branaDarkBlue,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Liked",
-                        style: GoogleFonts.jost(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LatestRelease()),
+                    );
+                  },
+                  child: Container(
+                    width: 150,
+                    height: 100,
+                    margin: const EdgeInsets.only(right: 20),
+                    decoration: const BoxDecoration(
+                        color: branaDarkBlue,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Liked",
+                            style: GoogleFonts.jost(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "20 Books",
+                            style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 10,
+                    ),
+                  )),
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LatestRelease()),
+                    );
+                  },
+                  child: Container(
+                    width: 150,
+                    height: 100,
+                    margin: const EdgeInsets.only(right: 20),
+                    decoration: const BoxDecoration(
+                        color: branaDarkBlue,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Latest",
+                            style: GoogleFonts.jost(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "20 Books",
+                            style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "20 Books",
-                        style: GoogleFonts.jost(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                    ),
+                  )),
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LatestRelease()),
+                    );
+                  },
+                  child: Container(
+                    width: 150,
+                    height: 100,
+                    margin: const EdgeInsets.only(right: 20),
+                    decoration: const BoxDecoration(
+                        color: branaDarkBlue,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Wishlist",
+                            style: GoogleFonts.jost(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "20 Books",
+                            style: GoogleFonts.jost(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: 150,
-                height: 100,
-                margin: const EdgeInsets.only(right: 20),
-                decoration: const BoxDecoration(
-                    color: branaDarkBlue,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Latest",
-                        style: GoogleFonts.jost(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "20 Books",
-                        style: GoogleFonts.jost(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: 150,
-                height: 100,
-                margin: const EdgeInsets.only(right: 20),
-                decoration: const BoxDecoration(
-                    color: branaDarkBlue,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Wishlist",
-                        style: GoogleFonts.jost(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "20 Books",
-                        style: GoogleFonts.jost(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                  )),
             ],
           ),
         ),
