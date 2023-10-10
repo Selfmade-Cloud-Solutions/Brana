@@ -4,6 +4,7 @@ import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/pages/explore/latest.dart';
+import 'package:brana_mobile/pages/explore/liked.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -197,7 +198,7 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LatestRelease()),
+                      MaterialPageRoute(builder: (context) => LikedPage()),
                     );
                   },
                   child: Container(
