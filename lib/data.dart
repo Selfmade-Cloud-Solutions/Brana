@@ -19,6 +19,17 @@ class FakeData {
   ];
   List<Category> get categoriesList => _categoriesList;
 }
+
+List bookspic = [
+  "books/ስቅታ.jpg",
+  "books/ስቅታ.jpg",
+  "books/ስቅታ.jpg",
+  "books/ስቅታ.jpg",
+  "books/ስቅታ.jpg",
+];
+
+
+
 class CourseModel {
   String name;
   String description;
