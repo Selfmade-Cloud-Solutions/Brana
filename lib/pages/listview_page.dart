@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:brana_mobile/data.dart';
-import 'package:brana_mobile/models/category.dart';
 
 class ListViewPage extends StatelessWidget {
   const ListViewPage({Key? key}) : super(key: key);
@@ -14,7 +13,6 @@ class ListViewPage extends StatelessWidget {
         textDirection: TextDirection.ltr,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Lorem'),
             centerTitle: true,
           ),
           body: Padding(

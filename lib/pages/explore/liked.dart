@@ -1,158 +1,151 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:brana_mobile/book_detail.dart';
+// import 'package:brana_mobile/pages/explore/swiper.dart';
 
-class LikedPage extends StatelessWidget {
-  const LikedPage({Key? key}) : super(key: key);
+class LikedPage extends StatefulWidget {
+  const LikedPage({super.key});
+
+  @override
+  State<LikedPage> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<LikedPage> {
+  TextEditingController textController = TextEditingController();
+
+  List<Book> books = getBookList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: branaDark,
-      appBar: AppBar(
-      backgroundColor: branaDark,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: branaWhite,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        flexibleSpace: const Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        )),
-      ),
-      body: LatestTop(),
-    );
-  }
-}
-
-class LatestTop extends StatefulWidget {
-  const LatestTop({Key? key}) : super(key: key);
-
-  @override
-  _LatestTopState createState() => _LatestTopState();
-}
-
-class _LatestTopState extends State<LatestTop> {
-  final upcomings = [
-    'assets/books/upcoming1.jpg',
-    'assets/books/upcoming2.png',
-    'assets/books/upcoming3.jpg',
-  ];
-
-  final _pageController = PageController();
-  int _currentPage = 0;
-
-  late Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (_currentPage < upcomings.length - 1) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-      _pageController.animateToPage(
-        _currentPage,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 120,
-      child: Stack(
-        children: [
-          PageView(
-            controller: _pageController,
-            physics: const ScrollPhysics(),
-            onPageChanged: (int page) {
-              setState(() {
-                _currentPage = page;
-              });
+      backgroundColor: branaDeepBlack,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: branaDeepBlack,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
             },
-            children: upcomings
-                .map((e) => Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              e,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    Colors.black,
-                                    Colors.black45,
-                                    Colors.black12,
-                                    Colors.black.withOpacity(0)
-                                  ])),
-                        ),
-                        const Positioned(
-                            left: 30,
-                            top: 20,
-                            child: Text(
-                              'Upcoming Book',
-                              style:
-                                  TextStyle(fontSize: 24, color: Colors.white),
-                            )),
-                        const Positioned(
-                            left: 30,
-                            top: 55,
-                            child: Text(
-                              '30+ new book coming with various \nStories are waiting for you',
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.grey),
-                            ))
-                      ],
-                    ))
-                .toList(),
+            color: Colors.white,
           ),
-          Positioned(
-              left: 30,
-              bottom: 10,
-              child: SmoothPageIndicator(
-                controller: _pageController,
-                count: upcomings.length,
-                effect: const ExpandingDotsEffect(
-                  expansionFactor: 4,
-                  dotWidth: 8,
-                  dotHeight: 4,
-                  activeDotColor: Colors.white,
+          flexibleSpace: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Liked",
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 25,
+                  height: 1,
+                  color: Colors.white,
                 ),
-                onDotClicked: (index) {
-                  _pageController.animateToPage(index,
-                      duration: const Duration(milliseconds: 3),
-                      curve: Curves.easeOut);
-                },
-              ))
+              ),
+            ],
+          )),
+        ),
+        body: ListView(children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  color:kLightBlue.withOpacity(0.1),
+                height:20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: kLightBlue.withOpacity(0.1),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                    ),
+                  ),
+                ),
+                  SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Container(
+                    color: kLightBlue.withOpacity(0.1),
+                    child: GridView.count(
+                      physics: const BouncingScrollPhysics(),
+                      crossAxisCount: 3,
+                      children: buildBooks()
+                          .map((book) => SizedBox(
+                                child: book,
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ]));
+  }
+
+  List<Widget> buildBooks() {
+    List<Widget> list = [];
+    for (var i = 0; i < books.length; i++) {
+      list.add(buildBook(books[i], i));
+    }
+    return list;
+  }
+
+  Widget buildBook(Book book, int index) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+        );
+      },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+          Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
+                      spreadRadius: 8,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                    child: Hero(
+                      tag: book.image,
+                      child: Image.asset(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width/5,
+                        book.image,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+              ),
+            
+            Text(
+              book.title,
+              style: GoogleFonts.jost(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white70),
+            ),
+            Text(
+              book.author.fullname,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+            ),
+        )
         ],
-      ),
+        ),
+      
     );
   }
 }

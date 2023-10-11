@@ -5,6 +5,7 @@ import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/pages/explore/latest.dart';
 import 'package:brana_mobile/pages/explore/liked.dart';
+import 'package:brana_mobile/pages/explore/wishlist.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -198,7 +199,7 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LikedPage()),
+                      MaterialPageRoute(builder: (context) => const LikedPage()),
                     );
                   },
                   child: Container(
@@ -224,7 +225,7 @@ class CategoriesScroller extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            "20 Books",
+                            "14 Books",
                             style: GoogleFonts.jost(
                               fontSize: 16,
                               color: Colors.white,
@@ -238,7 +239,7 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LatestRelease()),
+                      MaterialPageRoute(builder: (context) =>  const LatestPage()),
                     );
                   },
                   child: Container(
@@ -278,7 +279,7 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LatestRelease()),
+                      MaterialPageRoute(builder: (context) => const WishlistPage()),
                     );
                   },
                   child: Container(

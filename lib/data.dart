@@ -1,5 +1,17 @@
-import 'package:brana_mobile/models/category.dart';
+const upcomings = [
+    'assets/books/upcoming1.jpg',
+    'assets/books/upcoming2.png',
+    'assets/books/upcoming3.jpg',
+  ];
+  class Category {
+  late String name;
+  late String image;
 
+  Category({
+    required this.name,
+    required this.image,
+  });
+}
 class FakeData {
   final List<Category> _categoriesList = <Category>[
     Category(name: ' ፍሬዓለም ሺባባው', image: 'assets/authors/ፍሬዓለምሺባባው.jpg'),

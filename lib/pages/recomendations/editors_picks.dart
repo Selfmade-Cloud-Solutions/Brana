@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
-// import 'package:anim_search_bar/anim_search_bar.dart';
-
 class EditorsPicks extends StatefulWidget {
   const EditorsPicks({super.key});
 
