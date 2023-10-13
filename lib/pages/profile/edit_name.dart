@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:brana_mobile/widgets/appbar_widget.dart';
+import 'package:brana_mobile/constants.dart';
 
 // This class handles the Page to edit the Name Section of the User Profile.
 class EditNameFormPage extends StatefulWidget {
@@ -35,7 +36,17 @@ class EditNameFormPageState extends State<EditNameFormPage> {
         appBar: buildAppBar(context),
         body: Form(
           key: _formKey,
-          child: Column(
+          child:Theme(
+        data: Theme.of(context).copyWith(
+          inputDecorationTheme: const InputDecorationTheme(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: branaWhite), 
+            ),
+          ),
+        ),
+          child: Container(
+            color:branaDeepBlack,
+            child:Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -45,6 +56,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                     "What's Your Name?",
                     style: TextStyle(
                       fontSize: 25,
+                      color: branaWhite,
                       fontWeight: FontWeight.bold,
                     ),
                   )),
@@ -68,9 +80,14 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                               return null;
                             },
                             decoration:
-                                const InputDecoration(labelText: 'First Name'),
+                                const InputDecoration(labelText: 'First Name',
+                                labelStyle: TextStyle(
+        color: branaWhite,
+      ),),
                             controller: firstNameController,
-                          ))),
+                          )
+                          )
+                          ),
                   Padding(
                       padding: const EdgeInsets.fromLTRB(0, 40, 16, 0),
                       child: SizedBox(
@@ -87,7 +104,10 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                               return null;
                             },
                             decoration:
-                                const InputDecoration(labelText: 'Last Name'),
+                                const InputDecoration(labelText: 'Last Name',
+                                labelStyle: TextStyle(
+        color: branaWhite,
+      ),),
                             controller: secondNameController,
                           )))
                 ],
@@ -117,6 +137,6 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                       )))
             ],
           ),
-        ));
+        ))));
   }
 }

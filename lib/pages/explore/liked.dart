@@ -13,7 +13,6 @@ class LikedPage extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<LikedPage> {
-  TextEditingController textController = TextEditingController();
 
   List<Book> books = getBookList();
 

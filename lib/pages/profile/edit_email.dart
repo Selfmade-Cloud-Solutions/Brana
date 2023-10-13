@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:brana_mobile/widgets/appbar_widget.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:brana_mobile/constants.dart';
 
 // This class handles the Page to edit the Email Section of the User Profile.
 class EditEmailFormPage extends StatefulWidget {
@@ -31,9 +32,18 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: branaDeepBlack,
         appBar: buildAppBar(context),
         body: Form(
           key: _formKey,
+          child:Theme(
+        data: Theme.of(context).copyWith(
+          inputDecorationTheme: const InputDecorationTheme(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: branaWhite), 
+            ),
+          ),
+        ),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -43,7 +53,8 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
                     child: Text(
                       "What's your email?",
                       style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold,
+                      color: branaWhite,),
                       textAlign: TextAlign.left,
                     )),
                 Padding(
@@ -60,7 +71,10 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
                             return null;
                           },
                           decoration: const InputDecoration(
-                              labelText: 'Your email address'),
+                              labelText: 'Your email address',
+                              labelStyle: TextStyle(
+        color: branaWhite,
+                          )),
                           controller: emailController,
                         ))),
                 Padding(
@@ -87,6 +101,6 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
                           ),
                         )))
               ]),
-        ));
+        )));
   }
 }

@@ -1,9 +1,10 @@
 const upcomings = [
-    'assets/books/upcoming1.jpg',
-    'assets/books/upcoming2.png',
-    'assets/books/upcoming3.jpg',
-  ];
-  class Category {
+  'assets/books/upcoming1.jpg',
+  'assets/books/upcoming2.png',
+  'assets/books/upcoming3.jpg',
+];
+
+class Category {
   late String name;
   late String image;
 
@@ -12,6 +13,7 @@ const upcomings = [
     required this.image,
   });
 }
+
 class FakeData {
   final List<Category> _categoriesList = <Category>[
     Category(name: ' ፍሬዓለም ሺባባው', image: 'assets/authors/ፍሬዓለምሺባባው.jpg'),
@@ -40,85 +42,92 @@ List bookspic = [
   "books/ስቅታ.jpg",
 ];
 
-
-
-class CourseModel {
+class BookModel {
   String name;
   String description;
   String author;
   String duration;
   String chapters;
-  String episodes;
+  // String episodes;
+  String narrator;
   String thumbnail;
 
-  CourseModel(
+  BookModel(
       {required this.name,
       required this.description,
       required this.duration,
       required this.author,
       required this.chapters,
-      required this.episodes,
+      // required this.episodes,
+      required this.narrator,
       required this.thumbnail});
 }
 
-class CourseList {
-  static List<CourseModel> list = [
-    CourseModel(
+class BookList {
+  static List<BookModel> list = [
+    BookModel(
         name: "ላስብበት ",
         description:
             "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
         author: "ፍሬዓለም ሺባባው",
         duration: "210 minutes",
         chapters: "12 chapters",
-        episodes: "56 Episodes",
+        // episodes: "56 Episodes",
+        narrator: "እንዳለጌታ ከበደ",
         thumbnail: "assets/books/ላስብበት.jpg"),
-    CourseModel(
+    BookModel(
         name: "ስቅታ",
         description:
             "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
         author: "ሮማን አፈወርቅ",
         duration: "210 minutes",
         chapters: "12 chapters",
-        episodes: "56 Episodes",
+        // episodes: "56 Episodes",
+        narrator: "እንዳለጌታ ከበደ",
         thumbnail: "assets/books/ስቅታ.jpg"),
-    CourseModel(
+    BookModel(
         name: "እስረኞቹ",
         description:
             "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
         author: "እንዳለጌታ ከበደ",
         duration: "210 minutes",
         chapters: "12 chapters",
-        episodes: "56 Episodes",
+        // episodes: "56 Episodes",
+        narrator: "እንዳለጌታ ከበደ",
         thumbnail: "assets/books/እስረኞቹ.jpg"),
-    CourseModel(
+    BookModel(
         name: "ልጅነት",
         description:
             "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
         author: "ፍሬዓለም ሺባባው",
         duration: "210 minutes",
         chapters: "12 chapters",
-        episodes: "56 Episodes",
+        // episodes: "56 Episodes",
+        narrator: "እንዳለጌታ ከበደ",
         thumbnail: "assets/books/ልጅነት.jpg"),
-    CourseModel(
+    BookModel(
         name: "ሀብት ያለው አእምሮህ",
         description:
             "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
         author: "ሮማን አፈወርቅ",
         duration: "210 minutes",
         chapters: "12 chapters",
-        episodes: "56 Episodes",
+        // episodes: "56 Episodes",
+        narrator: "እንዳለጌታ ከበደ",
         thumbnail: "assets/books/ሀብት_ያለው_አእምሮህ.jpg"),
-    CourseModel(
+    BookModel(
         name: "ቴሎስ",
         description:
             "የመንገድ ሠራተኛ ታክሢውን አስቁሞ ገባ እሱ በገባበት ቅስበት ታክሢውን የሽንት ቤት ሽታ ሞላው ሁሉም ሠው ተገርሞ ግማሹ መስኮት ይከፋታል ግማሹ ኡፋ ኡፉ እያለ ወያላው ወደ ቻይናው እያየ ሄሎ ቻይንዬ ፈሣሽ እንዴ?እሥቲ ሂሣብ አለ ?..",
         author: "እንዳለጌታ ከበደ",
         duration: "210 minutes",
         chapters: "12 chapters",
-        episodes: "56 Episodes",
+        // episodes: "56 Episodes",
+        narrator: "እንዳለጌታ ከበደ",
         thumbnail: "assets/books/ቴሎስ.jpg"),
   ];
 }
+
 class Book {
   String title;
   String description;
@@ -265,7 +274,6 @@ class Author {
 
 List<Author> getAuthorList() {
   return <Author>[
-    
     Author(
       "እንዳለጌታ ከበደ",
       12,
@@ -398,5 +406,3 @@ const booksExplore = [
     "image": "ላስብበት.jpg"
   },
 ];
-
-

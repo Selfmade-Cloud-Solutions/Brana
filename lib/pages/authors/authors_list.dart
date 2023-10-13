@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
-// import 'package:brana_mobile/book_detail.dart';
+import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 // import 'package:brana_mobile/pages/gridview_page.dart';
 // import 'package:anim_search_bar/anim_search_bar.dart';
 
@@ -99,7 +99,17 @@ class _MyWidgetState extends State<AuthorsListPage> {
   }
 
   Widget buildAuthor(Author author, int index) {
-    return Padding(
+
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AuthorsSoloPage(),
+        ),  
+      );
+    },
+    child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
         child: Container(
           decoration: const BoxDecoration(
@@ -173,6 +183,6 @@ class _MyWidgetState extends State<AuthorsListPage> {
               ),
             ],
           ),
-        ));
+        )));
   }
 }

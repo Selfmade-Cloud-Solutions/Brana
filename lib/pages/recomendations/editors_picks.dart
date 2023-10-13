@@ -26,7 +26,7 @@ class _MyWidgetState extends State<EditorsPicks> {
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.white,
+            color: branaWhite,
           ),
           flexibleSpace: Center(
               child: Column(

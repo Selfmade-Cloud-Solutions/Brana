@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:brana_mobile/user/user_data.dart';
+import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Phone Section of the User Profile.
@@ -32,8 +33,18 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(context),
-        body: Form(
+        body: Container(
+          color: branaDeepBlack,
+          child:Form(
           key: _formKey,
+          child: Theme(
+        data: Theme.of(context).copyWith(
+          inputDecorationTheme: const InputDecorationTheme(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: branaWhite), 
+            ),
+          ),
+        ),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -43,7 +54,8 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
                     child: Text(
                       "What's Your Phone Number?",
                       style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
+                      color: branaWhite,),
                     )),
                 Padding(
                     padding: const EdgeInsets.only(top: 40),
@@ -65,6 +77,9 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
                           controller: phoneController,
                           decoration: const InputDecoration(
                             labelText: 'Your Phone Number',
+                            labelStyle: TextStyle(
+        color: branaWhite,
+      ),
                           ),
                         ))),
                 Padding(
@@ -90,6 +105,6 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
                           ),
                         )))
               ]),
-        ));
+    ))));
   }
 }
