@@ -1,92 +1,152 @@
-import 'package:brana_mobile/data.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:brana_mobile/data.dart';
+import 'package:brana_mobile/constants.dart';
+import 'package:brana_mobile/book_detail.dart';
+import 'package:brana_mobile/pages/explore/swiper.dart';
 
-class LatestRelease extends StatefulWidget {
+class LatestPage extends StatefulWidget {
+  const LatestPage({super.key});
+
   @override
-  _LatestScreenState createState() => _LatestScreenState();
+  State<LatestPage> createState() => _MyWidgetState();
 }
 
-class _LatestScreenState extends State<LatestRelease> {
-  final ScrollController _scrollController1 = ScrollController();
+class _MyWidgetState extends State<LatestPage> {
+  TextEditingController textController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      double minScrollExtent1 = _scrollController1.position.minScrollExtent;
-      double maxScrollExtent1 = _scrollController1.position.maxScrollExtent;
-      //
-      animateToMaxMin(maxScrollExtent1, minScrollExtent1, maxScrollExtent1, 25,
-          _scrollController1);
-    });
-  }
-
-  animateToMaxMin(double max, double min, double direction, int seconds,
-      ScrollController scrollController) {
-    scrollController
-        .animateTo(
-          direction,
-            duration: Duration(seconds: seconds), curve: Curves.linear)
-        .then((value) {
-      direction = direction == max ? min : max;
-      animateToMaxMin(max, min, direction, seconds, scrollController);
-    });
-  }
+  List<Book> books = getBookList();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
+    return Scaffold(
+      backgroundColor: branaDeepBlack,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: branaDeepBlack,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.white,
+          ),
+          flexibleSpace: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Latest Releases",
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 25,
+                  height: 1,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          )),
+        ),
+        body: ListView(children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                LatestScroll(
-                  scrollController: _scrollController1,
-                  images: bookspic,
+                const LatestTop(),
+                Container(
+                  color:kLightBlue.withOpacity(0.1),
+                height:20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: kLightBlue.withOpacity(0.1),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                    ),
+                  ),
+                ),
+                  SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Container(
+                    color: kLightBlue.withOpacity(0.1),
+                    child: GridView.count(
+                      physics: const BouncingScrollPhysics(),
+                      crossAxisCount: 3,
+                      children: buildBooks()
+                          .map((book) => SizedBox(
+                                child: book,
+                              ))
+                          .toList(),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
+          )
+        ]));
   }
-}
 
-class LatestScroll extends StatelessWidget {
-  final ScrollController scrollController;
-  final List images;
+  List<Widget> buildBooks() {
+    List<Widget> list = [];
+    for (var i = 0; i < books.length; i++) {
+      list.add(buildBook(books[i], i));
+    }
+    return list;
+  }
 
-  const LatestScroll({Key? key, required this.scrollController, required this.images})
-      : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: ListView.builder(
-          controller: scrollController,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: images.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Image.asset(
-                  'assets/${images[index % images.length]}',
-                  width: 150,
-                  fit: BoxFit.cover,
+  Widget buildBook(Book book, int index) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+        );
+      },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+          Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
+                      spreadRadius: 8,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
+                    child: Hero(
+                      tag: book.image,
+                      child: Image.asset(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width/5,
+                        book.image,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
               ),
-            );
-          }),
+            
+            Text(
+              book.title,
+              style: GoogleFonts.jost(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white70),
+            ),
+            Text(
+              book.author.fullname,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+            ),
+        )
+        ],
+        ),
+      
     );
   }
 }

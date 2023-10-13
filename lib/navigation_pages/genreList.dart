@@ -12,10 +12,10 @@ class GenreListPage extends StatefulWidget {
 }
 
 class _RecomendedPageState extends State<GenreListPage> {
-  Set<CourseModel> courseSet = {};
+  Set<BookModel> courseSet = {};
 
-  Widget _courseList(BuildContext context) {
-    courseSet.addAll(CourseList.list);
+  Widget _bookList(BuildContext context) {
+    courseSet.addAll(BookList.list);
 
     return SingleChildScrollView(
         child: Column(
@@ -43,7 +43,7 @@ class _RecomendedPageState extends State<GenreListPage> {
     );
   }
 
-  Widget _bookInfo(BuildContext context, CourseModel model) {
+  Widget _bookInfo(BuildContext context, BookModel model) {
     return SizedBox(
         height: 170,
         width: MediaQuery.of(context).size.width - 20,
@@ -65,20 +65,14 @@ class _RecomendedPageState extends State<GenreListPage> {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Expanded(
-                      child: Text(model.name,
-                          style: GoogleFonts.jost(
-                fontSize: 15,
-                height: 1,
-                color: branaWhite,
-                fontWeight: FontWeight.bold
-              ),),
-              
-                    ),
-                    const SizedBox(
-                  height: 10,
-                ),
-                    const SizedBox(
-                      width: 5,
+                      child: Text(
+                        model.name,
+                        style: GoogleFonts.jost(
+                            fontSize: 15,
+                            height: 1,
+                            color: branaWhite,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Text(model.duration,
                         style: const TextStyle(
@@ -88,41 +82,61 @@ class _RecomendedPageState extends State<GenreListPage> {
                     const SizedBox(width: 10)
                   ],
                 ),
-                Text(
-                  model.author,
-                  style: GoogleFonts.jost(
-                fontSize: 15,
-                height: 1,
-                color: branaWhite,
-                fontWeight: FontWeight.bold
-              ),
-                ),const SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
-                  height: 80,
+                  height: 60,
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       if (constraints.constrainHeight(20) < 20) {
                         return SingleChildScrollView(
                           controller: ScrollController(),
                           child: Text(
-                            model.description, 
-                          style: GoogleFonts.jost(
-                fontSize: 12,
-                height: 1,
-                color: branaWhite,
-              ),),
+                            model.description,
+                            style: GoogleFonts.jost(
+                              fontSize: 12,
+                              height: 1,
+                              color: branaWhite,
+                            ),
+                          ),
                         );
                       } else {
-                        return Text(model.description,style: GoogleFonts.jost(
-                fontSize: 12,
-                height: 1,
-                color: branaWhite,
-              ),);
+                        return Text(
+                          model.description,
+                          style: GoogleFonts.jost(
+                            fontSize: 12,
+                            height: 1,
+                            color: branaWhite,
+                          ),
+                        );
                       }
                     },
                   ),
+                ),
+                Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      model.author,
+                      style: GoogleFonts.jost(
+                        fontSize: 15,
+                        height: 1,
+                        color: branaWhite,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "Narrator ${model.narrator}",
+                    style: GoogleFonts.jost(
+                        fontSize: 15,
+                        height: 1,
+                        color: branaWhite,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ]),
+                const SizedBox(
+                  height: 10,
                 ),
                 Row(
                   children: <Widget>[
@@ -130,7 +144,7 @@ class _RecomendedPageState extends State<GenreListPage> {
                     const SizedBox(
                       width: 10,
                     ),
-                    _chip(model.episodes, branaWhite, height: 5),
+                    // _chip(model.episodes, branaWhite, height: 5),
                   ],
                 )
               ],
@@ -185,15 +199,18 @@ class _RecomendedPageState extends State<GenreListPage> {
         )),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          color: kLightBlue.withOpacity(0.1),
+          child: Container(
+        width: MediaQuery.of(context).size.width,
+        color: kLightBlue.withOpacity(0.1),
         child: Column(
-  children: <Widget>[
-    _courseList(context),
-    SizedBox(height: 40, width: double.infinity, child: Container(color: Colors.black)),
-  ],
-),
+          children: <Widget>[
+            _bookList(context),
+            SizedBox(
+                height: 40,
+                width: double.infinity,
+                child: Container(color: Colors.black)),
+          ],
+        ),
       )),
     );
   }

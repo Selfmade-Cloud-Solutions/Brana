@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:brana_mobile/widgets/appbar_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:brana_mobile/constants.dart';
 // This class handles the Page to edit the About Me Section of the User Profile.
 class EditDescriptionFormPage extends StatefulWidget {
   const EditDescriptionFormPage({super.key});
@@ -30,6 +31,7 @@ class _EditDescriptionFormPageState extends State<EditDescriptionFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: branaDeepBlack,
         appBar: buildAppBar(context),
         body: Form(
           key: _formKey,
@@ -42,7 +44,8 @@ class _EditDescriptionFormPageState extends State<EditDescriptionFormPage> {
                     child: Text(
                       "Update your birthday",
                       style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold,
+                          color:branaWhite),
                     )),
                 Padding(
   padding: const EdgeInsets.all(20),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 
 class genreBookDetail extends StatelessWidget {
-  final CourseModel? model;
+  final BookModel? model;
 
   const genreBookDetail({required this.model});
 
@@ -12,7 +12,7 @@ class genreBookDetail extends StatelessWidget {
     if (model == null) {
       return const Scaffold(
         body: Center(
-          child: Text('Error: Course not found'),
+          child: Text('Error: Book not found'),
         ),
       );
     }

@@ -6,7 +6,6 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:brana_mobile/constants.dart';
 // import 'package:brana_mobile/screens/Loading.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 // import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:just_audio/just_audio.dart';
