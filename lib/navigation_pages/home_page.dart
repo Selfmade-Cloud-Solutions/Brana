@@ -1,3 +1,4 @@
+import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
@@ -139,6 +140,7 @@ class _MyWidgetState extends State<HomePage> {
                                             color: Colors.white,
                                           ),
                                         ),
+
                                         InkWell(
                                           onTap: () {
                                             Navigator.push(
@@ -485,7 +487,16 @@ class _MyWidgetState extends State<HomePage> {
   }
 
   Widget buildAuthor(Author author, int index) {
-    return Container(
+    return GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AuthorsSoloPage(),
+        ),  
+      );
+    },
+    child: Container(
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 0, 0, 0),
         borderRadius: BorderRadius.all(
@@ -557,7 +568,7 @@ class _MyWidgetState extends State<HomePage> {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget buildBooktwo(Book book2, int index) {
