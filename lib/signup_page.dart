@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -62,7 +63,6 @@ class _MyWidgetState extends State<SignupPage> {
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         color: kLightBlue.withOpacity(0.1),
-        
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: _buildForm(),
@@ -76,18 +76,18 @@ class _MyWidgetState extends State<SignupPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
-      child: _buildTop(),
-    ),  
-  ),
-        const Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 60),
+            child: _buildTop(),
+          ),
+        ),
+        Center(
           child: Text(
             "Welcome",
-            style: TextStyle(
+            style: GoogleFonts.jost(
               color: branaWhite,
               fontSize: 32,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
@@ -138,26 +138,23 @@ class _MyWidgetState extends State<SignupPage> {
   Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: branaWhite),
+      style: GoogleFonts.jost(color: branaWhite),
     );
   }
 
   Widget _buildInputFieldFirstName(TextEditingController controller) {
     return TextField(
         controller: controller,
-        decoration:  InputDecoration(
+        decoration: InputDecoration(
             suffixIcon: const Icon(Icons.done),
             labelText: 'First Name',
-            labelStyle: const TextStyle(color: branaWhite),
+            labelStyle: GoogleFonts.jost(color: branaWhite),
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: branaWhite),
-              borderRadius: BorderRadius.circular(8)
-            ),
+                borderSide: const BorderSide(color: branaWhite),
+                borderRadius: BorderRadius.circular(8)),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color:branaWhite),
-              borderRadius: BorderRadius.circular(8)
-            )
-            ));
+                borderSide: const BorderSide(color: branaWhite),
+                borderRadius: BorderRadius.circular(8))));
   }
 
   Widget _buildInputFieldLastName(TextEditingController controller) {
@@ -166,61 +163,57 @@ class _MyWidgetState extends State<SignupPage> {
         decoration: InputDecoration(
             suffixIcon: const Icon(Icons.done),
             labelText: 'Last Name',
-            labelStyle: const TextStyle(color: branaWhite),
+            labelStyle: GoogleFonts.jost(color: branaWhite),
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: branaWhite),
               borderRadius: BorderRadius.circular(8),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide( color:branaWhite ),
-              borderRadius: BorderRadius.circular(8))
-            ));
+                borderSide: const BorderSide(color: branaWhite),
+                borderRadius: BorderRadius.circular(8))));
   }
 
   Widget _buildInputFieldEmail(TextEditingController controller) {
     return TextField(
       controller: controller,
-      decoration:  InputDecoration(
-          suffixIcon: const Icon(Icons.done),
-          labelText: 'Email',
-          labelStyle: const TextStyle(color: branaWhite),
-          enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)  
+      decoration: InputDecoration(
+        suffixIcon: const Icon(Icons.done),
+        labelText: 'Email',
+        labelStyle: GoogleFonts.jost(color: branaWhite),
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: branaWhite),
+            borderRadius: BorderRadius.circular(8)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: branaWhite),
+            borderRadius: BorderRadius.circular(8)),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)
-      ),),
     );
   }
-  
 
   Widget _buildInputFieldPassword(TextEditingController controller,
       {isPassword = false}) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                isPasswordVisible = !isPasswordVisible;
-              });
-            },
-            icon: isPasswordVisible
-                ? const Icon(Icons.visibility)
-                : const Icon(Icons.visibility_off),
-          ),
-          labelText: 'Password',
-          labelStyle:  const TextStyle(color: branaWhite),
-          enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)  
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              isPasswordVisible = !isPasswordVisible;
+            });
+          },
+          icon: isPasswordVisible
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        ),
+        labelText: 'Password',
+        labelStyle: GoogleFonts.jost(color: branaWhite),
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: branaWhite),
+            borderRadius: BorderRadius.circular(8)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: branaWhite),
+            borderRadius: BorderRadius.circular(8)),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)
-      ),),
       obscureText: !isPasswordVisible,
     );
   }
@@ -229,34 +222,32 @@ class _MyWidgetState extends State<SignupPage> {
     return TextField(
         controller: controller,
         decoration: InputDecoration(
-            suffixIcon: const Icon(Icons.done),
-            labelText: 'Phone Number',
-            labelStyle: const TextStyle(color: branaWhite),
-            enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)  
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)
-      ),));
+          suffixIcon: const Icon(Icons.done),
+          labelText: 'Phone Number',
+          labelStyle: GoogleFonts.jost(color: branaWhite),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: branaWhite),
+              borderRadius: BorderRadius.circular(8)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: branaWhite),
+              borderRadius: BorderRadius.circular(8)),
+        ));
   }
 
   Widget _buildInputFieldDateOfBirth(TextEditingController controller) {
     return TextField(
         controller: controller,
         decoration: InputDecoration(
-            suffixIcon: const Icon(Icons.done),
-            labelText: 'Date of Birth',
-            labelStyle: const TextStyle(color: branaWhite),
-            enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)  
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: branaWhite),
-        borderRadius: BorderRadius.circular(8)
-      ),));
+          suffixIcon: const Icon(Icons.done),
+          labelText: 'Date of Birth',
+          labelStyle: GoogleFonts.jost(color: branaWhite),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: branaWhite),
+              borderRadius: BorderRadius.circular(8)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: branaWhite),
+              borderRadius: BorderRadius.circular(8)),
+        ));
   }
 
   Widget _buildSignupButton() {
@@ -274,14 +265,13 @@ class _MyWidgetState extends State<SignupPage> {
         );
       },
       style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
-        elevation: 20,
-        minimumSize: const Size.fromHeight(60),
-        backgroundColor: branaPrimaryColor
-      ),
-      child: const Text(
+          shape: const StadiumBorder(),
+          elevation: 20,
+          minimumSize: const Size.fromHeight(60),
+          backgroundColor: branaPrimaryColor),
+      child: Text(
         "SignUp",
-        style: TextStyle(
+        style: GoogleFonts.jost(
           color: branaWhite,
         ),
       ),

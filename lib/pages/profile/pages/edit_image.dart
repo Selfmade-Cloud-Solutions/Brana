@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:brana_mobile/widgets/appbar_widget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EditImagePage extends StatefulWidget {
   const EditImagePage({Key? key}) : super(key: key);
@@ -25,11 +26,11 @@ class _EditImagePageState extends State<EditImagePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(
+          SizedBox(
               width: 330,
               child: Text(
                 "Upload a photo of yourself:",
-                style: TextStyle(
+                style: GoogleFonts.jost(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
                 ),
@@ -64,9 +65,9 @@ class _EditImagePageState extends State<EditImagePage> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: const Text(
+                      child:  Text(
                         'Update',
-                        style: TextStyle(fontSize: 15),
+                        style: GoogleFonts.jost(fontSize: 15),
                       ),
                     ),
                   )))

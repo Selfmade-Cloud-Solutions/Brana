@@ -61,7 +61,7 @@
 //                                                           _currentSong?.title ??
 //                                                               'Chapter 1',
 //                                                           style:
-//                                                               const TextStyle(
+//                                                               GoogleFonts.jost(
 //                                                             fontSize: 14.0,
 //                                                             color: Colors.white,
 //                                                           ),
@@ -71,7 +71,7 @@
 //                                                                   ?.artist ??
 //                                                               'Chapter 1',
 //                                                           style:
-//                                                               const TextStyle(
+//                                                               GoogleFonts.jost(
 //                                                             fontSize: 14.0,
 //                                                             color: Colors.white,
 //                                                           ),
@@ -121,13 +121,13 @@
 //                                         children: [
 //                                           Text(
 //                                             formatDuration(position),
-//                                             style: const TextStyle(
+//                                             style: GoogleFonts.jost(
 //                                                 fontSize: 13,
 //                                                 color: Colors.white),
 //                                           ),
 //                                           Text(
 //                                             formatDuration(duration - position),
-//                                             style: const TextStyle(
+//                                             style: GoogleFonts.jost(
 //                                                 fontSize: 13,
 //                                                 color: Colors.white),
 //                                           ),

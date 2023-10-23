@@ -61,7 +61,7 @@ class _MyWidgetState extends State<HomePage> {
                     Text(
                       "Brana Audiobooks",
                       style: GoogleFonts.jost(
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w600,
                         fontSize: 25,
                         height: 1,
                         color: Colors.white,
@@ -103,7 +103,7 @@ class _MyWidgetState extends State<HomePage> {
                         Container(
                             color: branaDeepBlack,
                             child: SizedBox(
-                            height:300,
+                              height: 300,
                               child: Container(
                                 color: kLightBlue.withOpacity(0.1),
                                 child: ListView(
@@ -132,15 +132,14 @@ class _MyWidgetState extends State<HomePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
+                                        Text(
                                           "Authors",
-                                          style: TextStyle(
+                                          style: GoogleFonts.jost(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           ),
                                         ),
-
                                         InkWell(
                                           onTap: () {
                                             Navigator.push(
@@ -149,20 +148,20 @@ class _MyWidgetState extends State<HomePage> {
                                                     builder: (_) =>
                                                         const AuthorsListPage()));
                                           },
-                                          child: const Row(
+                                          child: Row(
                                             children: [
                                               Text(
                                                 "Show all",
-                                                style: TextStyle(
+                                                style: GoogleFonts.jost(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 8,
                                               ),
-                                              Icon(
+                                              const Icon(
                                                 Icons.arrow_forward,
                                                 size: 18,
                                                 color: Colors.white,
@@ -208,9 +207,9 @@ class _MyWidgetState extends State<HomePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                Text(
                                   "Editors Picks",
-                                  style: TextStyle(
+                                  style: GoogleFonts.jost(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -226,20 +225,20 @@ class _MyWidgetState extends State<HomePage> {
                                                 builder: (_) =>
                                                     const EditorsPicks()));
                                       },
-                                      child: const Row(
+                                      child: Row(
                                         children: [
                                           Text(
                                             "Show all",
-                                            style: TextStyle(
+                                            style: GoogleFonts.jost(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 8,
                                           ),
-                                          Icon(
+                                          const Icon(
                                             Icons.arrow_forward,
                                             size: 18,
                                             color: Colors.white,
@@ -277,9 +276,9 @@ class _MyWidgetState extends State<HomePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                Text(
                                   "Podcasts",
-                                  style: TextStyle(
+                                  style: GoogleFonts.jost(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -288,34 +287,34 @@ class _MyWidgetState extends State<HomePage> {
                                 Row(
                                   children: [
                                     InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        const Podcast()));
-                                          },
-                                          child: const Row(
-                                            children: [
-                                              Text(
-                                                "Show all",
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Icon(
-                                                Icons.arrow_forward,
-                                                size: 18,
-                                                color: Colors.white,
-                                              ),
-                                            ],
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const Podcast()));
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Show all",
+                                            style: GoogleFonts.jost(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        )
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          const Icon(
+                                            Icons.arrow_forward,
+                                            size: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ],
@@ -348,9 +347,9 @@ class _MyWidgetState extends State<HomePage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Children",
-                                    style: TextStyle(
+                                    style: GoogleFonts.jost(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -359,34 +358,34 @@ class _MyWidgetState extends State<HomePage> {
                                   Row(
                                     children: [
                                       InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        const Children()));
-                                          },
-                                          child: const Row(
-                                            children: [
-                                              Text(
-                                                "Show all",
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Icon(
-                                                Icons.arrow_forward,
-                                                size: 18,
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const Children()));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Show all",
+                                              style: GoogleFonts.jost(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.white,
                                               ),
-                                            ],
-                                          ),
-                                        )
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            const Icon(
+                                              Icons.arrow_forward,
+                                              size: 18,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ],
@@ -429,51 +428,51 @@ class _MyWidgetState extends State<HomePage> {
         margin:
             EdgeInsets.only(right: 32, left: index == 0 ? 16 : 0, bottom: 8),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
-                      spreadRadius: 8,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
+                        spreadRadius: 8,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  margin: const EdgeInsets.only(
+                    bottom: 16,
+                    top: 24,
+                  ),
+                  child: Hero(
+                    tag: book.title,
+                    child: Image.asset(
+                      book.image,
+                      fit: BoxFit.fitWidth,
                     ),
-                  ],
-                ),
-                margin: const EdgeInsets.only(
-                  bottom: 16,
-                  top: 24,
-                ),
-                child: Hero(
-                  tag: book.title,
-                  child: Image.asset(
-                    book.image,
-                    fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
-            ),
-            Text(
-              book.title,
-              style: GoogleFonts.jost(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white70),
-            ),
-            Text(
-              book.author.fullname,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+              Text(
+                book.title,
+                style: GoogleFonts.jost(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white70),
               ),
-            ),]
-        ),
+              Text(
+                book.author.fullname,
+                style: GoogleFonts.jost(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ]),
       ),
     );
   }
@@ -488,87 +487,87 @@ class _MyWidgetState extends State<HomePage> {
 
   Widget buildAuthor(Author author, int index) {
     return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const AuthorsSoloPage(),
-        ),  
-      );
-    },
-    child: Container(
-      decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 0, 0, 0),
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      padding: const EdgeInsets.all(12),
-      margin: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
-      width: 255,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Card(
-            elevation: 4,
-            margin: const EdgeInsets.all(0),
-            clipBehavior: Clip.antiAlias,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AuthorsSoloPage(),
             ),
-            child: Container(
-              width: 75,
-              height: 75,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(author.image),
-                  fit: BoxFit.cover,
-                ),
-              ),
+          );
+        },
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 0, 0, 0),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
             ),
           ),
-          const SizedBox(
-            width: 12,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                author.fullname,
-                style: GoogleFonts.jost(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          padding: const EdgeInsets.all(12),
+          margin: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
+          width: 255,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Card(
+                elevation: 4,
+                margin: const EdgeInsets.all(0),
+                clipBehavior: Clip.antiAlias,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
                 ),
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.library_books,
-                    color: Colors.grey,
-                    size: 14,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "${author.books} books",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
+                child: Container(
+                  width: 75,
+                  height: 75,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(author.image),
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    author.fullname,
+                    style: GoogleFonts.jost(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.library_books,
+                        color: Colors.grey,
+                        size: 14,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "${author.books} books",
+                        style: GoogleFonts.jost(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 
   Widget buildBooktwo(Book book2, int index) {
@@ -622,7 +621,7 @@ class _MyWidgetState extends State<HomePage> {
             ),
             Text(
               book2.author.fullname,
-              style: const TextStyle(
+              style: GoogleFonts.jost(
                 fontSize: 14,
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,

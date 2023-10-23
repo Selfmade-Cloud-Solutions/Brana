@@ -1,3 +1,4 @@
+import 'package:brana_mobile/phone_and_password.dart';
 import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -32,7 +33,8 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: const Splashscreen(),
+      // home: const PhoneAndPassword(),
+      home: Splashscreen(),
 
       debugShowCheckedModeBanner: false,
     );

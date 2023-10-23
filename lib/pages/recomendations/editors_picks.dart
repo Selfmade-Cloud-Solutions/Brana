@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
+
 class EditorsPicks extends StatefulWidget {
   const EditorsPicks({super.key});
 
@@ -35,7 +36,7 @@ class _MyWidgetState extends State<EditorsPicks> {
               Text(
                 "Editors Picks",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
                   color: Colors.white,
@@ -81,7 +82,7 @@ class _MyWidgetState extends State<EditorsPicks> {
                         ),
                       ),
                     ),
-                      SizedBox(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: Container(
                         color: kLightBlue.withOpacity(0.1),
@@ -118,11 +119,11 @@ class _MyWidgetState extends State<EditorsPicks> {
           MaterialPageRoute(builder: (context) => BookDetail(book: book)),
         );
       },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
           Expanded(
-              child: Container(
+            child: Container(
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -134,35 +135,33 @@ class _MyWidgetState extends State<EditorsPicks> {
                     ),
                   ],
                 ),
-                    child: Hero(
-                      tag: book.image,
-                      child: Image.asset(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width/5,
-                        book.image,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-              ),
-            
-            Text(
-              book.title,
-              style: GoogleFonts.jost(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white70),
-            ),
-            Text(
-              book.author.fullname,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white,
+                child: Hero(
+                  tag: book.image,
+                  child: Image.asset(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width / 5,
+                    book.image,
+                    fit: BoxFit.cover,
+                  ),
+                )),
+          ),
+          Text(
+            book.title,
+            style: GoogleFonts.jost(
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: Colors.white70),
+          ),
+          Text(
+            book.author.fullname,
+            style: GoogleFonts.jost(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
-        )
+          )
         ],
-        ),
-      
+      ),
     );
   }
 }

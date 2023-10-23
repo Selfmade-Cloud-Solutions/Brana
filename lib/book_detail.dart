@@ -1,12 +1,7 @@
-// import 'package:brana_mobile/player/audioplayerscreen.dart';
 import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:brana_mobile/widgets/back_button.dart';
-// import 'package:brana_mobile/audioplayer.dart';
-// import 'package:brana_mobile/constants.dart';
-// import 'package:brana_mobile/widgets/back_button.dart';
 
 class BookDetail extends StatelessWidget {
   const BookDetail({
@@ -29,25 +24,27 @@ class BookDetail extends StatelessWidget {
     });
 
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: const Color.fromARGB(255, 2, 22, 41),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 2, 22, 41),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(book.image),
-              fit: BoxFit.cover,
-            ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(book.image),
+            fit: BoxFit.cover,
           ),
-          child: Stack(children: [
+        ),
+        child: Stack(
+          children: [
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -71,7 +68,7 @@ class BookDetail extends StatelessWidget {
                 controller: scrollController,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 16, bottom: 0, right: 16, top: 50),
+                      left: 16, bottom: 110, right: 16, top: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -128,70 +125,62 @@ class BookDetail extends StatelessWidget {
                           IconButton(
                             color: Colors.white,
                             icon: const Icon(Icons.bookmark_add, size: 30),
-                            // label: const Center(child: Text('Add to Wishlist')),
                             onPressed: () {},
                           ),
                         ],
                       ),
-                      // const SizedBox(height: 4),
-                      // const SizedBox(height: 4),
                       Text(
                         book.description,
-                        style: const TextStyle(
+                        style: GoogleFonts.jost(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,
                           color: Colors.white,
-                        ),
-                      ),
-                      
-                  Container(
-                        height: 200,
-                        width: size.width,
-                        padding: const EdgeInsets.only(
-                          top: 100,
-                          left: 32,
-                          right: 32,
-                          bottom: 40,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(
-                                    MediaQuery.of(context).size.width * 0.4,
-                                    20),
-                                textStyle: const TextStyle(fontSize: 16),
-                                foregroundColor: Colors.white,
-                                backgroundColor:
-                                    const Color.fromARGB(255, 2, 22, 41),
-                                shadowColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                elevation: 5,
-                              ),
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      AudioPlayerScreen(book: book),
-                                ),
-                              ),
-                              icon: const Icon(Icons.play_arrow_rounded,
-                                  size: 30),
-                              label: const Center(child: Text('Listen')),
-                            ),
-                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            )
-          ]),
-        ));
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                height: 200,
+                width: size.width,
+                padding:
+                    EdgeInsets.only(top: 110, left: MediaQuery.of(context).size.width * 0.55, right: MediaQuery.of(context).size.width * 0.05, bottom: 30),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width * 0.4, 20),
+                    textStyle: GoogleFonts.jost(fontSize: 16),
+                    foregroundColor: Colors.white,
+                    backgroundColor:
+                        const Color.fromARGB(255, 2, 22, 41),
+                    shadowColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(15),
+                    ),
+                    elevation: 5,
+                  ),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AudioPlayerScreen(book: book),
+                    ),
+                  ),
+                  icon:
+                      const Icon(Icons.play_arrow_rounded, size: 30),
+                  label:
+                      const Center(child: Text('Listen')),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:brana_mobile/data.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class ListViewPage extends StatelessWidget {
   const ListViewPage({Key? key}) : super(key: key);
@@ -50,7 +52,7 @@ class ListViewPage extends StatelessWidget {
             ),
             Text(
               category.name,
-              style: const TextStyle(fontSize: 18),
+              style: GoogleFonts.jost (fontSize: 18),
             )
           ],
         ));

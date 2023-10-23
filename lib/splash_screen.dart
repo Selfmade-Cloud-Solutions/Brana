@@ -1,3 +1,4 @@
+import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,17 +33,17 @@ class _SplashScreenState extends State<Splashscreen>
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(),
-        child: const Center(
-            child: Image(
-          image: AssetImage("assets/images/logo.png"),
-          width: 200,
-          height: 200,
-        )),
+      backgroundColor: branaDeepBlack,
+      body: Center(
+        child: Image(
+          image: const AssetImage("assets/images/logo.png"),
+          width: screenWidth * 0.3,
+          height: screenWidth * 0.3,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

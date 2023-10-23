@@ -18,48 +18,41 @@ class _MyWidgetState extends State<AuthorsListPage> {
 
   List<Author> authors = getAuthorList();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:AppBar(
-                backgroundColor: branaDeepBlack,
-                leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: Colors.white,
+        appBar: AppBar(
+          title: Center(
+              child: Text(
+            "Authors",
+            style: GoogleFonts.jost(
+              fontWeight: FontWeight.w600,
+              fontSize: 25,
+              height: 1,
+              color: Colors.white,
+            ),
+          )),
+          backgroundColor: branaDeepBlack,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.white,
+          ),
         ),
-                flexibleSpace: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Authors",
-                      style: GoogleFonts.jost(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 25,
-                        height: 1,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                )),
-              ),
         body: NotificationListener<ScrollNotification>(
             onNotification: (scrollDetails) {
               return true;
             },
-            child: ListView( children: [
+            child: ListView(children: [
               SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(
-                          top: 0, left: 16, right: 16),
+                      padding:
+                          const EdgeInsets.only(top: 0, left: 16, right: 16),
                     ),
                     Container(
                       color: Colors.black,
@@ -99,90 +92,89 @@ class _MyWidgetState extends State<AuthorsListPage> {
   }
 
   Widget buildAuthor(Author author, int index) {
-
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const AuthorsSoloPage(),
-        ),  
-      );
-    },
-    child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 0, 0, 0),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AuthorsSoloPage(),
             ),
-          ),
-          padding: const EdgeInsets.all(12),
-          margin: const EdgeInsets.only(right: 16, left: 16 ),
-          width: 255,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Card(
-                elevation: 4,
-                margin: const EdgeInsets.all(0),
-                clipBehavior: Clip.antiAlias,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-                child: Container(
-                  width: 75,
-                  height: 75,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(author.image),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+          );
+        },
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 5),
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 0, 0, 0),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
                 ),
               ),
-              const SizedBox(
-                width: 12,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    author.fullname,
-                    style: GoogleFonts.jost(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+              padding: const EdgeInsets.all(12),
+              margin: const EdgeInsets.only(right: 16, left: 16),
+              width: 255,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.all(0),
+                    clipBehavior: Clip.antiAlias,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.library_books,
-                        color: Colors.grey,
-                        size: 14,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        "${author.books} books",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
+                    child: Container(
+                      width: 75,
+                      height: 75,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(author.image),
+                          fit: BoxFit.cover,
                         ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        author.fullname,
+                        style: GoogleFonts.jost(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.library_books,
+                            color: Colors.grey,
+                            size: 14,
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "${author.books} books",
+                            style: GoogleFonts.jost(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
-            ],
-          ),
-        )));
+            )));
   }
 }

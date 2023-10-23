@@ -37,7 +37,7 @@ class _MyWidgetState extends State<Children> {
               Text(
                 "Children",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
                   color: Colors.white,
@@ -83,12 +83,10 @@ class _MyWidgetState extends State<Children> {
                         ),
                       ),
                     ),
-                      SizedBox(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: Container(
                         color: kLightBlue.withOpacity(0.1),
-                        
-                        
                         child: GridView.count(
                           physics: const BouncingScrollPhysics(),
                           crossAxisCount: 3,
@@ -122,58 +120,56 @@ class _MyWidgetState extends State<Children> {
           MaterialPageRoute(builder: (context) => BookDetail(book: book)),
         );
       },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
-                      spreadRadius: 8,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Padding(
-                    padding: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.width * 0.1,
-                    ),
-                    child: Hero(
-                      tag: book.image,
-                      child: Image.asset(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width / 5,
-                        book.image,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
+                    spreadRadius: 8,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Padding(
+                  padding: EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width * 0.1,
+                  ),
+                  child: Hero(
+                    tag: book.image,
+                    child: Image.asset(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width / 5,
+                      book.image,
+                      fit: BoxFit.cover,
+                    ),
+                  )),
             ),
-            Text(
-              book.title,
-              softWrap: true,
-              style: GoogleFonts.jost(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white70),
-            ),
-            Text(
-              book.author.fullname,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white,
+          ),
+          Text(
+            book.title,
+            softWrap: true,
+            style: GoogleFonts.jost(
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
-              ),
+                color: Colors.white70),
+          ),
+          Text(
+            book.author.fullname,
+            style: GoogleFonts.jost(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
-      
+          ),
+        ],
+      ),
     );
   }
 }

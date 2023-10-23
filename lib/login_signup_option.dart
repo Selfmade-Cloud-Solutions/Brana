@@ -3,6 +3,7 @@ import 'package:brana_mobile/signup_page.dart';
 import 'package:brana_mobile/login_page.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginSignupOption extends StatefulWidget {
   const LoginSignupOption({super.key, required double screenHeight});
@@ -77,7 +78,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
   Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: branaWhite),
+      style: GoogleFonts.jost(color: branaWhite),
     );
   }
 
@@ -96,8 +97,8 @@ class _MyWidgetState extends State<LoginSignupOption> {
         shadowColor: const Color.fromARGB(50, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
-      child: const Text("LOGIN",
-          style: TextStyle(
+      child:  Text("LOGIN",
+          style: GoogleFonts.jost(
             color: branaWhite,
             fontWeight: FontWeight.w800,
           )),
@@ -120,7 +121,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
         minimumSize: const Size.fromHeight(50),
       ),
       child: Text("SIGN UP",
-          style: TextStyle(
+          style: GoogleFonts.jost(
             color: branaPrimaryColor,
             fontWeight: FontWeight.w800,
           )),

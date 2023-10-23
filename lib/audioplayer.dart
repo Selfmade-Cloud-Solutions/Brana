@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:brana_mobile/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:brana_mobile/screens/Loading.dart';
 import 'package:flutter/material.dart';
 // import 'package:just_audio_background/just_audio_background.dart';
@@ -255,7 +256,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                     ),
                     title: Text(
                       song.artist,
-                      style: const TextStyle(
+                      style: GoogleFonts.jost(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: branaDarkBlue,
@@ -302,7 +303,8 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                               },
                               iconSize: 80,
                               icon: const Icon(Icons.play_arrow_rounded));
-                        } else if (processingState != ProcessingState.completed) {
+                        } else if (processingState !=
+                            ProcessingState.completed) {
                           return IconButton(
                               onPressed: () {
                                 audioPlayer.pause();
@@ -333,7 +335,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                                   bufferedBarColor: Colors.grey,
                                   progressBarColor: Colors.yellow,
                                   thumbColor: Colors.yellow,
-                                  timeLabelTextStyle: const TextStyle(
+                                  timeLabelTextStyle: GoogleFonts.jost(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w200,
                                   ),

@@ -33,7 +33,7 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
               Text(
                 "Author Name",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
                   color: branaWhite,
@@ -45,71 +45,64 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
         body: Container(
             color: kLightBlue.withOpacity(0.1),
             child: ListView(children: [
-              Stack(
-                alignment: Alignment.centerLeft,
-                children:[
-              buildAuthorImage(),
-            ]),
+              Stack(alignment: Alignment.centerLeft, children: [
+                buildAuthorImage(),
+              ]),
               Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: buildAuthorBooks(),
               )
-            ]
-            )
-            )
-            );
+            ])));
   }
 
-
   Widget buildAuthorImage() {
-  return ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-                child: Container(
-                decoration: const BoxDecoration(
-    image: DecorationImage(
-      image: NetworkImage('https://i.guim.co.uk/img/media/0fb8f397b68134c1cea91aa0ec858c27ba982c12/619_0_5963_3580/master/5963.jpg?width=620&dpr=1&s=none'),
-      fit: BoxFit.cover,
-    )),
-      height: 110,
-child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      Container(
-        padding: const EdgeInsets.only(left: 10),
-        child: const CircleAvatar(
-          radius: 50,
-          backgroundImage: NetworkImage(
-            'https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250'),
-        ),
-      ),
-      Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Text(
-      "Author Name",
-      style: GoogleFonts.jost(
-        fontWeight: FontWeight.w400,
-        fontSize: 28,
-        height: 1,
-        color: Colors.black,
-      ),
-    ),
-    Text(
-      "Books:4",
-      style: GoogleFonts.jost(
-        fontWeight: FontWeight.w400,
-        fontSize: 20,
-        height: 1,
-        color: Colors.black,
-      ),
-    ),
-  ],
-)
-
-    ],
-  )));
-}
-
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+              image: NetworkImage(
+                  'https://i.guim.co.uk/img/media/0fb8f397b68134c1cea91aa0ec858c27ba982c12/619_0_5963_3580/master/5963.jpg?width=620&dpr=1&s=none'),
+              fit: BoxFit.cover,
+            )),
+            height: 110,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: const CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                        'https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250'),
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Author Name",
+                      style: GoogleFonts.jost(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 28,
+                        height: 1,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "Books:4",
+                      style: GoogleFonts.jost(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        height: 1,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )));
+  }
 
   Widget buildAuthorBooks() => SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -160,14 +153,6 @@ child: Row(
                 fontWeight: FontWeight.bold,
                 color: Colors.white70),
           ),
-          Text(
-            book.author.fullname,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          )
         ],
       ),
     );

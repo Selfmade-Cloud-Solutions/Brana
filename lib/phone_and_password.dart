@@ -1,20 +1,20 @@
-import 'package:brana_mobile/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:intl/intl.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class PhoneAndPassword extends StatefulWidget {
+  const PhoneAndPassword({super.key});
 
   @override
-  State<LoginPage> createState() => _MyWidgetState();
+  State<PhoneAndPassword> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<LoginPage> {
+class _MyWidgetState extends State<PhoneAndPassword> {
   late Color myColor;
   late Size mediaSize;
-  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController2 = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
   bool isPasswordVisible = false;
@@ -38,15 +38,12 @@ class _MyWidgetState extends State<LoginPage> {
 
   Widget _buildTop() {
     return SizedBox(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            "assets/images/logo.png",
-            width: 100,
-            height: 100,
-          ),
-        ],
+      child: Center(
+        child: Image.asset(
+          "assets/images/logo.png",
+          width: 100,
+          height: 100,
+        ),
       ),
     );
   }
@@ -79,7 +76,7 @@ class _MyWidgetState extends State<LoginPage> {
         ),
         Center(
           child: Text(
-            "Welcome Back",
+            "Complete registration",
             style: GoogleFonts.jost(
               color: branaWhite,
               fontSize: 32,
@@ -89,12 +86,12 @@ class _MyWidgetState extends State<LoginPage> {
         ),
         const SizedBox(height: 10),
         Center(
-          child: _buildPrimaryText("Please Login"),
+          child: _buildPrimaryText("Set Password to complete registration"),
         ),
         const SizedBox(height: 15),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _buildInputFieldEmail(emailController),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          // child: buildDatePicker(context),
         ),
         const SizedBox(height: 30),
         Padding(
@@ -102,15 +99,15 @@ class _MyWidgetState extends State<LoginPage> {
           child:
               _buildInputFieldPassword(passwordController, isPassword: false),
         ),
-        const SizedBox(height: 5),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _buildRememberForgot(),
-        ),
         const SizedBox(height: 15),
         Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildInputFieldRepeatPassword(passwordController2,
+              isPassword: false),
+        ),
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 80),
-          child: _buildLoginButton(),
+          child: _buildLoginButton(context),
         ),
         const SizedBox(height: 35),
       ],
@@ -126,35 +123,24 @@ class _MyWidgetState extends State<LoginPage> {
     );
   }
 
-  Widget _buildInputFieldEmail(TextEditingController controller) {
+  Widget _buildInputFieldPassword(
+    TextEditingController controller, {
+    isPassword = false,
+  }) {
     return TextField(
       controller: controller,
-      decoration: InputDecoration(
-        labelText: 'Email',
-        labelStyle: GoogleFonts.jost(color: Colors.white),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(8)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(8)),
-      ),
-    );
-  }
-
-  Widget _buildInputFieldPassword(TextEditingController controller,
-      {isPassword = false}) {
-    return TextField(
-      controller: controller,
+      style: GoogleFonts.jost(color: Colors.white), // Add text style
       decoration: InputDecoration(
         labelText: 'Password',
         labelStyle: GoogleFonts.jost(color: Colors.white),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(8)),
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(8),
+        ),
         focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(8)),
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(8),
+        ),
         suffixIcon: IconButton(
           onPressed: () {
             setState(() {
@@ -170,37 +156,40 @@ class _MyWidgetState extends State<LoginPage> {
     );
   }
 
-  Widget _buildRememberForgot() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Checkbox(
-              value: rememberUser,
-              onChanged: (value) {
-                setState(() {
-                  rememberUser = value!;
-                });
-              },
-            ),
-            _buildPrimaryText("Remember me"),
-          ],
+  Widget _buildInputFieldRepeatPassword(
+    TextEditingController controller2, {
+    isPassword = false,
+  }) {
+    return TextField(
+      controller: controller2,
+      style: GoogleFonts.jost(color: Colors.white), // Add text style
+      decoration: InputDecoration(
+        labelText: 'Repeat Password',
+        labelStyle: GoogleFonts.jost(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(8),
         ),
-        TextButton(
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        suffixIcon: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ForgotPassword()),
-            );
+            setState(() {
+              isPasswordVisible = !isPasswordVisible;
+            });
           },
-          child: _buildPrimaryText("Forgot password"),
+          icon: isPasswordVisible
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
         ),
-      ],
+      ),
+      obscureText: !isPasswordVisible,
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildLoginButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
         // debugPrint("Email : ${emailController.text}");
@@ -218,7 +207,7 @@ class _MyWidgetState extends State<LoginPage> {
         minimumSize: const Size.fromHeight(50),
       ),
       child: Text(
-        "LOGIN",
+        "Continue",
         style: GoogleFonts.jost(
           color: branaWhite,
         ),

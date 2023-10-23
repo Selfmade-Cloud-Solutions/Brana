@@ -123,7 +123,7 @@ class _HomeScreenState extends State<ExplorePage> {
               Text(
                 "Explore Audiobooks",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
                   color: Colors.white,
@@ -199,7 +199,8 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LikedPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const LikedPage()),
                     );
                   },
                   child: Container(
@@ -239,7 +240,8 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  const LatestPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const LatestPage()),
                     );
                   },
                   child: Container(
@@ -279,7 +281,8 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const WishlistPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const WishlistPage()),
                     );
                   },
                   child: Container(

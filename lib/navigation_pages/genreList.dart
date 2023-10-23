@@ -75,7 +75,7 @@ class _RecomendedPageState extends State<GenreListPage> {
                       ),
                     ),
                     Text(model.duration,
-                        style: const TextStyle(
+                        style: GoogleFonts.jost(
                           color: Colors.grey,
                           fontSize: 14,
                         )),
@@ -164,7 +164,7 @@ class _RecomendedPageState extends State<GenreListPage> {
       ),
       child: Text(
         text,
-        style: TextStyle(
+        style: GoogleFonts.jost(
             color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
       ),
     );

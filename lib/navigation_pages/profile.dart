@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Text(
               "Profile",
               style: GoogleFonts.jost(
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w600,
                 fontSize: 25,
                 height: 1,
                 color: Colors.white,
@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      body:   Container(
+      body: Container(
           color: branaDeepBlack,
           child: Column(
             children: [
@@ -105,26 +105,66 @@ class _ProfilePageState extends State<ProfilePage> {
       ));
   // Widget builds the display item with the proper formatting to display the user's info
   Widget buildUserInfoDisplay(String getValue, String title, Widget editPage) =>
-  SingleChildScrollView(
+      SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.jost(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: branaWhite,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 1,
+                  ),
+                  Container(
+                      width: 350,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                        color: branaWhite,
+                        width: 1,
+                      ))),
+                      child: Row(children: [
+                        Expanded(
+                            child: TextButton(
+                                onPressed: () {
+                                  navigateSecondPage(editPage);
+                                },
+                                child: Text(
+                                  getValue,
+                                  style: GoogleFonts.jost(
+                                      fontSize: 16, height: 1.4),
+                                ))),
+                      ]))
+                ],
+              )));
+
+  // Widget builds the About Me Section
+  Widget buildAbout(User user) => SingleChildScrollView(
       child: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                title,
-                style: const TextStyle(
+                'Date of birth',
+                style: GoogleFonts.jost(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: branaWhite,
                 ),
               ),
-              const SizedBox(
-                height: 1,
-              ),
+              const SizedBox(height: 1),
               Container(
                   width: 350,
-                  height: 40,
+                  height: 50,
                   decoration: const BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
@@ -135,84 +175,46 @@ class _ProfilePageState extends State<ProfilePage> {
                     Expanded(
                         child: TextButton(
                             onPressed: () {
-                              navigateSecondPage(editPage);
+                              navigateSecondPage(
+                                  const EditDescriptionFormPage());
                             },
-                            child: Text(
-                              getValue,
-                              style: const TextStyle(fontSize: 16, height: 1.4),
-                            ))),
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      user.aboutMeDescription,
+                                      style: GoogleFonts.jost(
+                                        fontSize: 16,
+                                        height: 1.80,
+                                      ),
+                                    ))))),
                   ]))
             ],
           )));
-
-  // Widget builds the About Me Section
-  Widget buildAbout(User user) =>
-  SingleChildScrollView( 
-    child: Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Date of birth',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: branaWhite,
-            ),
-          ),
-          const SizedBox(height: 1),
-          Container(
-              width: 350,
-              height: 50,
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                color: branaWhite,
-                width: 1,
-              ))),
-              child: Row(children: [
-                Expanded(
-                    child: TextButton(
-                        onPressed: () {
-                          navigateSecondPage(const EditDescriptionFormPage());
-                        },
-                        child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                            child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  user.aboutMeDescription,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    height: 1.80,
-                                  ),
-                                ))))),
-              ]))
-        ],
-      )));
   Widget buildEditButton() {
     return SingleChildScrollView(
-      child:Padding(
-        padding: const EdgeInsets.only(top: 150),
-        child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              width: 330,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditProfile()));
-                },
-                child: const Text(
-                  'Edit Profile',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-            ))));
+        child: Padding(
+            padding: const EdgeInsets.only(top: 150),
+            child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: 330,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EditProfile()));
+                    },
+                    child: Text(
+                      'Edit Profile',
+                      style: GoogleFonts.jost(fontSize: 15),
+                    ),
+                  ),
+                ))));
   }
 
   // Refrshes the Page after updating user info.

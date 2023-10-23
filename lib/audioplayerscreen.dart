@@ -6,6 +6,7 @@ import 'package:brana_mobile/data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
@@ -172,7 +173,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(book.title,
-                  style: TextStyle(
+                  style: GoogleFonts.jost(
                     color: _isExpanded
                         ? Colors.white
                         : const Color.fromARGB(255, 2, 22, 41),
@@ -180,7 +181,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                     fontWeight: FontWeight.w400,
                   )),
               Text(book.author.fullname,
-                  style: TextStyle(
+                  style: GoogleFonts.jost(
                     color: _isExpanded
                         ? Colors.white
                         : const Color.fromARGB(255, 2, 22, 41),
@@ -221,7 +222,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                       ),
                       title: Text(
                         song.artist,
-                        style: const TextStyle(
+                        style: GoogleFonts.jost(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 2, 22, 41),
@@ -301,7 +302,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                   bufferedBarColor: Colors.grey,
                                   progressBarColor: Colors.yellow,
                                   thumbColor: Colors.yellow,
-                                  timeLabelTextStyle: const TextStyle(
+                                  timeLabelTextStyle: GoogleFonts.jost(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -465,7 +466,7 @@ class MediaMetadata extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: GoogleFonts.jost(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w200),
@@ -474,7 +475,7 @@ class MediaMetadata extends StatelessWidget {
                       // const SizedBox(height: 8),
                       Text(
                         artist,
-                        style: const TextStyle(
+                        style: GoogleFonts.jost(
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.w200),
