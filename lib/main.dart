@@ -34,7 +34,7 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const PhoneAndPassword(),
-      home: Splashscreen(),
+      home: const Splashscreen(),
 
       debugShowCheckedModeBanner: false,
     );

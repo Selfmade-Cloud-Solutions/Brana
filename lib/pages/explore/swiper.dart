@@ -115,7 +115,7 @@ class _LatestTopState extends State<LatestTop> {
                             child: Text(
                               'Upcoming Book',
                               style: GoogleFonts.jost(
-                                  fontSize: 24, color: Colors.white),
+                                  fontSize: 24, color: branaWhite),
                             )),
                         Positioned(
                             left: 30,
@@ -139,7 +139,7 @@ class _LatestTopState extends State<LatestTop> {
                   expansionFactor: 4,
                   dotWidth: 8,
                   dotHeight: 4,
-                  activeDotColor: Colors.white,
+                  activeDotColor: branaWhite,
                 ),
                 onDotClicked: (index) {
                   _pageController.animateToPage(index,

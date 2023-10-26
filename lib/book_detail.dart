@@ -2,6 +2,7 @@ import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/data.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:brana_mobile/constants.dart';
 
 class BookDetail extends StatelessWidget {
   const BookDetail({
@@ -109,7 +110,7 @@ class BookDetail extends StatelessWidget {
                                 style: GoogleFonts.jost(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w800,
-                                  color: Colors.white,
+                                  color: branaWhite,
                                 ),
                               ),
                               Text(
@@ -117,13 +118,13 @@ class BookDetail extends StatelessWidget {
                                 style: GoogleFonts.jost(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.white,
+                                  color: branaWhite,
                                 ),
                               ),
                             ],
                           ),
                           IconButton(
-                            color: Colors.white,
+                            color: branaWhite,
                             icon: const Icon(Icons.bookmark_add, size: 30),
                             onPressed: () {},
                           ),
@@ -134,7 +135,7 @@ class BookDetail extends StatelessWidget {
                         style: GoogleFonts.jost(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,
-                          color: Colors.white,
+                          color: branaWhite,
                         ),
                       ),
                     ],
@@ -147,34 +148,32 @@ class BookDetail extends StatelessWidget {
               child: Container(
                 height: 200,
                 width: size.width,
-                padding:
-                    EdgeInsets.only(top: 110, left: MediaQuery.of(context).size.width * 0.55, right: MediaQuery.of(context).size.width * 0.05, bottom: 30),
+                padding: EdgeInsets.only(
+                    top: 110,
+                    left: MediaQuery.of(context).size.width * 0.55,
+                    right: MediaQuery.of(context).size.width * 0.05,
+                    bottom: 30),
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     minimumSize:
                         Size(MediaQuery.of(context).size.width * 0.4, 20),
                     textStyle: GoogleFonts.jost(fontSize: 16),
-                    foregroundColor: Colors.white,
-                    backgroundColor:
-                        const Color.fromARGB(255, 2, 22, 41),
+                    foregroundColor: branaWhite,
+                    backgroundColor: const Color.fromARGB(255, 2, 22, 41),
                     shadowColor: Colors.black,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     elevation: 5,
                   ),
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          AudioPlayerScreen(book: book),
+                      builder: (context) => AudioPlayerScreen(book: book),
                     ),
                   ),
-                  icon:
-                      const Icon(Icons.play_arrow_rounded, size: 30),
-                  label:
-                      const Center(child: Text('Listen')),
+                  icon: const Icon(Icons.play_arrow_rounded, size: 30),
+                  label: const Center(child: Text('Listen')),
                 ),
               ),
             ),

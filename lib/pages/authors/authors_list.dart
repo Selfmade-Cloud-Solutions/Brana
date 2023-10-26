@@ -29,7 +29,7 @@ class _MyWidgetState extends State<AuthorsListPage> {
               fontWeight: FontWeight.w600,
               fontSize: 25,
               height: 1,
-              color: Colors.white,
+              color: branaWhite,
             ),
           )),
           backgroundColor: branaDeepBlack,
@@ -38,7 +38,7 @@ class _MyWidgetState extends State<AuthorsListPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.white,
+            color: branaWhite,
           ),
         ),
         body: NotificationListener<ScrollNotification>(
@@ -148,7 +148,7 @@ class _MyWidgetState extends State<AuthorsListPage> {
                         style: GoogleFonts.jost(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: branaWhite,
                         ),
                       ),
                       Row(

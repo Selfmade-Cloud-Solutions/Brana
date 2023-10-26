@@ -129,16 +129,16 @@ class _MyWidgetState extends State<PhoneAndPassword> {
   }) {
     return TextField(
       controller: controller,
-      style: GoogleFonts.jost(color: Colors.white), // Add text style
+      style: GoogleFonts.jost(color: branaWhite), // Add text style
       decoration: InputDecoration(
         labelText: 'Password',
-        labelStyle: GoogleFonts.jost(color: Colors.white),
+        labelStyle: GoogleFonts.jost(color: branaWhite),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: branaWhite),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: branaWhite),
           borderRadius: BorderRadius.circular(8),
         ),
         suffixIcon: IconButton(
@@ -162,16 +162,16 @@ class _MyWidgetState extends State<PhoneAndPassword> {
   }) {
     return TextField(
       controller: controller2,
-      style: GoogleFonts.jost(color: Colors.white), // Add text style
+      style: GoogleFonts.jost(color: branaWhite), // Add text style
       decoration: InputDecoration(
         labelText: 'Repeat Password',
-        labelStyle: GoogleFonts.jost(color: Colors.white),
+        labelStyle: GoogleFonts.jost(color: branaWhite),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: branaWhite),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: branaWhite),
           borderRadius: BorderRadius.circular(8),
         ),
         suffixIcon: IconButton(

@@ -62,7 +62,7 @@ class _HomeScreenState extends State<ExplorePage> {
                             fontWeight: FontWeight.w400,
                             fontSize: 28,
                             height: 1,
-                            color: Colors.white,
+                            color: branaWhite,
                           ),
                         ),
                         Flexible(
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<ExplorePage> {
                               fontWeight: FontWeight.w200,
                               fontSize: 17,
                               height: 1,
-                              color: Colors.white,
+                              color: branaWhite,
                             ),
                           ),
                         ),
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<ExplorePage> {
                   fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
@@ -219,7 +219,7 @@ class CategoriesScroller extends StatelessWidget {
                             "Liked",
                             style: GoogleFonts.jost(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: branaWhite,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -229,7 +229,7 @@ class CategoriesScroller extends StatelessWidget {
                             "14 Books",
                             style: GoogleFonts.jost(
                               fontSize: 16,
-                              color: Colors.white,
+                              color: branaWhite,
                             ),
                           ),
                         ],
@@ -260,7 +260,7 @@ class CategoriesScroller extends StatelessWidget {
                             "Latest",
                             style: GoogleFonts.jost(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: branaWhite,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -270,7 +270,7 @@ class CategoriesScroller extends StatelessWidget {
                             "20 Books",
                             style: GoogleFonts.jost(
                               fontSize: 16,
-                              color: Colors.white,
+                              color: branaWhite,
                             ),
                           ),
                         ],
@@ -301,7 +301,7 @@ class CategoriesScroller extends StatelessWidget {
                             "Wishlist",
                             style: GoogleFonts.jost(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: branaWhite,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -311,7 +311,7 @@ class CategoriesScroller extends StatelessWidget {
                             "20 Books",
                             style: GoogleFonts.jost(
                               fontSize: 16,
-                              color: Colors.white,
+                              color: branaWhite,
                             ),
                           ),
                         ],

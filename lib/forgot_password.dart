@@ -118,12 +118,12 @@ class _MyWidgetState extends State<ForgotPassword> {
       style: const TextStyle(color: branaWhite),
       decoration: InputDecoration(
         labelText: 'Email',
-        labelStyle: GoogleFonts.jost(color: Colors.white),
+        labelStyle: GoogleFonts.jost(color: branaWhite),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: branaWhite),
             borderRadius: BorderRadius.circular(8)),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: branaWhite),
           borderRadius: BorderRadius.circular(8),
         ),
       ),

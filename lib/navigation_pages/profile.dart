@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontWeight: FontWeight.w600,
                 fontSize: 25,
                 height: 1,
-                color: Colors.white,
+                color: branaWhite,
               ),
             ),
           ],
@@ -87,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
       padding: const EdgeInsets.only(right: 10),
       child: const Icon(
         Icons.settings,
-        color: Colors.white,
+        color: branaWhite,
         size: 35,
       ),
     );

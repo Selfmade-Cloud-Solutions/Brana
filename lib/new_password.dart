@@ -15,7 +15,7 @@ class _MyWidgetState extends State<NewPassword> {
   late Size mediaSize;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-    TextEditingController passwordController2 = TextEditingController();
+  TextEditingController passwordController2 = TextEditingController();
   bool rememberUser = false;
   bool isPasswordVisible = false;
 
@@ -88,7 +88,6 @@ class _MyWidgetState extends State<NewPassword> {
           ),
         ),
         const SizedBox(height: 10),
-      
         const SizedBox(height: 15),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -111,49 +110,19 @@ class _MyWidgetState extends State<NewPassword> {
     );
   }
 
-
-
   Widget _buildInputFieldPassword(TextEditingController controller,
       {isPassword = false}) {
     return TextField(
       controller: controller,
-      style:const TextStyle(color: branaWhite),
+      style: const TextStyle(color: branaWhite),
       decoration: InputDecoration(
         labelText: 'New Password',
-        labelStyle: GoogleFonts.jost(color: Colors.white),
+        labelStyle: GoogleFonts.jost(color: branaWhite),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: branaWhite),
             borderRadius: BorderRadius.circular(8)),
         focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(8)),
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              isPasswordVisible = !isPasswordVisible;
-            });
-          },
-          icon: isPasswordVisible
-              ? const Icon(Icons.visibility)
-              : const Icon(Icons.visibility_off),
-        ),
-      ),
-      obscureText: !isPasswordVisible,
-    );
-  }
-Widget _buildInputFieldRetypePassword(TextEditingController controller,
-      {isPassword = false}) {
-    return TextField(
-      controller: controller,
-      style:const TextStyle(color: branaWhite),
-      decoration: InputDecoration(
-        labelText: 'Confirm New Password',
-        labelStyle: GoogleFonts.jost(color: Colors.white),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(8)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: branaWhite),
             borderRadius: BorderRadius.circular(8)),
         suffixIcon: IconButton(
           onPressed: () {
@@ -170,6 +139,34 @@ Widget _buildInputFieldRetypePassword(TextEditingController controller,
     );
   }
 
+  Widget _buildInputFieldRetypePassword(TextEditingController controller,
+      {isPassword = false}) {
+    return TextField(
+      controller: controller,
+      style: const TextStyle(color: branaWhite),
+      decoration: InputDecoration(
+        labelText: 'Confirm New Password',
+        labelStyle: GoogleFonts.jost(color: branaWhite),
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: branaWhite),
+            borderRadius: BorderRadius.circular(8)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: branaWhite),
+            borderRadius: BorderRadius.circular(8)),
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              isPasswordVisible = !isPasswordVisible;
+            });
+          },
+          icon: isPasswordVisible
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        ),
+      ),
+      obscureText: !isPasswordVisible,
+    );
+  }
 
   Widget _buildButton() {
     return ElevatedButton(

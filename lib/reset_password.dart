@@ -117,12 +117,12 @@ class _MyWidgetState extends State<ResetPassword> {
       controller: controller,
       style: const TextStyle(color: branaWhite),
       decoration: InputDecoration(
-        labelStyle: GoogleFonts.jost(color: Colors.white),
+        labelStyle: GoogleFonts.jost(color: branaWhite),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: branaWhite),
             borderRadius: BorderRadius.circular(8)),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: branaWhite),
           borderRadius: BorderRadius.circular(8),
         ),
       ),

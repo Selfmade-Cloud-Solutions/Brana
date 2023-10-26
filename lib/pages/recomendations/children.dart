@@ -28,7 +28,7 @@ class _MyWidgetState extends State<Children> {
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.white,
+            color: branaWhite,
           ),
           flexibleSpace: Center(
               child: Column(
@@ -40,7 +40,7 @@ class _MyWidgetState extends State<Children> {
                   fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
@@ -164,7 +164,7 @@ class _MyWidgetState extends State<Children> {
             book.author.fullname,
             style: GoogleFonts.jost(
               fontSize: 14,
-              color: Colors.white,
+              color: branaWhite,
               fontWeight: FontWeight.bold,
             ),
           ),

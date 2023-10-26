@@ -54,7 +54,7 @@ class _MyWidgetState extends State<Navigation> {
           child: GNav(
             gap: 8,
             color: branaBlue,
-            activeColor: Colors.white,
+            activeColor: branaWhite,
             tabBackgroundColor: branaPrimaryColor,
             padding: const EdgeInsets.all(10),
             selectedIndex: _currentIndex,

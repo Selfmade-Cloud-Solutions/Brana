@@ -3,6 +3,8 @@ import 'package:audio_session/audio_session.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:brana_mobile/audioplayer.dart';
 import 'package:brana_mobile/data.dart';
+
+import 'package:brana_mobile/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -157,13 +159,13 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: _isExpanded ? Colors.transparent : Colors.white,
+          backgroundColor: _isExpanded ? Colors.transparent : branaWhite,
           elevation: 0,
           // leadingWidth: 600,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               color: _isExpanded
-                  ? Colors.white
+                  ? branaWhite
                   : const Color.fromARGB(255, 2, 22, 41),
               onPressed: () {
                 Navigator.pop(context);
@@ -175,7 +177,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
               Text(book.title,
                   style: GoogleFonts.jost(
                     color: _isExpanded
-                        ? Colors.white
+                        ? branaWhite
                         : const Color.fromARGB(255, 2, 22, 41),
                     fontSize: 17,
                     fontWeight: FontWeight.w400,
@@ -183,7 +185,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
               Text(book.author.fullname,
                   style: GoogleFonts.jost(
                     color: _isExpanded
-                        ? Colors.white
+                        ? branaWhite
                         : const Color.fromARGB(255, 2, 22, 41),
                     fontSize: 12,
                     fontWeight: FontWeight.w300,
@@ -201,7 +203,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                   size: 30,
                   Icons.view_comfortable_rounded,
                   color: _isExpanded
-                      ? Colors.white
+                      ? branaWhite
                       : const Color.fromARGB(255, 2, 22, 41),
                 ))
           ],
@@ -225,7 +227,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                         style: GoogleFonts.jost(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 2, 22, 41),
+                          color: const Color.fromARGB(255, 2, 22, 41),
                         ),
                       ),
                       subtitle: Text(book.title),
@@ -303,7 +305,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                   progressBarColor: Colors.yellow,
                                   thumbColor: Colors.yellow,
                                   timeLabelTextStyle: GoogleFonts.jost(
-                                    color: Colors.white,
+                                    color: branaWhite,
                                     fontWeight: FontWeight.w400,
                                   ),
                                   timeLabelType: TimeLabelType.remainingTime,
@@ -326,7 +328,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                           await _audioPlayer.seekToPrevious();
                                         },
                                         iconSize: 30,
-                                        color: Colors.white,
+                                        color: branaWhite,
                                         icon: const Icon(
                                             Icons.skip_previous_rounded)),
                                   IconButton(
@@ -337,7 +339,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                                 15));
                                       },
                                       iconSize: _isExpanded ? 35 : 30,
-                                      color: Colors.white,
+                                      color: branaWhite,
                                       icon: const Icon(
                                           CupertinoIcons.gobackward_15)),
                                   StreamBuilder<PlayerState>(
@@ -382,7 +384,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                                 15));
                                       },
                                       iconSize: _isExpanded ? 35 : 30,
-                                      color: Colors.white,
+                                      color: branaWhite,
                                       icon: const Icon(
                                           CupertinoIcons.goforward_15)),
                                   if (_isExpanded)
@@ -391,7 +393,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                           await _audioPlayer.seekToNext();
                                         },
                                         iconSize: 30,
-                                        color: Colors.white,
+                                        color: branaWhite,
                                         icon:
                                             const Icon(Icons.skip_next_rounded))
                                 ],
@@ -467,7 +469,7 @@ class MediaMetadata extends StatelessWidget {
                       Text(
                         title,
                         style: GoogleFonts.jost(
-                            color: Colors.white,
+                            color: branaWhite,
                             fontSize: 20,
                             fontWeight: FontWeight.w200),
                         textAlign: TextAlign.left,
@@ -476,7 +478,7 @@ class MediaMetadata extends StatelessWidget {
                       Text(
                         artist,
                         style: GoogleFonts.jost(
-                            color: Colors.white,
+                            color: branaWhite,
                             fontSize: 18,
                             fontWeight: FontWeight.w200),
                       ),
@@ -509,7 +511,7 @@ class MediaMetadata extends StatelessWidget {
 //               await audioPlayer.seekToPrevious();
 //             },
 //             iconSize: 30,
-//             color: Colors.white,
+//             color: branaWhite,
 //             icon: const Icon(Icons.skip_previous_rounded)),
 //         IconButton(
 //             onPressed: () async {
@@ -517,7 +519,7 @@ class MediaMetadata extends StatelessWidget {
 //                   .seek(Duration(seconds: audioPlayer.position.inSeconds - 15));
 //             },
 //             iconSize: 35,
-//             color: Colors.white,
+//             color: branaWhite,
 //             icon: const Icon(CupertinoIcons.gobackward_15)),
 //         StreamBuilder<PlayerState>(
 //           stream: audioPlayer.playerStateStream,
@@ -555,14 +557,14 @@ class MediaMetadata extends StatelessWidget {
 //                   .seek(Duration(seconds: audioPlayer.position.inSeconds + 15));
 //             },
 //             iconSize: 35,
-//             color: Colors.white,
+//             color: branaWhite,
 //             icon: const Icon(CupertinoIcons.goforward_15)),
 //         IconButton(
 //             onPressed: () async {
 //               await audioPlayer.seekToNext();
 //             },
 //             iconSize: 30,
-//             color: Colors.white,
+//             color: branaWhite,
 //             icon: const Icon(Icons.skip_next_rounded))
 //       ],
 //     );

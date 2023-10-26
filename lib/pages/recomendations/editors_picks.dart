@@ -39,7 +39,7 @@ class _MyWidgetState extends State<EditorsPicks> {
                   fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
@@ -156,7 +156,7 @@ class _MyWidgetState extends State<EditorsPicks> {
             book.author.fullname,
             style: GoogleFonts.jost(
               fontSize: 14,
-              color: Colors.white,
+              color: branaWhite,
               fontWeight: FontWeight.bold,
             ),
           )

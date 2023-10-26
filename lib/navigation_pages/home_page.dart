@@ -64,7 +64,7 @@ class _MyWidgetState extends State<HomePage> {
                         fontWeight: FontWeight.w600,
                         fontSize: 25,
                         height: 1,
-                        color: Colors.white,
+                        color: branaWhite,
                       ),
                     ),
                   ],
@@ -137,7 +137,7 @@ class _MyWidgetState extends State<HomePage> {
                                           style: GoogleFonts.jost(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                            color: branaWhite,
                                           ),
                                         ),
                                         InkWell(
@@ -155,7 +155,7 @@ class _MyWidgetState extends State<HomePage> {
                                                 style: GoogleFonts.jost(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
+                                                  color: branaWhite,
                                                 ),
                                               ),
                                               const SizedBox(
@@ -164,7 +164,7 @@ class _MyWidgetState extends State<HomePage> {
                                               const Icon(
                                                 Icons.arrow_forward,
                                                 size: 18,
-                                                color: Colors.white,
+                                                color: branaWhite,
                                               ),
                                             ],
                                           ),
@@ -212,7 +212,7 @@ class _MyWidgetState extends State<HomePage> {
                                   style: GoogleFonts.jost(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                    color: branaWhite,
                                   ),
                                 ),
                                 Row(
@@ -232,7 +232,7 @@ class _MyWidgetState extends State<HomePage> {
                                             style: GoogleFonts.jost(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.white,
+                                              color: branaWhite,
                                             ),
                                           ),
                                           const SizedBox(
@@ -241,7 +241,7 @@ class _MyWidgetState extends State<HomePage> {
                                           const Icon(
                                             Icons.arrow_forward,
                                             size: 18,
-                                            color: Colors.white,
+                                            color: branaWhite,
                                           ),
                                         ],
                                       ),
@@ -281,7 +281,7 @@ class _MyWidgetState extends State<HomePage> {
                                   style: GoogleFonts.jost(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                    color: branaWhite,
                                   ),
                                 ),
                                 Row(
@@ -301,7 +301,7 @@ class _MyWidgetState extends State<HomePage> {
                                             style: GoogleFonts.jost(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.white,
+                                              color: branaWhite,
                                             ),
                                           ),
                                           const SizedBox(
@@ -310,7 +310,7 @@ class _MyWidgetState extends State<HomePage> {
                                           const Icon(
                                             Icons.arrow_forward,
                                             size: 18,
-                                            color: Colors.white,
+                                            color: branaWhite,
                                           ),
                                         ],
                                       ),
@@ -352,7 +352,7 @@ class _MyWidgetState extends State<HomePage> {
                                     style: GoogleFonts.jost(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: branaWhite,
                                     ),
                                   ),
                                   Row(
@@ -372,7 +372,7 @@ class _MyWidgetState extends State<HomePage> {
                                               style: GoogleFonts.jost(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                                color: branaWhite,
                                               ),
                                             ),
                                             const SizedBox(
@@ -381,7 +381,7 @@ class _MyWidgetState extends State<HomePage> {
                                             const Icon(
                                               Icons.arrow_forward,
                                               size: 18,
-                                              color: Colors.white,
+                                              color: branaWhite,
                                             ),
                                           ],
                                         ),
@@ -468,7 +468,7 @@ class _MyWidgetState extends State<HomePage> {
                 book.author.fullname,
                 style: GoogleFonts.jost(
                   fontSize: 14,
-                  color: Colors.white,
+                  color: branaWhite,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -540,7 +540,7 @@ class _MyWidgetState extends State<HomePage> {
                     style: GoogleFonts.jost(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: branaWhite,
                     ),
                   ),
                   Row(

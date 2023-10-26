@@ -165,7 +165,7 @@ class _RecomendedPageState extends State<GenreListPage> {
       child: Text(
         text,
         style: GoogleFonts.jost(
-            color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
+            color: isPrimaryCard ? branaWhite : textColor, fontSize: 12),
       ),
     );
   }
@@ -181,7 +181,7 @@ class _RecomendedPageState extends State<GenreListPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Colors.white,
+          color: branaWhite,
         ),
         flexibleSpace: Center(
             child: Column(

@@ -43,7 +43,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   Song? _currentSong;
   bool _isPlaying = false;
   bool _isExpanded = false;
-  Color appBarColor = Colors.white;
+  Color appBarColor = branaWhite;
   late String appBarText;
   Icon iconview = const Icon(Icons.arrow_back);
   // late AudioPlayer audioPlayer;
@@ -218,12 +218,12 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
           title: _isExpanded ? null : const Text("widget.book.title"),
           leading: IconButton(
             icon: iconview,
-            color: _isExpanded ? Colors.white : Colors.black,
+            color: _isExpanded ? branaWhite : Colors.black,
             onPressed: () {
               if (_isExpanded) {
                 setState(() {
                   _isExpanded = !_isExpanded;
-                  appBarColor = Colors.white;
+                  appBarColor = branaWhite;
                   iconview = const Icon(Icons.arrow_back);
                 });
               } else {
@@ -234,7 +234,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
           actions: [
             IconButton(
               icon: const Icon(Icons.more_vert_outlined),
-              color: _isExpanded ? Colors.white : Colors.black,
+              color: _isExpanded ? branaWhite : Colors.black,
               onPressed: () {
                 // Handle search icon press
               },
@@ -314,7 +314,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                         }
                         return const Icon(
                           Icons.play_arrow_rounded,
-                          color: Colors.white,
+                          color: branaWhite,
                           size: 80,
                         );
                       },
@@ -331,12 +331,12 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                                     const EdgeInsets.fromLTRB(15, 10, 15, 0),
                                 child: ProgressBar(
                                   barHeight: 6,
-                                  baseBarColor: Colors.white,
+                                  baseBarColor: branaWhite,
                                   bufferedBarColor: Colors.grey,
                                   progressBarColor: Colors.yellow,
                                   thumbColor: Colors.yellow,
                                   timeLabelTextStyle: GoogleFonts.jost(
-                                    color: Colors.white,
+                                    color: branaWhite,
                                     fontWeight: FontWeight.w200,
                                   ),
                                   progress:
