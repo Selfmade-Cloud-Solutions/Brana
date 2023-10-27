@@ -1,3 +1,4 @@
+import 'package:brana_mobile/editor_api.dart';
 import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -223,7 +224,7 @@ class _MyWidgetState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (_) =>
-                                                    const EditorsPicks()));
+                                                    const EditorsPicksPage()));
                                       },
                                       child: Row(
                                         children: [
@@ -253,15 +254,19 @@ class _MyWidgetState extends State<HomePage> {
                           ),
                         ),
                         SizedBox(
-                            height: 200,
-                            child: Container(
-                              color: kLightBlue.withOpacity(0.1),
-                              child: ListView(
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                children: buildBooks(),
-                              ),
-                            )),
+  height: 200,
+  width:200,
+  child: Container(
+    color: kLightBlue.withOpacity(0.1),
+    child: ListView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      children: [
+        EditorsPicksPage(), // Wrap the widget inside a list
+      ],
+    ),
+  ),
+),
                         const SizedBox(height: 5),
                         Container(
                           decoration: BoxDecoration(

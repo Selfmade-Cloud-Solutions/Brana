@@ -1,3 +1,4 @@
+import 'package:brana_mobile/editor_api.dart';
 import 'package:brana_mobile/phone_and_password.dart';
 import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const PhoneAndPassword(),
-      home: const Splashscreen(),
+      home: const EditorsPicksPage(),
 
       debugShowCheckedModeBanner: false,
     );
