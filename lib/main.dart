@@ -34,8 +34,8 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      // home: const PhoneAndPassword(),
-      home: const EditorsPicksPage(),
+      home:  const Splashscreen(),
+      // home: EditorsPicksPage(),
 
       debugShowCheckedModeBanner: false,
     );

@@ -1,4 +1,7 @@
 {
     "cmake.sourceDirectory": "/home/gk/Desktop/brana_mobile_new/linux",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ]
 }

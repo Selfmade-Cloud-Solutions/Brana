@@ -3,16 +3,19 @@ import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/data.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/book_detail.dart';
 import 'package:brana_mobile/pages/authors/authors_list.dart';
 import 'package:brana_mobile/pages/recomendations/editors_picks.dart';
 import 'package:brana_mobile/pages/recomendations/podcasts.dart';
 import 'package:brana_mobile/pages/recomendations/children.dart';
+import 'package:brana_mobile/editor_api.dart';
 // import 'package:anim_search_bar/anim_search_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({key});
 
   @override
   State<HomePage> createState() => _MyWidgetState();
@@ -20,15 +23,29 @@ class HomePage extends StatefulWidget {
 
 class _MyWidgetState extends State<HomePage> {
   TextEditingController textController = TextEditingController();
+// API DATA
 
+  List<dynamic> data = [];
   List<Book> books = getBookList();
-  List<Book> books2 = getBookList();
-  List<Book> books3 = getBookList();
-  List<Book> books4 = getBookList();
-  List<Author> authors = getAuthorList();
-  ThemeData theme = ThemeData();
 
-  bool isDarkMode = true;
+  Future<List<dynamic>> fetchAudiobooks() async {
+    final response = await http.get(Uri.parse(
+        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobooks'));
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      return jsonData['message'];
+    } else {
+      throw Exception('Failed to fetch audiobooks');
+    }
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getData();
+  // }
+
+  List<Author> authors = getAuthorList();
   bool appBarVisible = true;
   final ScrollController _scrollController = ScrollController();
 
@@ -188,14 +205,6 @@ class _MyWidgetState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(40),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Container(
                           decoration: BoxDecoration(
                             color: kLightBlue.withOpacity(0.1),
                             borderRadius: const BorderRadius.only(
@@ -209,7 +218,7 @@ class _MyWidgetState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Editors Picks",
+                                  "Editor's Pick",
                                   style: GoogleFonts.jost(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
@@ -224,7 +233,7 @@ class _MyWidgetState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (_) =>
-                                                    const EditorsPicksPage()));
+                                                    const EditorsPicks()));
                                       },
                                       child: Row(
                                         children: [
@@ -253,20 +262,34 @@ class _MyWidgetState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        SizedBox(
-  height: 200,
-  width:200,
-  child: Container(
-    color: kLightBlue.withOpacity(0.1),
-    child: ListView(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      children: [
-        EditorsPicksPage(), // Wrap the widget inside a list
-      ],
+                        // RenderRepaintBoundary#d815b
+                        Container(
+  color: kLightBlue.withOpacity(0.1),
+  child: SizedBox(
+    height: 200,
+    width:80,
+    child: FutureBuilder<List<Widget>>(
+      future: buildRecommended(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Flexible (
+            child: ListView(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            children: snapshot.data!,
+          ));
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     ),
   ),
 ),
+
                         const SizedBox(height: 5),
                         Container(
                           decoration: BoxDecoration(
@@ -333,7 +356,7 @@ class _MyWidgetState extends State<HomePage> {
                             child: ListView(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              children: buildBooks(),
+                              // children: buildBooks(),
                             ),
                           ),
                         ),
@@ -403,7 +426,7 @@ class _MyWidgetState extends State<HomePage> {
                             child: ListView(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              children: buildBooks(),
+                              // children: buildBooks(),
                             ),
                           ),
                         )
@@ -436,7 +459,7 @@ class _MyWidgetState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Expanded(
+              Flexible(
                 child: Container(
                   decoration: BoxDecoration(
                     boxShadow: [
@@ -575,66 +598,96 @@ class _MyWidgetState extends State<HomePage> {
         ));
   }
 
-  Widget buildBooktwo(Book book2, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book2)),
-        );
-      },
-      child: Container(
-        margin:
-            EdgeInsets.only(right: 32, left: index == 0 ? 16 : 0, bottom: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              height: 200,
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
-                      spreadRadius: 8,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                margin: const EdgeInsets.only(
-                  bottom: 16,
-                  top: 24,
-                ),
-                child: Hero(
-                  tag: book2.title,
-                  child: Image.asset(
-                    book2.image,
-                    fit: BoxFit.fitWidth,
+  Future<List<Widget>> buildRecommended() async {
+    List<dynamic> bookRecom = await fetchAudiobooks();
+    List<Widget> list = [];
+    for (var i = 0; i < bookRecom.length; i++) {
+      list.add(buildBookTwo(bookRecom[i], i));
+    }
+    return list;
+  }
+
+  Widget buildBookTwo(dynamic audiobook, int index) {
+    return FutureBuilder<List<dynamic>>(
+      future: fetchAudiobooks(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final audiobooks = snapshot.data!;
+          final filteredAudiobooks = audiobooks
+              .takeWhile((audiobook) => audiobook['title'] != null)
+              .toList();
+          return Container(
+              child: ListView.builder(
+            itemCount: filteredAudiobooks.length,
+            itemBuilder: (context, index) {
+              final audiobook = filteredAudiobooks[index];
+              // final title = audiobook['title'];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BookDetail(book: audiobook)),
+                  );
+                },
+                child: Container(
+                  height: 200.0,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                              image: DecorationImage(
+                                image: NetworkImage(audiobook['image'],),
+                                fit: BoxFit.cover,
+                              ),
+                          ),
+                        ),
+                      const SizedBox(width: 16.0),
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              audiobook['title'],
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              audiobook['author'],
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              '${audiobook['duration']} minutes',
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ),
-            Text(
-              book2.title,
-              style: GoogleFonts.jost(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              book2.author.fullname,
-              style: GoogleFonts.jost(
-                fontSize: 14,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+              );
+            },
+          ));
+        
+        } else if (snapshot.hasError) {
+          return const Text('Failed to fetch audiobooks');
+        } else {
+          return const Center(child:  CircularProgressIndicator());
+        }
+      },
     );
   }
 }
