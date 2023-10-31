@@ -22,22 +22,31 @@ class _MyWidgetState extends State<SignupPage> {
   bool isPasswordVisible = false;
   bool rememberUser = false;
 
-  @override
+@override
   Widget build(BuildContext context) {
-    myColor = Theme.of(context).primaryColorLight;
-    mediaSize = MediaQuery.of(context).size;
-    return Container(
-      decoration: BoxDecoration(
-        color: myColor,
-      ),
-      child: Scaffold(
-        backgroundColor: branaDeepBlack,
-        body: Stack(children: [
-          Positioned(bottom: 5, left: 10, right: 10, child: _buildBottom()),
-        ]),
-      ),
-    );
-  }
+
+  double bottomPadding;
+  double leftRightPadding;
+
+  mediaSize = MediaQuery.of(context).size;
+
+  bottomPadding = mediaSize.height * 0.01; 
+  leftRightPadding = mediaSize.width * 0.05;
+
+  return Scaffold(
+    backgroundColor: branaDeepBlack,
+    body: Stack(
+      children: [
+        Positioned(
+          bottom: bottomPadding, 
+          left: leftRightPadding,
+          right: leftRightPadding, 
+          child: _buildBottom()
+        )  
+      ]
+    )
+  );
+}
 
   Widget _buildTop() {
     return SizedBox(
@@ -145,6 +154,9 @@ class _MyWidgetState extends State<SignupPage> {
   Widget _buildInputFieldFirstName(TextEditingController controller) {
     return TextField(
         controller: controller,
+        style: const TextStyle(
+  color: branaWhite
+),
         decoration: InputDecoration(
             suffixIcon: const Icon(Icons.done),
             labelText: 'First Name',
@@ -160,6 +172,9 @@ class _MyWidgetState extends State<SignupPage> {
   Widget _buildInputFieldLastName(TextEditingController controller) {
     return TextField(
         controller: controller,
+        style: const TextStyle(
+  color: branaWhite
+),
         decoration: InputDecoration(
             suffixIcon: const Icon(Icons.done),
             labelText: 'Last Name',
@@ -176,6 +191,9 @@ class _MyWidgetState extends State<SignupPage> {
   Widget _buildInputFieldEmail(TextEditingController controller) {
     return TextField(
       controller: controller,
+      style: const TextStyle(
+  color: branaWhite
+),
       decoration: InputDecoration(
         suffixIcon: const Icon(Icons.done),
         labelText: 'Email',
@@ -194,6 +212,9 @@ class _MyWidgetState extends State<SignupPage> {
       {isPassword = false}) {
     return TextField(
       controller: controller,
+      style: const TextStyle(
+  color: branaWhite
+),
       decoration: InputDecoration(
         suffixIcon: IconButton(
           onPressed: () {
@@ -221,6 +242,9 @@ class _MyWidgetState extends State<SignupPage> {
   Widget _buildInputFieldPhoneNumber(TextEditingController controller) {
     return TextField(
         controller: controller,
+        style: const TextStyle(
+  color: branaWhite
+),
         decoration: InputDecoration(
           suffixIcon: const Icon(Icons.done),
           labelText: 'Phone Number',
@@ -237,6 +261,9 @@ class _MyWidgetState extends State<SignupPage> {
   Widget _buildInputFieldDateOfBirth(TextEditingController controller) {
     return TextField(
         controller: controller,
+        style: const TextStyle(
+  color: branaWhite
+),
         decoration: InputDecoration(
           suffixIcon: const Icon(Icons.done),
           labelText: 'Date of Birth',

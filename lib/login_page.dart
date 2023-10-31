@@ -21,20 +21,29 @@ class _MyWidgetState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    myColor = Theme.of(context).primaryColorLight;
-    mediaSize = MediaQuery.of(context).size;
-    return Container(
-      decoration: BoxDecoration(
-        color: branaPrimaryColor,
-      ),
-      child: Scaffold(
-        backgroundColor: branaDeepBlack,
-        body: Stack(children: [
-          Positioned(bottom: 50, left: 10, right: 10, child: _buildBottom()),
-        ]),
-      ),
-    );
-  }
+
+  double bottomPadding;
+  double leftRightPadding;
+
+  mediaSize = MediaQuery.of(context).size;
+
+  bottomPadding = mediaSize.height * 0.01; 
+  leftRightPadding = mediaSize.width * 0.05;
+
+  return Scaffold(
+    backgroundColor: branaDeepBlack,
+    body: Stack(
+      children: [
+        Positioned(
+          bottom: bottomPadding, 
+          left: leftRightPadding,
+          right: leftRightPadding, 
+          child: _buildBottom()
+        )  
+      ]
+    )
+  );
+}
 
   Widget _buildTop() {
     return SizedBox(
@@ -129,6 +138,9 @@ class _MyWidgetState extends State<LoginPage> {
   Widget _buildInputFieldEmail(TextEditingController controller) {
     return TextField(
       controller: controller,
+      style: const TextStyle(
+  color: branaWhite
+),
       decoration: InputDecoration(
         labelText: 'Email',
         labelStyle: GoogleFonts.jost(color: branaWhite),
@@ -146,6 +158,9 @@ class _MyWidgetState extends State<LoginPage> {
       {isPassword = false}) {
     return TextField(
       controller: controller,
+      style: const TextStyle(
+  color: branaWhite
+),
       decoration: InputDecoration(
         labelText: 'Password',
         labelStyle: GoogleFonts.jost(color: branaWhite),

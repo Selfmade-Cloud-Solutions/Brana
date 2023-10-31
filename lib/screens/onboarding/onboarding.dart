@@ -217,7 +217,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         children: <Widget>[
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(kPaddingL),
+              padding: const EdgeInsets.all(kPaddingL/2),
               child: Column(
                 children: <Widget>[
                   Header(onSkip: _goToLogin),

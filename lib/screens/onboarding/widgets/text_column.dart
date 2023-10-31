@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../constants.dart';
+import 'package:brana_mobile/constants.dart';
 
 class TextColumn extends StatelessWidget {
   final String title;
@@ -14,16 +13,19 @@ class TextColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     double fontSize = MediaQuery.of(context).size.width * 0.05;
+fontSize = fontSize.clamp(12, 20); 
     return Column(
       children: <Widget>[
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .copyWith(color: branaWhite, fontWeight: FontWeight.bold),
-        ),
+Text(
+  title,
+  textAlign: TextAlign.center,
+  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: fontSize  
+  ),
+),
         const SizedBox(height: kSpaceS),
         Text(
           text,
@@ -31,7 +33,8 @@ class TextColumn extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleMedium!
-              .copyWith(color: branaWhite),
+              .copyWith(color: branaWhite,
+          fontSize: fontSize/1.5 ),
         ),
       ],
     );
