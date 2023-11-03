@@ -44,7 +44,7 @@ class _MyWidgetState extends State<Navigation> {
             BoxShadow(
               blurRadius: 0,
               color:
-                  branaDark, // Adjust the opacity (alpha value) and color as needed
+                  branaDark, 
               spreadRadius: 1,
             ),
           ],

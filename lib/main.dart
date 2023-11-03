@@ -1,5 +1,3 @@
-import 'package:brana_mobile/editor_api.dart';
-import 'package:brana_mobile/phone_and_password.dart';
 import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -35,7 +33,7 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       home:  const Splashscreen(),
-      // home: EditorsPicksPage(),
+      // home: AuthorList(),
 
       debugShowCheckedModeBanner: false,
     );

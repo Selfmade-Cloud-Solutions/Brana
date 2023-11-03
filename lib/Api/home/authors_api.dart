@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:brana_mobile/constants.dart';
 
-class AuthorsListPage extends StatefulWidget {
-  const AuthorsListPage({Key? key}) : super(key: key);
+class AuthorList extends StatefulWidget {
+  const AuthorList({Key? key}) : super(key: key);
 
   @override
   _AuthorsList createState() => _AuthorsList();
 }
 
-class _AuthorsList extends State<AuthorsListPage> {
+class _AuthorsList extends State<AuthorList> {
   late List<dynamic> authors = [];
 
   @override
@@ -34,30 +34,8 @@ class _AuthorsList extends State<AuthorsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:branaDeepBlack,
-        appBar: AppBar(
-          title: Center(
-              child: Text(
-            "Authors",
-            style: GoogleFonts.jost(
-              fontWeight: FontWeight.w600,
-              fontSize: 25,
-              height: 1,
-              color: branaWhite,
-            ),
-          )),
-          backgroundColor: branaDeepBlack,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: branaWhite,
-          ),
-        ),
-        body:ListView.builder(
-      scrollDirection: Axis.vertical,
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
       itemCount: authors.length,
       itemBuilder: (context, index) {
@@ -137,6 +115,6 @@ class _AuthorsList extends State<AuthorsListPage> {
           ),
         );
       },
-    ));
+    );
   }
 }
