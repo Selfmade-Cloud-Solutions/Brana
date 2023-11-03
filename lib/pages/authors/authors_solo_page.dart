@@ -125,14 +125,20 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-      child: Column(
+    return 
+    // GestureDetector(
+    //   onTap: () {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //               builder: (context) => BookDetail(
+    //                 title: audiobook['title'] ?? '',
+    //               ),
+    //             ),
+    //     );
+    //   },
+    //   child: 
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
@@ -154,7 +160,7 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
                 color: Colors.white70),
           ),
         ],
-      ),
+      // ),
     );
   }
 }

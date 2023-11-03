@@ -1,25 +1,49 @@
 import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:brana_mobile/data.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:brana_mobile/constants.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class BookDetail extends StatelessWidget {
+class BookDetail extends StatefulWidget {
   const BookDetail({
     Key? key,
-    required this.book,
+    required this.title,
   }) : super(key: key);
 
-  final Book book;
+  final String title;
+
+  @override
+  _BookDetailState createState() => _BookDetailState();
+}
+
+class _BookDetailState extends State<BookDetail> {
+  late Map<String, dynamic> audiobook = {};
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final apiUrl = 'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobook?audiobook_id=${widget.title}';
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        audiobook = jsonDecode(response.body)['message'];
+      });
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    // Scroll Controller
     ScrollController scrollController = ScrollController();
 
-    // Scroll to top on widget build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.jumpTo(0);
     });
@@ -40,7 +64,7 @@ class BookDetail extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(book.image),
+            image: NetworkImage(audiobook['thumbnail'] ?? ''),
             fit: BoxFit.cover,
           ),
         ),
@@ -74,7 +98,6 @@ class BookDetail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 0),
-                      // Modified poster layout
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
@@ -91,10 +114,11 @@ class BookDetail extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: Image.asset(
-                              book.image,
+                            child:  audiobook['thumbnail'] != null
+                      ?Image.network(
+                              audiobook['thumbnail'] ?? '',
                               fit: BoxFit.cover,
-                            ),
+                            ): const SizedBox.shrink(),
                           ),
                         ),
                       ),
@@ -106,36 +130,36 @@ class BookDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                book.title,
+                                audiobook['title'] ?? '',
                                 style: GoogleFonts.jost(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w800,
-                                  color: branaWhite,
+                                  color: Colors.white, // Use Colors.white
                                 ),
                               ),
                               Text(
-                                book.author.fullname,
+                                audiobook['author'] ?? '',
                                 style: GoogleFonts.jost(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
-                                  color: branaWhite,
+                                  color: Colors.white, // Use Colors.white
                                 ),
                               ),
                             ],
                           ),
                           IconButton(
-                            color: branaWhite,
+                            color: Colors.white, // Use Colors.white
                             icon: const Icon(Icons.bookmark_add, size: 30),
                             onPressed: () {},
                           ),
                         ],
                       ),
                       Text(
-                        book.description,
+                        audiobook['description'] ?? '',
                         style: GoogleFonts.jost(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,
-                          color: branaWhite,
+                          color: Colors.white, // Use Colors.white
                         ),
                       ),
                     ],
@@ -149,16 +173,16 @@ class BookDetail extends StatelessWidget {
                 height: 200,
                 width: size.width,
                 padding: EdgeInsets.only(
-                    top: 110,
-                    left: MediaQuery.of(context).size.width * 0.55,
-                    right: MediaQuery.of(context).size.width * 0.05,
-                    bottom: 30),
+                  top: 110,
+                  left: MediaQuery.of(context).size.width * 0.55,
+                  right: MediaQuery.of(context).size.width * 0.05,
+                  bottom: 30,
+                ),
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    minimumSize:
-                        Size(MediaQuery.of(context).size.width * 0.4, 20),
+                    minimumSize: Size(MediaQuery.of(context).size.width * 0.4, 20),
                     textStyle: GoogleFonts.jost(fontSize: 16),
-                    foregroundColor: branaWhite,
+                    foregroundColor: Colors.white, // Use Colors.white
                     backgroundColor: const Color.fromARGB(255, 2, 22, 41),
                     shadowColor: Colors.black,
                     shape: RoundedRectangleBorder(
@@ -169,11 +193,13 @@ class BookDetail extends StatelessWidget {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AudioPlayerScreen(book: book),
-                    ),
+                  builder: (context) => BookDetail(
+                    title: audiobook['title'] ?? '',
+                  ),
+                ),
                   ),
                   icon: const Icon(Icons.play_arrow_rounded, size: 30),
-                  label: const Center(child: Text('Listen')),
+                  label: const Text('Listen'),
                 ),
               ),
             ),

@@ -277,17 +277,14 @@ class _MyWidgetState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        Container(
-                          color: kLightBlue.withOpacity(0.1),
-                          child: SizedBox(
-                            height: 200,
-                            child: ListView(
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              children: buildBooks(),
-                            ),
-                          ),
+                        
+                        const SizedBox(
+                          height: 5,
                         ),
+                        const SizedBox(
+                          height: 200, 
+                          child: ChildrenList()),
+                          
                         const SizedBox(height: 5),
                         Container(
                             decoration: BoxDecoration(
@@ -358,74 +355,4 @@ class _MyWidgetState extends State<HomePage> {
                   ))
             ])));
   }
-
-  List<Widget> buildBooks() {
-    List<Widget> list = [];
-    for (var i = 0; i < books.length; i++) {
-      list.add(buildBook(books[i], i));
-    }
-    return list;
-  }
-
-  Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-      child: Container(
-        margin:
-            EdgeInsets.only(right: 32, left: index == 0 ? 16 : 0, bottom: 8),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Flexible(
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
-                        spreadRadius: 8,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  margin: const EdgeInsets.only(
-                    bottom: 16,
-                    top: 24,
-                  ),
-                  child: Hero(
-                    tag: book.title,
-                    child: Image.asset(
-                      book.image,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                book.title,
-                style: GoogleFonts.jost(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white70),
-              ),
-              Text(
-                book.author.fullname,
-                style: GoogleFonts.jost(
-                  fontSize: 14,
-                  color: branaWhite,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ]),
-      ),
-    );
-  }
-
 }

@@ -112,14 +112,16 @@ class _MyWidgetState extends State<Podcast> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-      child: Center(
+    return 
+    // GestureDetector(
+    //   onTap: () {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+    //     );
+    //   },
+    //   child: 
+      Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -168,7 +170,7 @@ class _MyWidgetState extends State<Podcast> {
             ),
           ],
         ),
-      ),
+      // ),
     );
   }
 }

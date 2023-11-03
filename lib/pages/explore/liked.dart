@@ -92,14 +92,16 @@ class _MyWidgetState extends State<LikedPage> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-      child: Column(
+    return 
+    // GestureDetector(
+    //   onTap: () {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+    //     );
+    //   },
+    //   child: 
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
@@ -141,7 +143,7 @@ class _MyWidgetState extends State<LikedPage> {
             ),
           )
         ],
-      ),
+      // ),
     );
   }
 }

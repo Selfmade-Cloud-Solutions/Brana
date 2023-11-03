@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:brana_mobile/book_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +77,18 @@ class _AudiobookListState extends State<Children> {
         final audiobook = audiobooks[index];
         return AspectRatio(
   aspectRatio: 1,
-  child: Container(
+  child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BookDetail(
+                    title: audiobook['title'] ?? '',
+                  ),
+                ),
+              );
+            },
+            child: Container(
     width: MediaQuery.of(context).size.width * 0.3,
     height: MediaQuery.of(context).size.height * 0.3,
             margin: const EdgeInsets.only(right: 5, left: 5),
@@ -113,7 +125,7 @@ class _AudiobookListState extends State<Children> {
               ],
             ),
           
-        ));
+        )));
       },
     ));
   }
