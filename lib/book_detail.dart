@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:brana_mobile/constants.dart';
 
 class BookDetail extends StatefulWidget {
   const BookDetail({
@@ -18,7 +19,7 @@ class BookDetail extends StatefulWidget {
 
 class _BookDetailState extends State<BookDetail> {
   late Map<String, dynamic> audiobook = {};
-
+  bool showFullDescription = false;
   @override
   void initState() {
     super.initState();
@@ -26,7 +27,8 @@ class _BookDetailState extends State<BookDetail> {
   }
 
   Future<void> fetchData() async {
-    final apiUrl = 'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobook?audiobook_id=${widget.title}';
+    final apiUrl =
+        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobook?audiobook_id=${widget.title}';
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
@@ -36,6 +38,19 @@ class _BookDetailState extends State<BookDetail> {
     } else {
       throw Exception('Failed to fetch data');
     }
+  }
+
+  // Description readmore
+  String truncateDescription(String description) {
+    List<String> words = description.split(' ');
+    int numWords =
+        30; // Change this value to control the number of displayed words
+
+    if (words.length <= numWords) {
+      return description;
+    }
+
+    return '${words.sublist(0, numWords).join(' ')}...';
   }
 
   @override
@@ -66,7 +81,7 @@ class _BookDetailState extends State<BookDetail> {
           image: DecorationImage(
             image: NetworkImage(audiobook['thumbnail'] ?? ''),
             fit: BoxFit.cover,
-          ),
+          )
         ),
         child: Stack(
           children: [
@@ -97,29 +112,19 @@ class _BookDetailState extends State<BookDetail> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 0),
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.9),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child:  audiobook['thumbnail'] != null
-                      ?Image.network(
-                              audiobook['thumbnail'] ?? '',
-                              fit: BoxFit.cover,
-                            ): const SizedBox.shrink(),
-                          ),
+                          child: audiobook['thumbnail'] != null
+                              ? Image.network(
+                                  audiobook['thumbnail'] ?? '',
+                                  fit: BoxFit.cover,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                )
+                              : const SizedBox.shrink(),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -134,7 +139,7 @@ class _BookDetailState extends State<BookDetail> {
                                 style: GoogleFonts.jost(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w800,
-                                  color: Colors.white, // Use Colors.white
+                                  color: branaWhite, // Use branaWhite
                                 ),
                               ),
                               Text(
@@ -142,24 +147,43 @@ class _BookDetailState extends State<BookDetail> {
                                 style: GoogleFonts.jost(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.white, // Use Colors.white
+                                  color: branaWhite, // Use branaWhite
                                 ),
                               ),
                             ],
                           ),
                           IconButton(
-                            color: Colors.white, // Use Colors.white
+                            color: branaWhite, // Use branaWhite
                             icon: const Icon(Icons.bookmark_add, size: 30),
                             onPressed: () {},
                           ),
                         ],
                       ),
                       Text(
-                        audiobook['description'] ?? '',
+                        showFullDescription
+                            ? audiobook['description'] ?? ''
+                            : truncateDescription(
+                                audiobook['description'] ?? ''),
                         style: GoogleFonts.jost(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,
-                          color: Colors.white, // Use Colors.white
+                          color: branaWhite, // Use branaWhite
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            showFullDescription = !showFullDescription;
+                          });
+                        },
+                        child: Center(
+                          child: Text(
+                              showFullDescription ? 'Read Less' : 'Read More',
+                              style: const TextStyle(
+                                color:
+                                    branaWhite, // Customize the color if desired
+                                fontWeight: FontWeight.bold,
+                              )),
                         ),
                       ),
                     ],
@@ -180,11 +204,12 @@ class _BookDetailState extends State<BookDetail> {
                 ),
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width * 0.4, 20),
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width * 0.4, 20),
                     textStyle: GoogleFonts.jost(fontSize: 16),
-                    foregroundColor: Colors.white, // Use Colors.white
+                    foregroundColor: branaWhite,
                     backgroundColor: const Color.fromARGB(255, 2, 22, 41),
-                    shadowColor: Colors.black,
+                    shadowColor: branaDeepBlack,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -193,10 +218,10 @@ class _BookDetailState extends State<BookDetail> {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                  builder: (context) => BookDetail(
-                    title: audiobook['title'] ?? '',
-                  ),
-                ),
+                      builder: (context) => BookDetail(
+                        title: audiobook['title'] ?? '',
+                      ),
+                    ),
                   ),
                   icon: const Icon(Icons.play_arrow_rounded, size: 30),
                   label: const Text('Listen'),
