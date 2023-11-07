@@ -120,9 +120,9 @@ class _BookDetailState extends State<BookDetail> {
                                   audiobook['thumbnail'] ?? '',
                                   fit: BoxFit.cover,
                                   width:
-                                      MediaQuery.of(context).size.width * 0.5,
+                                      MediaQuery.of(context).size.width * 0.8,
                                   height:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.7,
                                 )
                               : const SizedBox.shrink(),
                         ),
