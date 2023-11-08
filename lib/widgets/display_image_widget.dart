@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-
 class DisplayImage extends StatelessWidget {
   final String imagePath;
   final VoidCallback onPressed;
@@ -15,16 +14,16 @@ class DisplayImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const color = Color.fromRGBO(64, 105, 225, 1);
+    const color = Color.fromRGBO(255, 255, 255, 1);
 
     return Center(
         child: Stack(children: [
       buildImage(color),
-      Positioned(
-        right: 10,
-        top: 85,
-        child: buildEditIcon(color),
-      )
+      // Positioned(
+      //   right: 10,
+      //   top: 85,
+      //   child: buildEditIcon(color),
+      // )
     ]));
   }
 
@@ -35,23 +34,23 @@ class DisplayImage extends StatelessWidget {
         : FileImage(File(imagePath));
 
     return CircleAvatar(
-      radius: 60,
+      radius: 50,
       backgroundColor: color,
       child: CircleAvatar(
         backgroundImage: image as ImageProvider,
-        radius: 55,
+        radius: 48,
       ),
     );
   }
 
-  // Builds Edit Icon on Profile Picture
-  Widget buildEditIcon(Color color) => buildCircle(
-      all: 8,
-      child: Icon(
-        Icons.edit,
-        color: color,
-        size: 20,
-      ));
+  // // Builds Edit Icon on Profile Picture
+  // Widget buildEditIcon(Color color) => buildCircle(
+  //     all: 8,
+  //     child: Icon(
+  //       Icons.edit,
+  //       color: color,
+  //       size: 20,
+  //     ));
 
   // Builds/Makes Circle for Edit Icon on Profile Picture
   Widget buildCircle({
@@ -60,7 +59,7 @@ class DisplayImage extends StatelessWidget {
   }) =>
       ClipOval(
           child: Container(
-        padding: EdgeInsets.all(all),
+        // padding: EdgeInsets.all(all),
         color: const Color.fromARGB(255, 184, 208, 211),
         child: child,
       ));

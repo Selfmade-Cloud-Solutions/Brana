@@ -21,29 +21,54 @@ class _MyWidgetState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double bottomPadding;
+    double toppadding;
+    double leftRightPadding;
 
-  double bottomPadding;
-  double leftRightPadding;
+    mediaSize = MediaQuery.of(context).size;
+    toppadding = mediaSize.height / 5;
+    bottomPadding = mediaSize.height / 5;
+    leftRightPadding = mediaSize.width * 0.05;
 
-  mediaSize = MediaQuery.of(context).size;
-
-  bottomPadding = mediaSize.height * 0.01; 
-  leftRightPadding = mediaSize.width * 0.05;
-
-  return Scaffold(
-    backgroundColor: branaDeepBlack,
-    body: Stack(
-      children: [
-        Positioned(
-          bottom: bottomPadding, 
-          left: leftRightPadding,
-          right: leftRightPadding, 
-          child: _buildBottom()
-        )  
-      ]
-    )
-  );
-}
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: branaDeepBlack,
+      body: Stack(children: [
+        Padding(
+          padding: EdgeInsets.only(
+              left: leftRightPadding, top: toppadding, bottom: bottomPadding),
+          child: Container(
+            color: branaDarkBlue,
+            width: mediaSize.width - 50,
+            height: mediaSize.height,
+            child: Column(
+              children: [
+                Container(
+                  child: _buildTop(),
+                ),
+                Container(
+                  child: _buildForm(),
+                ),
+                // Container(
+                //   child: _buildBottom(),
+                // )
+              ],
+            ),
+          ),
+        ),
+      ]),
+      // body: SafeArea(
+      //   child: Stack(alignment: Alignment.topCenter, children: [
+      //     Positioned(
+      //         // top: toppadding,
+      //         // bottom: bottomPadding,
+      //         left: leftRightPadding,
+      //         right: leftRightPadding,
+      //         child: _buildBottom())
+      //   ]),
+      // )
+    );
+  }
 
   Widget _buildTop() {
     return SizedBox(
@@ -61,16 +86,20 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Widget _buildBottom() {
-    return SizedBox(
-      width: mediaSize.width,
-      child: Card(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        color: kLightBlue.withOpacity(0.1),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: _buildForm(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
+      child: SizedBox(
+        // width: mediaSize.width,
+        // height: mediaSize.height - 350,
+        child: Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          color: kLightBlue.withOpacity(0.1),
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            // child: _buildForm(),
+          ),
         ),
       ),
     );
@@ -83,7 +112,7 @@ class _MyWidgetState extends State<LoginPage> {
         Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 60),
-            child: _buildTop(),
+            // child: _buildTop(),
           ),
         ),
         Center(
@@ -96,7 +125,9 @@ class _MyWidgetState extends State<LoginPage> {
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 20,
+        ),
         Center(
           child: _buildPrimaryText("Please Login"),
         ),
@@ -121,7 +152,9 @@ class _MyWidgetState extends State<LoginPage> {
           padding: const EdgeInsets.symmetric(horizontal: 80),
           child: _buildLoginButton(),
         ),
-        const SizedBox(height: 35),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 20,
+        ),
       ],
     );
   }
@@ -138,9 +171,7 @@ class _MyWidgetState extends State<LoginPage> {
   Widget _buildInputFieldEmail(TextEditingController controller) {
     return TextField(
       controller: controller,
-      style: const TextStyle(
-  color: branaWhite
-),
+      style: const TextStyle(color: branaWhite),
       decoration: InputDecoration(
         labelText: 'Email',
         labelStyle: GoogleFonts.jost(color: branaWhite),
@@ -158,9 +189,7 @@ class _MyWidgetState extends State<LoginPage> {
       {isPassword = false}) {
     return TextField(
       controller: controller,
-      style: const TextStyle(
-  color: branaWhite
-),
+      style: const TextStyle(color: branaWhite),
       decoration: InputDecoration(
         labelText: 'Password',
         labelStyle: GoogleFonts.jost(color: branaWhite),
@@ -216,26 +245,31 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Widget _buildLoginButton() {
-    return ElevatedButton(
-      onPressed: () {
-        // debugPrint("Email : ${emailController.text}");
-        // debugPrint("Password : ${passwordController.text}");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Navigation()),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
-        elevation: 20,
-        shadowColor: branaPrimaryColor,
-        backgroundColor: branaPrimaryColor,
-        minimumSize: const Size.fromHeight(50),
-      ),
-      child: Text(
-        "LOGIN",
-        style: GoogleFonts.jost(
-          color: branaWhite,
+    var toppadding = MediaQuery.of(context).size.height / 20;
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, toppadding, 0, 0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.height / 20,
+        child: ElevatedButton(
+          onPressed: () {
+            // debugPrint("Email : ${emailController.text}");
+            // debugPrint("Password : ${passwordController.text}");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Navigation()),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
+              backgroundColor: branaPrimaryColor),
+          child: Text(
+            "LOGIN",
+            style: GoogleFonts.jost(
+              color: branaWhite,
+            ),
+          ),
         ),
       ),
     );
