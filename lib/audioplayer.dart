@@ -57,7 +57,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
     printEmojis: true,
     printTime: true,
   ));
-  double _sliderValue = 0.0;
+  // final double _sliderValue = 0.0;
   bool isFetching = false;
   int currentIndex = 0;
   final playlist = ConcatenatingAudioSource(

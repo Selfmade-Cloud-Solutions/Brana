@@ -98,7 +98,10 @@ class _MyWidgetState extends State<LikedPage> {
         var audiobook;
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => BookDetail(title: audiobook['title'] ?? '')),
+          MaterialPageRoute(builder: (context) => BookDetail(title: audiobook['title'] ?? '',
+                    author: audiobook['author'] ?? '',
+                    description: audiobook['description'] ?? '',
+                    thumbnail: audiobook['thumbnail'] ?? '',)),
         );
       },
       child: 

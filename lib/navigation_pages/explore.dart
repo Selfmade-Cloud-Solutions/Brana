@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/navigation_pages/genreList.dart';
-import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/pages/explore/latest.dart';
@@ -21,7 +20,6 @@ class _HomeScreenState extends State<ExplorePage> {
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
-  late Future<List<Map<String, dynamic>>> _genres;
 
   List<Widget> itemsData = [];
 Future<void> getPostsData() async {

@@ -139,8 +139,7 @@ class _MyWidgetState extends State<NewPassword> {
     );
   }
 
-  Widget _buildInputFieldRetypePassword(TextEditingController controller,
-      {isPassword = false}) {
+  Widget _buildInputFieldRetypePassword(TextEditingController controller) {
     return TextField(
       controller: controller,
       style: const TextStyle(color: branaWhite),
