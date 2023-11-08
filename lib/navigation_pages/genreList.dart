@@ -1,171 +1,100 @@
+import 'package:brana_mobile/book_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:brana_mobile/src/theme/theme.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class GenreListPage extends StatefulWidget {
-  const GenreListPage({super.key});
+class BookModel {
+  final String title;
+  final String description;
+  final String author;
+  final String narrator;
+  final String thumbnail;
+  final String chapter;
+  final String duration;
 
-  @override
-  State<GenreListPage> createState() => _RecomendedPageState();
+  BookModel({
+    required this.title,
+    required this.description,
+    required this.author,
+    required this.narrator,
+    required this.thumbnail,
+    required this.chapter,
+    required this.duration,
+  });
+
+  factory BookModel.fromJson(Map<String, dynamic> json) {
+  return BookModel(
+    title: json['title'] as String? ?? "",
+    description: json['description'] as String? ?? "",
+    author: json['author'] as String? ?? "",
+    narrator: json['narrator'] as String? ?? "",
+    thumbnail: json['thumbnail'] as String? ?? "",
+    chapter: json['Total chapter'].toString(), // Convert int to String
+    duration: json['duration'] as String? ?? "",
+  );
 }
 
-class _RecomendedPageState extends State<GenreListPage> {
-  Set<BookModel> courseSet = {};
+}
 
-  Widget _bookList(BuildContext context) {
-    courseSet.addAll(BookList.list);
+class GenreListPage extends StatefulWidget {
+  final String genreName;
+  const GenreListPage({Key? key, required this.genreName}) : super(key: key);
 
-    return SingleChildScrollView(
-        child: Column(
-            children: courseSet.map((course) {
-      return _bookInfo(context, course);
-    }).toList()));
+  @override
+  _GenreListPageState createState() => _GenreListPageState();
+}
+
+class _GenreListPageState extends State<GenreListPage> {
+  List<BookModel> books = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
   }
 
-  Widget _card(BuildContext context, {Widget? backWidget}) {
-    return Container(
-      height: 190,
-      width: MediaQuery.of(context).size.width * .34,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: const BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                offset: Offset(0, 5), blurRadius: 10, color: Color(0x12000000))
-          ]),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        child: backWidget,
-      ),
-    );
+  Future<void> fetchData() async {
+    try {
+      final response = await http.get(
+          Uri.parse(
+              "https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retreive_audiobook_genre?audiobook_genre=${widget.genreName}"));
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        final message = jsonData['message'] as List;
+
+
+        if (message.isNotEmpty) {
+          final bookList = message
+              .map((bookData) => BookModel.fromJson(bookData))
+              .toList();
+          setState(() {
+            books = bookList;
+          });
+        } 
+      } 
+    // ignore: empty_catches
+    } catch (e) {
+    }
   }
 
-  Widget _bookInfo(BuildContext context, BookModel model) {
-    return SizedBox(
-        height: 170,
-        width: MediaQuery.of(context).size.width - 20,
-        child: Row(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: .7,
-              child: _card(
-                context,
-                backWidget: Image.asset(model.thumbnail),
-              ),
-            ),
-            Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        model.name,
-                        style: GoogleFonts.jost(
-                            fontSize: 15,
-                            height: 1,
-                            color: branaWhite,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Text(model.duration,
-                        style: GoogleFonts.jost(
-                          color: Colors.grey,
-                          fontSize: 14,
-                        )),
-                    const SizedBox(width: 10)
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: 60,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      if (constraints.constrainHeight(20) < 20) {
-                        return SingleChildScrollView(
-                          controller: ScrollController(),
-                          child: Text(
-                            model.description,
-                            style: GoogleFonts.jost(
-                              fontSize: 12,
-                              height: 1,
-                              color: branaWhite,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return Text(
-                          model.description,
-                          style: GoogleFonts.jost(
-                            fontSize: 12,
-                            height: 1,
-                            color: branaWhite,
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
-                Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      model.author,
-                      style: GoogleFonts.jost(
-                        fontSize: 15,
-                        height: 1,
-                        color: branaWhite,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    "Narrator ${model.narrator}",
-                    style: GoogleFonts.jost(
-                        fontSize: 15,
-                        height: 1,
-                        color: branaWhite,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ]),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: <Widget>[
-                    _chip(model.chapters, branaWhite, height: 5),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    // _chip(model.episodes, branaWhite, height: 5),
-                  ],
-                )
-              ],
-            ))
-          ],
-        ));
-  }
 
-  Widget _chip(String text, Color textColor,
-      {double height = 0, bool isPrimaryCard = false}) {
+  Widget _chip(String text, Color textColor, {double height = 0}) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-        color: textColor.withAlpha(isPrimaryCard ? 200 : 50),
+      decoration:  BoxDecoration(
+        borderRadius:  const BorderRadius.all(Radius.circular(15)),
+        color:kLightBlue.withOpacity(0.1)
       ),
       child: Text(
-        text,
+        "$text Chapters",
         style: GoogleFonts.jost(
-            color: isPrimaryCard ? branaWhite : textColor, fontSize: 12),
+          color: branaWhite,
+          fontSize: 12,
+        ),
       ),
     );
   }
@@ -177,41 +106,195 @@ class _RecomendedPageState extends State<GenreListPage> {
       appBar: AppBar(
         backgroundColor: branaDeepBlack,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: branaWhite),
           onPressed: () {
             Navigator.pop(context);
           },
-          color: branaWhite,
         ),
-        flexibleSpace: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Genre Name",
-              style: GoogleFonts.jost(
-                fontSize: 20,
-                height: 1,
-                color: branaWhite,
-              ),
-            ),
-          ],
-        )),
+        title: Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children:[
+    Text(
+          widget.genreName,
+          style: GoogleFonts.jost(
+            fontSize: 20,
+            color: branaWhite,
+          ),
+        )],
       ),
-      body: SingleChildScrollView(
-          child: Container(
-        width: MediaQuery.of(context).size.width,
+      ),
+      body: ListView.builder(
+  itemCount: books.length,
+  itemBuilder: (context, index) {
+    return  GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BookDetail(
+                    title: books[index].title,
+                  ),
+                ),
+              );
+            },
+            child:Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
         color: kLightBlue.withOpacity(0.1),
-        child: Column(
+        elevation: 2,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _bookList(context),
-            SizedBox(
-                height: 40,
-                width: double.infinity,
-                child: Container(color: Colors.black)),
-          ],
+            
+            Padding(
+      padding: const EdgeInsets.symmetric( vertical:30),
+      child: SizedBox(
+              width: 150,
+              height:120, 
+              child: Image.network(books[index].thumbnail),
+            )),
+              Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 15),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      books[index].title,
+                      style: GoogleFonts.jost(
+                        fontSize: 15,
+                        height: 1,
+                        color: branaWhite,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    books[index].duration,
+                    style: GoogleFonts.jost(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(width: 10)
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 60,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (constraints.maxHeight < 20) {
+                      return SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: Text(
+                          books[index].description,
+                          style: GoogleFonts.jost(
+                            fontSize: 12,
+                            height: 1,
+                            color: branaWhite,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        books[index].description,
+                        style: GoogleFonts.jost(
+                          fontSize: 12,
+                          height: 1,
+                          color: branaWhite,
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                Column(
+      children: [
+        Text(
+          "Author ",
+          style: GoogleFonts.jost(
+            fontSize: 15,
+            height: 1,
+            color: branaWhite,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      )),
+        Text(
+          books[index].author,
+          style: GoogleFonts.jost(
+            fontSize: 15,
+            height: 1,
+            color: branaWhite,
+          ),
+        ),
+      ],
+    ),
+    Padding(
+      padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.09, vertical:10),
+    child:SizedBox(
+      width: MediaQuery.of(context).size.width * 0.01,
+      height: 15,
+      child: Container(
+        decoration: BoxDecoration(
+          color: branaWhite,
+          borderRadius: BorderRadius.circular(20), 
+        ),
+      ),
+    )),
+    Column(
+      children: [
+        Text(
+          "Narrator ",
+          style: GoogleFonts.jost(
+            fontSize: 15,
+            height: 1,
+            color: branaWhite,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          books[index].narrator,
+          style: GoogleFonts.jost(
+            fontSize: 15,
+            height: 1,
+            color: branaWhite,
+          ),
+        ),
+      ],
+    ),
+  ],
+),
+
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: <Widget>[
+                  _chip(books[index].chapter, branaWhite, height: 5),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
+        ),
+      ),
+    ));
+  },
+)
+
     );
   }
 }

@@ -53,7 +53,7 @@ class _MyWidgetState extends State<Navigation> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(
             gap: 8,
-            color: branaBlue,
+            color: branaWhite,
             activeColor: branaWhite,
             tabBackgroundColor: branaPrimaryColor,
             padding: const EdgeInsets.all(10),
