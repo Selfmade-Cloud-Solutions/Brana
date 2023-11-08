@@ -9,9 +9,15 @@ class BookDetail extends StatefulWidget {
   const BookDetail({
     Key? key,
     required this.title,
+    required this.author,
+    required this.description,
+    required this.thumbnail,
   }) : super(key: key);
 
   final String title;
+  final String author;
+  final String description;
+  final String thumbnail;
 
   @override
   _BookDetailState createState() => _BookDetailState();
@@ -20,6 +26,7 @@ class BookDetail extends StatefulWidget {
 class _BookDetailState extends State<BookDetail> {
   late Map<String, dynamic> audiobook = {};
   bool showFullDescription = false;
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -34,13 +41,13 @@ class _BookDetailState extends State<BookDetail> {
     if (response.statusCode == 200) {
       setState(() {
         audiobook = jsonDecode(response.body)['message'];
+        isLoading = false;
       });
     } else {
       throw Exception('Failed to fetch data');
     }
   }
 
-  // Description readmore
   String truncateDescription(String description) {
     List<String> words = description.split(' ');
     int numWords =
@@ -78,11 +85,10 @@ class _BookDetailState extends State<BookDetail> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(audiobook['thumbnail'] ?? ''),
-            fit: BoxFit.cover,
-          )
-        ),
+            image: DecorationImage(
+          image: NetworkImage(widget.thumbnail),
+          fit: BoxFit.cover,
+        )),
         child: Stack(
           children: [
             Container(
@@ -104,92 +110,101 @@ class _BookDetailState extends State<BookDetail> {
                 }
                 return true;
               },
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, bottom: 110, right: 16, top: 50),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: audiobook['thumbnail'] != null
-                              ? Image.network(
-                                  audiobook['thumbnail'] ?? '',
-                                  fit: BoxFit.cover,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                )
-                              : const SizedBox.shrink(),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                audiobook['title'] ?? '',
-                                style: GoogleFonts.jost(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w800,
-                                  color: branaWhite, // Use branaWhite
-                                ),
+              child: isLoading
+                  ? const Center(
+                      // Display the preloader if isLoading is true
+                      child: CircularProgressIndicator(color: branaWhite),
+                    )
+                  : SingleChildScrollView(
+                      controller: scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16, bottom: 110, right: 16, top: 50),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child:Image.network(
+                                        widget.thumbnail,
+                                        fit: BoxFit.cover,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                      )
+                                    
                               ),
-                              Text(
-                                audiobook['author'] ?? '',
-                                style: GoogleFonts.jost(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: branaWhite, // Use branaWhite
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.title,
+                                      style: GoogleFonts.jost(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w800,
+                                        color: branaWhite, // Use branaWhite
+                                      ),
+                                    ),
+                                    Text(
+                                      widget.author,
+                                      style: GoogleFonts.jost(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color: branaWhite, // Use branaWhite
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                                IconButton(
+                                  color: branaWhite, // Use branaWhite
+                                  icon:
+                                      const Icon(Icons.bookmark_add, size: 30),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                            Text(
+                              showFullDescription
+                                  ? widget.description
+                                  : truncateDescription(
+                                      widget.description),
+                              style: GoogleFonts.jost(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w300,
+                                color: branaWhite, // Use branaWhite
                               ),
-                            ],
-                          ),
-                          IconButton(
-                            color: branaWhite, // Use branaWhite
-                            icon: const Icon(Icons.bookmark_add, size: 30),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      Text(
-                        showFullDescription
-                            ? audiobook['description'] ?? ''
-                            : truncateDescription(
-                                audiobook['description'] ?? ''),
-                        style: GoogleFonts.jost(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w300,
-                          color: branaWhite, // Use branaWhite
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  showFullDescription = !showFullDescription;
+                                });
+                              },
+                              child: Center(
+                                child: Text(
+                                    showFullDescription
+                                        ? 'Read Less'
+                                        : 'Read More',
+                                    style: const TextStyle(
+                                      color:
+                                          branaWhite, // Customize the color if desired
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            showFullDescription = !showFullDescription;
-                          });
-                        },
-                        child: Center(
-                          child: Text(
-                              showFullDescription ? 'Read Less' : 'Read More',
-                              style: const TextStyle(
-                                color:
-                                    branaWhite, // Customize the color if desired
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
             ),
             Positioned(
               bottom: 0,
@@ -220,6 +235,9 @@ class _BookDetailState extends State<BookDetail> {
                     MaterialPageRoute(
                       builder: (context) => BookDetail(
                         title: audiobook['title'] ?? '',
+                        author: audiobook['author'] ?? '',
+                        description: audiobook['description'] ?? '',
+                        thumbnail: audiobook['thumbnail'] ?? '',
                       ),
                     ),
                   ),

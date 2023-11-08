@@ -51,6 +51,9 @@ class _AudiobookListState extends State<ChildrenList> {
                 MaterialPageRoute(
                   builder: (context) => BookDetail(
                     title: audiobook['title'] ?? '',
+                    author: audiobook['author'] ?? '',
+                    description: audiobook['description'] ?? '',
+                    thumbnail: audiobook['thumbnail'] ?? '',
                   ),
                 ),
               );

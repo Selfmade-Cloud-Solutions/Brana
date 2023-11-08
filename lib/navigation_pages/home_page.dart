@@ -2,14 +2,9 @@ import 'package:brana_mobile/Api/home/recommended_api.dart';
 import 'package:brana_mobile/Api/home/editorspick_api.dart';
 import 'package:brana_mobile/Api/home/children_api.dart';
 import 'package:brana_mobile/Api/home/authors_api.dart';
-// import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:brana_mobile/data.dart';
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
 import 'package:brana_mobile/constants.dart';
-import 'package:brana_mobile/book_detail.dart';
 import 'package:brana_mobile/pages/authors/authors_list.dart';
 import 'package:brana_mobile/pages/recomendations/editors_picks.dart';
 import 'package:brana_mobile/pages/recomendations/podcasts.dart';
@@ -24,12 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _MyWidgetState extends State<HomePage> {
   TextEditingController textController = TextEditingController();
-  List<dynamic> data = [];
-  List<Book> books = getBookList();
 
-  
-
-  // List<Author> authors = getAuthorList();
   bool appBarVisible = true;
   final ScrollController _scrollController = ScrollController();
 
@@ -84,9 +74,7 @@ class _MyWidgetState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const SizedBox(
-                          height: 210, 
-                          child: RecommendedList()),
+                        const SizedBox(height: 210, child: RecommendedList()),
                         // Author
                         Container(
                           color: Colors.black,
@@ -148,8 +136,7 @@ class _MyWidgetState extends State<HomePage> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 100,
-                                    child: AuthorList())
+                                      height: 100, child: AuthorList())
                                 ],
                               ),
                             ),
@@ -215,9 +202,7 @@ class _MyWidgetState extends State<HomePage> {
                           ),
                         ),
                         const SizedBox(height: 5),
-                        const SizedBox(
-                          height: 200, 
-                        child: EditorsPickList()),
+                        const SizedBox(height: 200, child: EditorsPickList()),
                         const SizedBox(height: 5),
                         Container(
                           decoration: BoxDecoration(
@@ -277,14 +262,12 @@ class _MyWidgetState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        
+
                         const SizedBox(
                           height: 5,
                         ),
-                        const SizedBox(
-                          height: 200, 
-                          child: ChildrenList()),
-                          
+                        const SizedBox(height: 200, child: ChildrenList()),
+
                         const SizedBox(height: 5),
                         Container(
                             decoration: BoxDecoration(
@@ -347,9 +330,7 @@ class _MyWidgetState extends State<HomePage> {
                         const SizedBox(
                           height: 5,
                         ),
-                        const SizedBox(
-                          height: 200, 
-                          child: ChildrenList()),
+                        const SizedBox(height: 200, child: ChildrenList()),
                       ],
                     ),
                   ))
