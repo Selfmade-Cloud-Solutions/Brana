@@ -68,8 +68,8 @@ class _AudiobookListState extends State<Children> {
         body:GridView.builder(
       gridDelegate: 
           const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 50
+            crossAxisCount: 2,
+            mainAxisSpacing: 10
           ),
       itemCount: audiobooks.length, 
       itemBuilder: (context, index) {
@@ -103,8 +103,8 @@ class _AudiobookListState extends State<Children> {
                   child: audiobook['thumbnail'] != null
                       ? Image.network(
                           audiobook['thumbnail'],
-                          width: containerWidth * 0.7,
-                          height: containerWidth * 0.7
+                          width: containerWidth * 1.2,
+                          height: containerWidth * 1.2
                         )
                       : const SizedBox.shrink(),
                 ),

@@ -300,7 +300,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.only(top: 0),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
+              child: SizedBox(
                 width: screenWidth / 3 - 10,
                 height: screenHeight / 10 - 50,
                 child: ElevatedButton(
@@ -347,14 +347,14 @@ class _ProfilePageState extends State<ProfilePage> {
     double leftpadding = mediaSize.width;
     double fontSize = screenWidth;
 
-    return Container(
+    return SizedBox(
       width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(left: leftpadding / 10),
-            child: Container(
+            child: SizedBox(
               width: screenWidth / 2 + 100,
               height: screenHeight / 12,
               child: Card(
@@ -401,14 +401,14 @@ class _ProfilePageState extends State<ProfilePage> {
     double screenHeight = mediaSize.height;
     double leftpadding = mediaSize.width;
     double fontSize = screenWidth;
-    return Container(
+    return SizedBox(
       width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(left: leftpadding / 10),
-            child: Container(
+            child: SizedBox(
               width: screenWidth / 2 + 100,
               height: screenHeight / 12,
               child: Card(

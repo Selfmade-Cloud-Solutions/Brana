@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -35,12 +36,27 @@ class _AuthorsList extends State<AuthorList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
-      itemCount: authors.length,
-      itemBuilder: (context, index) {
-        final author = authors[index];
-        return Container(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        itemCount: authors.length,
+        itemBuilder: (context, index) {
+          final author = authors[index];
+          // Check if total books is not zero before displaying the author
+          if (author['total Book'] != 0) {
+            return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AuthorsSoloPage(
+                        author: author['full name'] ?? '',
+                        thumbnail: author['author image'],
+                        totalbooks: author['total Book'].toString(),
+                      ),
+                    ),
+                  );
+                },
+                child:Container(
           decoration: const BoxDecoration(
             color: Color.fromARGB(255, 0, 0, 0),
             borderRadius: BorderRadius.all(
@@ -113,8 +129,13 @@ class _AuthorsList extends State<AuthorList> {
               ),
             ],
           ),
-        );
-      },
+        ));
+      }
+      else {
+            // If total books is zero, return an empty container
+            return Container();
+          }
+        },
     );
   }
 }

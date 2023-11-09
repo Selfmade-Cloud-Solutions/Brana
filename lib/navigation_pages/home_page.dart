@@ -18,32 +18,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<HomePage> {
-  TextEditingController textController = TextEditingController();
-
-  bool appBarVisible = true;
-  final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.offset >= 50) {
-        setState(() {
-          appBarVisible = false;
-        });
-      } else {
-        setState(() {
-          appBarVisible = true;
-        });
-      }
-    });
+  
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBarVisible
-            ? AppBar(
+      backgroundColor:branaDeepBlack,
+        appBar: AppBar(
                 automaticallyImplyLeading: false,
                 backgroundColor: branaDeepBlack,
                 flexibleSpace: Center(
@@ -61,13 +46,13 @@ class _MyWidgetState extends State<HomePage> {
                     ),
                   ],
                 )),
-              )
-            : null,
+              ),
         body: NotificationListener<ScrollNotification>(
             onNotification: (scrollDetails) {
               return true;
             },
-            child: ListView(controller: _scrollController, children: [
+            child: ListView(
+              children: [
               Container(
                   color: branaDeepBlack,
                   child: SingleChildScrollView(
