@@ -21,10 +21,21 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late Size mediaSize;
+
   @override
   Widget build(BuildContext context) {
     final user = UserData.myUser;
     const color = Color.fromRGBO(255, 255, 255, 1);
+    mediaSize = MediaQuery.of(context).size;
+    double toppadding = mediaSize.height;
+    double bottompadding = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double rightpadding = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
+
+    double fontSize = screenWidth;
     return Scaffold(
       backgroundColor: branaDeepBlack,
       appBar: AppBar(
@@ -38,8 +49,8 @@ class _ProfilePageState extends State<ProfilePage> {
               "My Profile",
               style: GoogleFonts.jost(
                 fontWeight: FontWeight.w600,
-                fontSize: 25,
-                height: 1,
+                fontSize: fontSize / 20,
+                height: screenHeight / 200,
                 color: branaWhite,
               ),
             ),
@@ -56,34 +67,37 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: screenHeight,
+          width: screenWidth,
           color: branaDeepBlack,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 5.0),
+                padding: EdgeInsets.only(top: toppadding / 30),
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 2 + 100,
-                  height: MediaQuery.of(context).size.height / 2 - 92,
+                  width: screenWidth / 1.3,
+                  height: screenHeight / 2.7,
                   decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 2, 16, 27),
                       borderRadius: BorderRadius.circular(12)),
                   child: Column(
                     children: [
+                      SizedBox(
+                        height: screenHeight / 30,
+                      ),
                       imdisplay(),
                       SizedBox(
-                        height: 5,
+                        height: screenHeight / 80,
                       ),
                       buildUserInfoDisplay(user.firstName, user.lastName),
                       SizedBox(
-                        height: 1,
+                        height: screenHeight / 250,
                       ),
                       emailDisplay(user.email),
                       SizedBox(
-                        height: 20,
+                        height: screenHeight / 20,
                       ),
                       buildEditButton(),
                     ],
@@ -91,31 +105,36 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: screenHeight / 50,
               ),
-              Center(
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: label("Total time njnspent"),
-                        ),
-                      ],
-                    ),
-                    total(),
-                    SizedBox(height: 30),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: label("Total Books"),
-                        ),
-                      ],
-                    ),
-                    cardd(),
-                  ],
+              Container(
+                width: screenWidth / 0.5,
+                height: screenHeight / 3,
+                color: branaDeepBlack,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: leftpadding / 30),
+                            child: label("Total time spent"),
+                          ),
+                        ],
+                      ),
+                      total(),
+                      SizedBox(height: screenHeight / 30),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: leftpadding / 30),
+                            child: label("Total Books"),
+                          ),
+                        ],
+                      ),
+                      cardd(),
+                    ],
+                  ),
                 ),
               )
             ],
@@ -126,8 +145,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget imdisplay() {
+    mediaSize = MediaQuery.of(context).size;
+    double toppadding = mediaSize.height;
+
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: EdgeInsets.only(top: toppadding * 0),
       child: InkWell(
           onTap: () {
             // navigateSecondPage(const EditImagePage());
@@ -155,104 +177,132 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildSettingsIcon(Color color) {
+    mediaSize = MediaQuery.of(context).size;
+    double toppadding = mediaSize.height;
+    double rightpadding = mediaSize.width;
+    double screenWidth = mediaSize.width;
+    double fontSize = screenWidth;
+
     return Container(
-      padding: const EdgeInsets.only(right: 10),
-      child: const Icon(
+      padding: EdgeInsets.only(right: rightpadding / 40, top: toppadding / 250),
+      child: Icon(
         Icons.settings,
         color: branaWhite,
-        size: 35,
+        size: fontSize / 13,
       ),
     );
   }
 
-  Widget buildUserInfoDisplay(String finame, String laname) =>
-      SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.only(bottom: 1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Text(
-                  //   title,
-                  //   style: GoogleFonts.jost(
-                  //     fontSize: 15,
-                  //     fontWeight: FontWeight.w500,
-                  //     color: branaWhite,
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 1,
-                  ),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Text(
-                            finame,
-                            style: GoogleFonts.jost(
-                                fontSize: 20, height: 1.4, color: Colors.white),
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            laname,
-                            style: GoogleFonts.jost(
-                                fontSize: 20, height: 1.4, color: Colors.white),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              )));
+  Widget buildUserInfoDisplay(String finame, String laname) {
+    mediaSize = MediaQuery.of(context).size;
 
-  Widget emailDisplay(String mail) => SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsets.only(bottom: 1),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Text(
-              //   title,
-              //   style: GoogleFonts.jost(
-              //     fontSize: 15,
-              //     fontWeight: FontWeight.w500,
-              //     color: branaWhite,
-              //   ),
-              // ),
-              const SizedBox(
-                height: 1,
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: Text(
-                        mail,
-                        style: GoogleFonts.jost(
-                            fontSize: 15,
-                            height: 1.4,
-                            color: Color.fromARGB(255, 158, 155, 155)),
+    double bottompadding = mediaSize.height;
+
+    double screenWidth = mediaSize.width;
+
+    double fontSize = screenWidth;
+    return SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.only(bottom: bottompadding / 350),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Text(
+                //   title,
+                //   style: GoogleFonts.jost(
+                //     fontSize: 15,
+                //     fontWeight: FontWeight.w500,
+                //     color: branaWhite,
+                //   ),
+                // ),
+
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text(
+                          finame,
+                          style: GoogleFonts.jost(
+                              fontSize: fontSize / 25,
+                              height: 1.4,
+                              color: Colors.white),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )));
+                      Container(
+                        child: Text(
+                          laname,
+                          style: GoogleFonts.jost(
+                              fontSize: fontSize / 25,
+                              height: 1.4,
+                              color: Colors.white),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            )));
+  }
+
+  Widget emailDisplay(String mail) {
+    mediaSize = MediaQuery.of(context).size;
+
+    double bottompadding = mediaSize.height;
+
+    double screenWidth = mediaSize.width;
+
+    double fontSize = screenWidth;
+    return SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.only(bottom: bottompadding / 350),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Text(
+                //   title,
+                //   style: GoogleFonts.jost(
+                //     fontSize: 15,
+                //     fontWeight: FontWeight.w500,
+                //     color: branaWhite,
+                //   ),
+                // ),
+
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text(
+                          mail,
+                          style: GoogleFonts.jost(
+                              fontSize: fontSize / 30,
+                              height: 1.4,
+                              color: Color.fromARGB(255, 158, 155, 155)),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )));
+  }
+
   Widget buildEditButton() {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double fontSize = screenWidth / 30;
+    mediaSize = MediaQuery.of(context).size;
+
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+
+    double fontSize = screenWidth;
     return SingleChildScrollView(
         child: Padding(
             padding: const EdgeInsets.only(top: 0),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                width: MediaQuery.of(context).size.width / 3 - 10,
-                height: MediaQuery.of(context).size.width / 10 - 5,
+                width: screenWidth / 3 - 10,
+                height: screenHeight / 10 - 50,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -270,7 +320,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Text(
                     'View Profile',
                     style: GoogleFonts.jost(
-                        fontSize: fontSize,
+                        fontSize: fontSize / 30,
                         color: const Color.fromARGB(255, 2, 16, 27),
                         fontWeight: FontWeight.w400),
                   ),
@@ -291,53 +341,46 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget cardd() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double fontSize = screenWidth;
+
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 40.0),
+            padding: EdgeInsets.only(left: leftpadding / 10),
             child: Container(
-              width: MediaQuery.of(context).size.width / 2 + 100,
-              height: 80,
+              width: screenWidth / 2 + 100,
+              height: screenHeight / 12,
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(1)),
+                    borderRadius: BorderRadius.circular(5)),
                 color: branaDark,
-
-                // Text(
-                //   "Total time spent",
-                //   style: GoogleFonts.jost(
-                //       fontSize: 20,
-                //       letterSpacing: 1,
-                //       fontWeight: FontWeight.w500,
-                //       color: Colors.white),
-                // ),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 15,
+                      width: screenWidth / 30,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 0.0),
-                      child: Container(
-                        height: 150,
-                        width: 10,
-                        child: Icon(
-                          Icons.timer,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          size: 30,
-                        ),
+                      child: Icon(
+                        Icons.book_outlined,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        size: 30,
                       ),
                     ),
                     SizedBox(
-                      width: 50,
+                      width: screenWidth / 10,
                     ),
                     Text(
                       "18 Books ",
                       style: GoogleFonts.jost(
-                          fontSize: 20,
+                          fontSize: fontSize / 20,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
@@ -353,53 +396,45 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget total() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double fontSize = screenWidth;
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 40.0),
+            padding: EdgeInsets.only(left: leftpadding / 10),
             child: Container(
-              width: MediaQuery.of(context).size.width / 2 + 100,
-              height: 80,
+              width: screenWidth / 2 + 100,
+              height: screenHeight / 12,
               child: Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(1)),
+                    borderRadius: BorderRadius.circular(5)),
                 color: branaDark,
-
-                // Text(
-                //   "Total time spent",
-                //   style: GoogleFonts.jost(
-                //       fontSize: 20,
-                //       letterSpacing: 1,
-                //       fontWeight: FontWeight.w500,
-                //       color: Colors.white),
-                // ),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 15,
+                      width: screenWidth / 30,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 0.0),
-                      child: Container(
-                        height: 150,
-                        width: 10,
-                        child: Icon(
-                          Icons.timer,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          size: 30,
-                        ),
+                      child: Icon(
+                        Icons.timer_outlined,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        size: 30,
                       ),
                     ),
                     SizedBox(
-                      width: 50,
+                      width: screenWidth / 10,
                     ),
                     Text(
                       "390 Minutes ",
                       style: GoogleFonts.jost(
-                          fontSize: 20,
+                          fontSize: fontSize / 20,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
@@ -415,8 +450,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget label(String label) {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double leftpadding = mediaSize.width;
+    double fontSize = screenWidth;
     return Padding(
-      padding: const EdgeInsets.only(left: 30.0),
+      padding: EdgeInsets.only(left: leftpadding / 15),
       child: Container(
         alignment: Alignment.topLeft,
         child: Text(
@@ -425,7 +464,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: const Color.fromARGB(255, 190, 188, 188),
               fontWeight: FontWeight.w300,
               letterSpacing: 0.2,
-              fontSize: 16.5),
+              fontSize: fontSize / 25),
         ),
       ),
     );

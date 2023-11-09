@@ -18,14 +18,17 @@ class _MyWidgetState extends State<LoginSignupOption> {
   late Color myColor;
 
   Widget _buildTop() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
     return SizedBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             "assets/images/logo.png",
-            width: 100,
-            height: 100,
+            width: screenWidth / 4,
+            height: screenHeight / 8,
           ),
         ],
       ),
@@ -33,6 +36,8 @@ class _MyWidgetState extends State<LoginSignupOption> {
   }
 
   Widget _buildBottom() {
+    mediaSize = MediaQuery.of(context).size;
+    double topppadding = mediaSize.height;
     return SizedBox(
       width: mediaSize.width,
       child: Card(
@@ -41,7 +46,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
         ),
         color: kLightBlue.withOpacity(0.1),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(topppadding / 15),
           child: _buildForm(),
         ),
       ),
@@ -49,28 +54,29 @@ class _MyWidgetState extends State<LoginSignupOption> {
   }
 
   Widget _buildForm() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenHeight = mediaSize.height;
+
+    double leftppadding = mediaSize.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60),
-            child: _buildTop(),
-          ),
+          child: _buildTop(),
         ),
-        const SizedBox(height: 40),
+        SizedBox(height: screenHeight / 20),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 60),
+          padding: EdgeInsets.symmetric(horizontal: leftppadding / 7),
           child: _buildLoginButton(),
         ),
-        const SizedBox(height: 40),
+        SizedBox(height: screenHeight / 40),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 60),
+          padding: EdgeInsets.symmetric(horizontal: leftppadding / 7),
           child: _buildSignupButton(),
         ),
-        const SizedBox(height: 30),
+        SizedBox(height: screenHeight / 25),
         _buildOtherLogin(),
-        const SizedBox(height: 10),
+        SizedBox(height: screenHeight / 25),
       ],
     );
   }
@@ -129,11 +135,15 @@ class _MyWidgetState extends State<LoginSignupOption> {
   }
 
   Widget _buildOtherLogin() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenHeight = mediaSize.height;
+
+    double leftppadding = mediaSize.width;
     return Center(
       child: Column(
         children: [
           _buildPrimaryText("Or Login with"),
-          const SizedBox(height: 20),
+          SizedBox(height: screenHeight / 35),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -164,15 +174,24 @@ class _MyWidgetState extends State<LoginSignupOption> {
   Widget build(BuildContext context) {
     myColor = Theme.of(context).primaryColorLight;
     mediaSize = MediaQuery.of(context).size;
-    return Container(
-      decoration: const BoxDecoration(
-        color: branaDeepBlack,
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
+    return Flexible(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: branaDeepBlack,
+        ),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Stack(children: <Widget>[
+              Positioned(
+                  top: screenHeight / 6,
+                  bottom: screenHeight / 6,
+                  left: screenWidth / 20,
+                  right: screenWidth / 20,
+                  child: _buildBottom())
+            ])),
       ),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Stack(children: <Widget>[
-            Positioned(bottom: 10, left: 10, right: 0, child: _buildBottom())
-          ])),
     );
   }
 }

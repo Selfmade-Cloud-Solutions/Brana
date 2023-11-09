@@ -21,6 +21,8 @@ class EditNameFormPage extends StatefulWidget {
 }
 
 class EditNameFormPageState extends State<EditNameFormPage> {
+  late Size mediaSize;
+
   final _formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final secondNameController = TextEditingController();
@@ -57,12 +59,22 @@ class EditNameFormPageState extends State<EditNameFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    mediaSize = MediaQuery.of(context).size;
+    double toppadding = mediaSize.height;
+    double bottompadding = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double rightpadding = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
+
+    double fontSize = screenWidth;
+
     return Scaffold(
         appBar: buildAppBar(context),
         body: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            height: screenHeight,
+            width: screenWidth,
             child: Form(
                 key: _formKey,
                 child: Theme(
@@ -91,32 +103,34 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                               //   ),
                               // ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: leftpadding * 0,
+                                    vertical: toppadding * 0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2, horizontal: 20),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: toppadding / 200,
+                                            horizontal: leftpadding / 20),
                                         child: Text(
                                           "Edit Profile",
                                           style: GoogleFonts.jost(
                                               color: const Color.fromARGB(
                                                   255, 255, 255, 255),
-                                              fontSize: 22),
+                                              fontSize: fontSize / 20),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 16,
-                                    ),
+                                    // SizedBox(
+                                    //   width: screenWidth / 5,
+                                    // ),
                                     Container(
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 20),
+                                        padding: EdgeInsets.only(
+                                            left: leftpadding / 20),
                                         child: Ink(
                                           child: Material(
                                             color: edit
@@ -132,8 +146,10 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                                               },
                                               child: Padding(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: 3.0,
-                                                    vertical: 3.0),
+                                                    horizontal:
+                                                        leftpadding / 300,
+                                                    vertical:
+                                                        leftpadding / 300),
                                                 child: Icon(
                                                   Icons.edit,
                                                   color: edit
@@ -167,10 +183,11 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                                 ),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: screenHeight / 30,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 150.0),
+                                padding:
+                                    EdgeInsets.only(left: leftpadding / 2.5),
                                 child: InkWell(
                                   onTap: () {
                                     navigateSecondPage(const EditImagePage());
@@ -206,30 +223,31 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 25, vertical: 5),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: leftpadding / 10,
+                                    vertical: toppadding / 30),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     label("First Name"),
                                     SizedBox(
-                                      height: 10,
+                                      height: screenHeight / 80,
                                     ),
                                     firstName(),
                                     SizedBox(
-                                      height: 30,
+                                      height: screenHeight / 50,
                                     ),
                                     label("Last Name"),
                                     SizedBox(
-                                      height: 10,
+                                      height: screenHeight / 80,
                                     ),
                                     lastName(),
                                     SizedBox(
-                                      height: 30,
+                                      height: screenHeight / 50,
                                     ),
                                     label("Email"),
                                     SizedBox(
-                                      height: 10,
+                                      height: screenHeight / 80,
                                     ),
                                     email(),
                                   ],
@@ -238,13 +256,12 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                             ],
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(top: 50),
+                              padding: EdgeInsets.only(top: toppadding / 20),
                               child: Align(
                                   alignment: Alignment.bottomCenter,
                                   child: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
-                                    height: 50,
+                                    width: screenWidth / 2,
+                                    height: screenHeight / 20,
                                     child: ElevatedButton(
                                       onPressed: () {
                                         // Validate returns true if the form is valid, or false otherwise.
@@ -263,7 +280,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                                       child: Text(
                                         'Update',
                                         style: GoogleFonts.jost(
-                                            fontSize: 20,
+                                            fontSize: fontSize / 20,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.blue),
                                       ),
@@ -288,9 +305,14 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   }
 
   Widget firstName() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double fontSize = screenWidth;
     return Container(
-      height: 55,
-      width: MediaQuery.of(context).size.width,
+      height: screenHeight / 15,
+      width: screenWidth,
       decoration: BoxDecoration(
           color: Color(0xff2a2e3d), borderRadius: BorderRadius.circular(15)),
       child: Center(
@@ -305,7 +327,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
             }
             return null;
           },
-          style: TextStyle(color: Colors.white, fontSize: 17),
+          style: TextStyle(color: Colors.white, fontSize: fontSize / 27),
           decoration: InputDecoration(
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -317,8 +339,8 @@ class EditNameFormPageState extends State<EditNameFormPage> {
               // fontSize: 17,
               // ),
               contentPadding: EdgeInsets.only(
-                left: 20,
-                right: 20,
+                left: leftpadding / 20,
+                right: leftpadding / 20,
               )),
         ),
       ),
@@ -326,9 +348,14 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   }
 
   Widget lastName() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double fontSize = screenWidth;
     return Container(
-      height: 55,
-      width: MediaQuery.of(context).size.width,
+      height: screenHeight / 15,
+      width: screenWidth,
       decoration: BoxDecoration(
           color: Color(0xff2a2e3d), borderRadius: BorderRadius.circular(15)),
       child: Center(
@@ -343,7 +370,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
             }
             return null;
           },
-          style: TextStyle(color: Colors.white, fontSize: 17),
+          style: TextStyle(color: Colors.white, fontSize: fontSize / 27),
           decoration: InputDecoration(
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -356,8 +383,8 @@ class EditNameFormPageState extends State<EditNameFormPage> {
               //   fontSize: 17,
               // ),
               contentPadding: EdgeInsets.only(
-                left: 20,
-                right: 20,
+                left: leftpadding / 20,
+                right: leftpadding / 20,
               )),
         ),
       ),
@@ -365,9 +392,14 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   }
 
   Widget email() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double fontSize = screenWidth;
     return Container(
-      height: 55,
-      width: MediaQuery.of(context).size.width,
+      height: screenHeight / 15,
+      width: screenWidth,
       decoration: BoxDecoration(
           color: Color(0xff2a2e3d), borderRadius: BorderRadius.circular(15)),
       child: Center(
@@ -380,7 +412,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
             }
             return null;
           },
-          style: TextStyle(color: Colors.white, fontSize: 17),
+          style: TextStyle(color: Colors.white, fontSize: fontSize / 27),
           decoration: InputDecoration(
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -392,8 +424,8 @@ class EditNameFormPageState extends State<EditNameFormPage> {
               //   fontSize: 17,
               // ),
               contentPadding: EdgeInsets.only(
-                left: 20,
-                right: 20,
+                left: leftpadding / 20,
+                right: leftpadding / 20,
               )),
         ),
       ),
@@ -401,13 +433,16 @@ class EditNameFormPageState extends State<EditNameFormPage> {
   }
 
   Widget label(String label) {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double fontSize = screenWidth;
     return Text(
       label,
       style: GoogleFonts.jost(
           color: Colors.blue,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.2,
-          fontSize: 16.5),
+          fontSize: fontSize / 25),
     );
   }
 }

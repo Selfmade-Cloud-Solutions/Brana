@@ -1,3 +1,4 @@
+import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class App extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Splashscreen(),
-      // home: AuthorList(),
+      // home: AuthorsSoloPage(),
 
       debugShowCheckedModeBanner: false,
     );
