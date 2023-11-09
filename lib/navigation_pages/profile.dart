@@ -278,7 +278,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: GoogleFonts.jost(
                               fontSize: fontSize / 30,
                               height: 1.4,
-                              color: Color.fromARGB(255, 158, 155, 155)),
+                              color: const Color.fromARGB(255, 158, 155, 155)),
                         ),
                       ),
                     ],
@@ -366,7 +366,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       width: screenWidth / 30,
                     ),
-                    Padding(
+                    const Padding(
                       padding: const EdgeInsets.only(top: 0.0),
                       child: Icon(
                         Icons.book_outlined,
@@ -420,11 +420,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       width: screenWidth / 30,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0.0),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 0.0),
                       child: Icon(
                         Icons.timer_outlined,
-                        color: const Color.fromARGB(255, 255, 255, 255),
+                        color: Color.fromARGB(255, 255, 255, 255),
                         size: 30,
                       ),
                     ),
