@@ -48,6 +48,7 @@ class GenreListPage extends StatefulWidget {
 
 class _GenreListPageState extends State<GenreListPage> {
   List<BookModel> books = [];
+  late Size mediaSize;
 
   @override
   void initState() {
@@ -77,6 +78,8 @@ class _GenreListPageState extends State<GenreListPage> {
   }
 
   Widget _chip(String text, Color textColor, {double height = 0}) {
+    mediaSize = MediaQuery.of(context).size;
+    double fontSize = mediaSize.width;
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
@@ -87,7 +90,7 @@ class _GenreListPageState extends State<GenreListPage> {
         "$text Chapters",
         style: GoogleFonts.jost(
           color: branaWhite,
-          fontSize: 12,
+          fontSize: fontSize/30,
         ),
       ),
     );
@@ -95,6 +98,15 @@ class _GenreListPageState extends State<GenreListPage> {
 
   @override
   Widget build(BuildContext context) {
+    mediaSize = MediaQuery.of(context).size;
+    double toppadding = mediaSize.height;
+    double bottompadding = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double rightpadding = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
+
+    double fontSize = screenWidth;
     return Scaffold(
         backgroundColor: branaDeepBlack,
         appBar: AppBar(
@@ -111,7 +123,7 @@ class _GenreListPageState extends State<GenreListPage> {
               Text(
                 widget.genreName,
                 style: GoogleFonts.jost(
-                  fontSize: 20,
+                  fontSize: fontSize / 17,
                   color: branaWhite,
                 ),
               )
@@ -136,7 +148,11 @@ class _GenreListPageState extends State<GenreListPage> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(.0),
+                  padding: EdgeInsets.only(
+                      top: toppadding / 30,
+                      left: leftpadding / 30,
+                      right: leftpadding / 30,
+                      bottom: bottompadding / 30),
                   child: Card(
                     color: kLightBlue.withOpacity(0.1),
                     elevation: 2,
@@ -144,10 +160,12 @@ class _GenreListPageState extends State<GenreListPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 30),
+                            padding: EdgeInsets.symmetric(
+                                vertical: toppadding / 20,
+                                horizontal: leftpadding / 70),
                             child: SizedBox(
-                              width: 150,
-                              height: 120,
+                              width: screenWidth / 3.5,
+                              height: screenHeight / 5,
                               child: CachedNetworkImage(
                                   imageUrl: books[index].thumbnail),
                             )),
@@ -155,39 +173,50 @@ class _GenreListPageState extends State<GenreListPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              const SizedBox(height: 15),
+                              SizedBox(height: screenHeight / 100),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   Expanded(
-                                    child: Text(
-                                      books[index].title,
-                                      style: GoogleFonts.jost(
-                                        fontSize: 15,
-                                        height: 1,
-                                        color: branaWhite,
-                                        fontWeight: FontWeight.bold,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: toppadding / 19,
+                                          left: leftpadding / 30),
+                                      child: Text(
+                                        books[index].title,
+                                        style: GoogleFonts.jost(
+                                          fontSize: fontSize / 25,
+                                          height: 1,
+                                          color: branaWhite,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    books[index].duration,
-                                    style: GoogleFonts.jost(
-                                      color: Colors.grey,
-                                      fontSize: 14,
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: toppadding / 19,
+                                        left: leftpadding / 30),
+                                    child: Text(
+                                      books[index].duration,
+                                      style: GoogleFonts.jost(
+                                        color: Colors.grey,
+                                        fontSize: fontSize / 25,
+                                      ),
                                     ),
                                   ),
-                                  const SizedBox(width: 10)
+                                  SizedBox(width: screenWidth / 30)
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: screenHeight / 250,
                               ),
                               Container(
-                                height: 60,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 15,
-                                ),
+                                height: screenHeight / 15,
+                                padding: EdgeInsets.only(
+                                    left: leftpadding / 90,
+                                    right: leftpadding / 90,
+                                    top: toppadding / 80),
                                 child: LayoutBuilder(
                                   builder: (context, constraints) {
                                     final maxLines =
@@ -200,18 +229,20 @@ class _GenreListPageState extends State<GenreListPage> {
                                         maxLines: maxLines > 3 ? 3 : maxLines,
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.jost(
-                                          fontSize: 12,
-                                          height: 1,
-                                          color: branaWhite,
-                                        ),
+                                            fontSize: fontSize / 30,
+                                            height: 1,
+                                            color: branaWhite,
+                                            fontWeight: FontWeight.w100),
                                       ),
                                     );
                                   },
                                 ),
                               ),
                               Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
+                                  padding: EdgeInsets.only(
+                                    left: leftpadding / 80,
+                                    right: leftpadding / 80,
+                                    top: toppadding / 100,
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -221,7 +252,7 @@ class _GenreListPageState extends State<GenreListPage> {
                                           Text(
                                             "Author ",
                                             style: GoogleFonts.jost(
-                                              fontSize: 15,
+                                              fontSize: fontSize / 25,
                                               height: 1,
                                               color: branaWhite,
                                               fontWeight: FontWeight.bold,
@@ -230,7 +261,7 @@ class _GenreListPageState extends State<GenreListPage> {
                                           Text(
                                             books[index].author,
                                             style: GoogleFonts.jost(
-                                              fontSize: 15,
+                                              fontSize: fontSize / 28,
                                               height: 1,
                                               color: branaWhite,
                                             ),
@@ -239,17 +270,11 @@ class _GenreListPageState extends State<GenreListPage> {
                                       ),
                                       Padding(
                                           padding: EdgeInsets.symmetric(
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.09,
-                                              vertical: 10),
+                                              horizontal: leftpadding / 30,
+                                              vertical: toppadding / 40),
                                           child: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.01,
-                                            height: 15,
+                                            width: screenWidth * 0.01,
+                                            height: screenHeight / 40,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color: branaWhite,
@@ -263,7 +288,7 @@ class _GenreListPageState extends State<GenreListPage> {
                                           Text(
                                             "Narrator ",
                                             style: GoogleFonts.jost(
-                                              fontSize: 15,
+                                              fontSize: fontSize / 25,
                                               height: 1,
                                               color: branaWhite,
                                               fontWeight: FontWeight.bold,
@@ -272,7 +297,7 @@ class _GenreListPageState extends State<GenreListPage> {
                                           Text(
                                             books[index].narrator,
                                             style: GoogleFonts.jost(
-                                              fontSize: 15,
+                                              fontSize: fontSize / 28,
                                               height: 1,
                                               color: branaWhite,
                                             ),
@@ -281,18 +306,21 @@ class _GenreListPageState extends State<GenreListPage> {
                                       ),
                                     ],
                                   )),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              // SizedBox(
+                              //   height: screenHeight / 100,
+                              // ),
                               Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
+                                  padding: EdgeInsets.only(
+                                      top: toppadding / 550,
+                                      left: leftpadding / 30,
+                                      right: leftpadding/30, 
+                                      bottom: toppadding/60),
                                   child: Row(
                                     children: <Widget>[
                                       _chip(books[index].chapter, branaWhite,
-                                          height: 5),
-                                      const SizedBox(
-                                        width: 10,
+                                          height: screenHeight / 90),
+                                      SizedBox(
+                                        width: screenWidth / 30,
                                       ),
                                     ],
                                   ))
