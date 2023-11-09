@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:path_provider/path_provider.dart';
@@ -54,7 +55,7 @@ class _EditImagePageState extends State<EditImagePage> {
                       setState(
                           () => user = user.copy(imagePath: newImage.path));
                     },
-                    child: Image.network(user.image),
+                    child: CachedNetworkImage(imageUrl: user.image),
                   ))),
           Padding(
               padding: const EdgeInsets.only(top: 40),
@@ -65,7 +66,7 @@ class _EditImagePageState extends State<EditImagePage> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child:  Text(
+                      child: Text(
                         'Update',
                         style: GoogleFonts.jost(fontSize: 15),
                       ),

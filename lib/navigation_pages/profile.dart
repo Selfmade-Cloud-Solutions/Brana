@@ -278,7 +278,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: GoogleFonts.jost(
                               fontSize: fontSize / 30,
                               height: 1.4,
-                              color: Color.fromARGB(255, 158, 155, 155)),
+                              color: const Color.fromARGB(255, 158, 155, 155)),
                         ),
                       ),
                     ],
@@ -300,7 +300,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.only(top: 0),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
+              child: SizedBox(
                 width: screenWidth / 3 - 10,
                 height: screenHeight / 10 - 50,
                 child: ElevatedButton(
@@ -347,14 +347,14 @@ class _ProfilePageState extends State<ProfilePage> {
     double leftpadding = mediaSize.width;
     double fontSize = screenWidth;
 
-    return Container(
+    return SizedBox(
       width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(left: leftpadding / 10),
-            child: Container(
+            child: SizedBox(
               width: screenWidth / 2 + 100,
               height: screenHeight / 12,
               child: Card(
@@ -366,7 +366,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       width: screenWidth / 30,
                     ),
-                    Padding(
+                    const Padding(
                       padding: const EdgeInsets.only(top: 0.0),
                       child: Icon(
                         Icons.book_outlined,
@@ -401,14 +401,14 @@ class _ProfilePageState extends State<ProfilePage> {
     double screenHeight = mediaSize.height;
     double leftpadding = mediaSize.width;
     double fontSize = screenWidth;
-    return Container(
+    return SizedBox(
       width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(left: leftpadding / 10),
-            child: Container(
+            child: SizedBox(
               width: screenWidth / 2 + 100,
               height: screenHeight / 12,
               child: Card(
@@ -420,11 +420,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       width: screenWidth / 30,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0.0),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 0.0),
                       child: Icon(
                         Icons.timer_outlined,
-                        color: const Color.fromARGB(255, 255, 255, 255),
+                        color: Color.fromARGB(255, 255, 255, 255),
                         size: 30,
                       ),
                     ),

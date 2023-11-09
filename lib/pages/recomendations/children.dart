@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:brana_mobile/book_detail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
@@ -38,7 +39,7 @@ class _AudiobookListState extends State<Children> {
   Widget build(BuildContext context) {
     double containerWidth = MediaQuery.of(context).size.width * 0.3;
     return Scaffold(
-      backgroundColor: branaDeepBlack,
+        backgroundColor: branaDeepBlack,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: branaDeepBlack,
@@ -65,72 +66,65 @@ class _AudiobookListState extends State<Children> {
             ],
           )),
         ),
-        body:GridView.builder(
-      gridDelegate: 
-          const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 50
-          ),
-      itemCount: audiobooks.length, 
-      itemBuilder: (context, index) {
-
-        final audiobook = audiobooks[index];
-        return AspectRatio(
-  aspectRatio: 1,
-  child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BookDetail(
-                    title: audiobook['title'] ?? '',
-                    author: audiobook['author'] ?? '',
-                    description: audiobook['description'] ?? '',
-                    thumbnail: audiobook['thumbnail'] ?? '',
-                  ),
-                ),
-              );
-            },
-            child: Container(
-    width: MediaQuery.of(context).size.width * 0.3,
-    height: MediaQuery.of(context).size.height * 0.3,
-            margin: const EdgeInsets.only(right: 5, left: 5),
-            color: kLightBlue.withOpacity(0.1),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: audiobook['thumbnail'] != null
-                      ? Image.network(
-                          audiobook['thumbnail'],
-                          width: containerWidth * 0.7,
-                          height: containerWidth * 0.7
-                        )
-                      : const SizedBox.shrink(),
-                ),
-                Flexible(
-                  child: Text(
-                  audiobook['title'] ?? '',
-                  style: GoogleFonts.jost(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: branaGrey,
-                  ),
-                )),
-                Flexible(
-                  child: Text(
-                  audiobook['author'] ?? '',
-                  style: GoogleFonts.jost(
-                    fontSize: 14,
-                    color: branaWhite,
-                  ),
-                )),
-              ],
-            ),
-          
-        )));
-      },
-    ));
+        body: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, mainAxisSpacing: 10),
+          itemCount: audiobooks.length,
+          itemBuilder: (context, index) {
+            final audiobook = audiobooks[index];
+            return AspectRatio(
+                aspectRatio: 1,
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookDetail(
+                            title: audiobook['title'] ?? '',
+                            author: audiobook['author'] ?? '',
+                            description: audiobook['description'] ?? '',
+                            thumbnail: audiobook['thumbnail'] ?? '',
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      margin: const EdgeInsets.only(right: 5, left: 5),
+                      color: kLightBlue.withOpacity(0.1),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: audiobook['thumbnail'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: audiobook['thumbnail'],
+                                    width: containerWidth * 1.2,
+                                    height: containerWidth * 1.2)
+                                : const SizedBox.shrink(),
+                          ),
+                          Flexible(
+                              child: Text(
+                            audiobook['title'] ?? '',
+                            style: GoogleFonts.jost(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: branaGrey,
+                            ),
+                          )),
+                          Flexible(
+                              child: Text(
+                            audiobook['author'] ?? '',
+                            style: GoogleFonts.jost(
+                              fontSize: 14,
+                              color: branaWhite,
+                            ),
+                          )),
+                        ],
+                      ),
+                    )));
+          },
+        ));
   }
 }
-

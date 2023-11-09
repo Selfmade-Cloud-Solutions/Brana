@@ -89,7 +89,7 @@ class _MyWidgetState extends State<Podcast> {
                           color: kLightBlue.withOpacity(0.1),
                           child: GridView.count(
                             physics: const BouncingScrollPhysics(),
-                            crossAxisCount: 3,
+                            crossAxisCount: 2,
                             children: buildBooks()
                                 .map((book) => SizedBox(
                                       child: book,

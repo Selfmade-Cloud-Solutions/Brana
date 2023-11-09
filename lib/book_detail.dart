@@ -1,4 +1,5 @@
 import 'package:brana_mobile/audioplayerscreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -126,6 +127,7 @@ class _BookDetailState extends State<BookDetail> {
                           children: [
                             Center(
                               child: ClipRRect(
+<<<<<<< HEAD
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
                                     widget.thumbnail,
@@ -135,6 +137,21 @@ class _BookDetailState extends State<BookDetail> {
                                     height:
                                         MediaQuery.of(context).size.width * 0.7,
                                   )),
+=======
+                                borderRadius: BorderRadius.circular(10),
+                                child:CachedNetworkImage(
+                                        imageUrl:widget.thumbnail,
+                                        fit: BoxFit.cover,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                      )
+                                    
+                              ),
+>>>>>>> 2059195404fe56d8c6014655f08e0855003531ab
                             ),
                             const SizedBox(height: 16),
                             Row(

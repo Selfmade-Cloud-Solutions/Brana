@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/navigation_pages/genreList.dart';
 import 'package:brana_mobile/constants.dart';
@@ -22,44 +23,43 @@ class _HomeScreenState extends State<ExplorePage> {
   double topContainer = 0;
 
   List<Widget> itemsData = [];
-Future<void> getPostsData() async {
-  final response = await http.get(Uri.parse('https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retreive_audiobook_genres'));
+  Future<void> getPostsData() async {
+    final response = await http.get(Uri.parse(
+        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retreive_audiobook_genres'));
 
-  if (response.statusCode == 200) {
-    final jsonResponse = json.decode(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
 
-    if (jsonResponse['message'] is List<dynamic>) {
-      final List<dynamic> genreList = jsonResponse['message'];
+      if (jsonResponse['message'] is List<dynamic>) {
+        final List<dynamic> genreList = jsonResponse['message'];
 
-      List<Widget> listItems = [];
+        List<Widget> listItems = [];
 
-      for (var genreData in genreList) {
-        if (genreData is Map<String, dynamic>) {
-          final genreName = genreData['Genre Name'] as String;
-          final audiobookCount = genreData['Audiobooks'] as int;
-          final thumbnailUrls = genreData['thumbnail'] as List<dynamic>;
+        for (var genreData in genreList) {
+          if (genreData is Map<String, dynamic>) {
+            final genreName = genreData['Genre Name'] as String;
+            final audiobookCount = genreData['Audiobooks'] as int;
+            final thumbnailUrls = genreData['thumbnail'] as List<dynamic>;
 
-          if (thumbnailUrls.isNotEmpty && thumbnailUrls.first is String) {
-            listItems.add(GenreWidget(
-              genreName: genreName,
-              audiobookCount: audiobookCount,
-              thumbnailUrl: thumbnailUrls.first as String,
-            ));
+            if (thumbnailUrls.isNotEmpty && thumbnailUrls.first is String) {
+              listItems.add(GenreWidget(
+                genreName: genreName,
+                audiobookCount: audiobookCount,
+                thumbnailUrl: thumbnailUrls.first as String,
+              ));
+            }
           }
         }
+
+        setState(() {
+          itemsData = listItems;
+        });
       }
-
-      setState(() {
-        itemsData = listItems;
-      });
+    } else {
+      throw Exception('Failed to fetch data from API');
     }
-  } else {
-    throw Exception('Failed to fetch data from API');
   }
-}
 
-
-  
   @override
   void initState() {
     super.initState();
@@ -143,14 +143,15 @@ Future<void> getPostsData() async {
           ),
         ));
   }
-  
 }
+
 class GenreWidget extends StatelessWidget {
   final String genreName;
   final int audiobookCount;
   final String thumbnailUrl;
 
-  const GenreWidget({super.key, 
+  const GenreWidget({
+    super.key,
     required this.genreName,
     required this.audiobookCount,
     required this.thumbnailUrl,
@@ -162,7 +163,8 @@ class GenreWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => GenreListPage(genreName: genreName)),
+          MaterialPageRoute(
+              builder: (context) => GenreListPage(genreName: genreName)),
         );
       },
       child: Container(
@@ -212,8 +214,8 @@ class GenreWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              Image.network(
-                thumbnailUrl,
+              CachedNetworkImage(
+                imageUrl: thumbnailUrl,
                 height: double.infinity,
               )
             ],
