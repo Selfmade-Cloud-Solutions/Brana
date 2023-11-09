@@ -186,7 +186,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
             body: Stack(children: <Widget>[
               Positioned(
                   top: screenHeight / 6,
-                  bottom: screenHeight / 6,
+                  bottom: screenHeight / 9,
                   left: screenWidth / 20,
                   right: screenWidth / 20,
                   child: _buildBottom())

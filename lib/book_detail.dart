@@ -85,10 +85,11 @@ class _BookDetailState extends State<BookDetail> {
       ),
       body: Container(
         decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
-          image: NetworkImage(widget.thumbnail),
-          fit: BoxFit.cover,
-        )),
+              image: NetworkImage(widget.thumbnail),
+              fit: BoxFit.cover,
+            )),
         child: Stack(
           children: [
             Container(
@@ -125,19 +126,15 @@ class _BookDetailState extends State<BookDetail> {
                           children: [
                             Center(
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child:Image.network(
-                                        widget.thumbnail,
-                                        fit: BoxFit.cover,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.7,
-                                      )
-                                    
-                              ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    widget.thumbnail,
+                                    fit: BoxFit.cover,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                  )),
                             ),
                             const SizedBox(height: 16),
                             Row(
@@ -175,8 +172,7 @@ class _BookDetailState extends State<BookDetail> {
                             Text(
                               showFullDescription
                                   ? widget.description
-                                  : truncateDescription(
-                                      widget.description),
+                                  : truncateDescription(widget.description),
                               style: GoogleFonts.jost(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w300,

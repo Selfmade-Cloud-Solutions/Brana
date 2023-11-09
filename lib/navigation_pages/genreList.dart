@@ -47,6 +47,7 @@ class GenreListPage extends StatefulWidget {
 
 class _GenreListPageState extends State<GenreListPage> {
   List<BookModel> books = [];
+  late Size mediaSize;
 
   @override
   void initState() {
@@ -76,9 +77,14 @@ class _GenreListPageState extends State<GenreListPage> {
   }
 
   Widget _chip(String text, Color textColor, {double height = 0}) {
+    mediaSize = MediaQuery.of(context).size;
+    double leftpadding = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double fontSize = mediaSize.width;
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
+      padding: EdgeInsets.symmetric(
+          horizontal: leftpadding / 20, vertical: screenHeight / 90),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           color: kLightBlue.withOpacity(0.1)),
@@ -86,7 +92,7 @@ class _GenreListPageState extends State<GenreListPage> {
         "$text Chapters",
         style: GoogleFonts.jost(
           color: branaWhite,
-          fontSize: 12,
+          fontSize: fontSize / 35,
         ),
       ),
     );
@@ -94,6 +100,12 @@ class _GenreListPageState extends State<GenreListPage> {
 
   @override
   Widget build(BuildContext context) {
+    mediaSize = MediaQuery.of(context).size;
+    double toppadding = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
+    double fontSize = mediaSize.width;
     return Scaffold(
         backgroundColor: branaDeepBlack,
         appBar: AppBar(
@@ -110,7 +122,7 @@ class _GenreListPageState extends State<GenreListPage> {
               Text(
                 widget.genreName,
                 style: GoogleFonts.jost(
-                  fontSize: 20,
+                  fontSize: fontSize / 17,
                   color: branaWhite,
                 ),
               )
@@ -127,175 +139,180 @@ class _GenreListPageState extends State<GenreListPage> {
                     MaterialPageRoute(
                       builder: (context) => BookDetail(
                         title: books[index].title,
-                    author: books[index].author,
-                    description: books[index].description,
-                    thumbnail: books[index].thumbnail,
+                        author: books[index].author,
+                        description: books[index].description,
+                        thumbnail: books[index].thumbnail,
                       ),
                     ),
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(.0),
+                  padding: EdgeInsets.only(top: toppadding / 80),
                   child: Card(
                     color: kLightBlue.withOpacity(0.1),
                     elevation: 2,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 30),
-                            child: SizedBox(
-                              width: 150,
-                              height: 120,
-                              child: Image.network(books[index].thumbnail),
-                            )),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              const SizedBox(height: 15),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Text(
-                                      books[index].title,
-                                      style: GoogleFonts.jost(
-                                        fontSize: 15,
-                                        height: 1,
-                                        color: branaWhite,
-                                        fontWeight: FontWeight.bold,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: toppadding / 180),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: toppadding / 20),
+                              child: SizedBox(
+                                width: screenWidth / 3.9,
+                                height: screenHeight / 6,
+                                child: Image.network(books[index].thumbnail),
+                              )),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: screenHeight / 70,
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                        books[index].title,
+                                        style: GoogleFonts.jost(
+                                          fontSize: fontSize / 25,
+                                          height: 1,
+                                          color: branaWhite,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Text(
-                                    books[index].duration,
-                                    style: GoogleFonts.jost(
-                                      color: Colors.grey,
-                                      fontSize: 14,
+                                    Text(
+                                      books[index].duration,
+                                      style: GoogleFonts.jost(
+                                        color: Colors.grey,
+                                        fontSize: fontSize / 30,
+                                      ),
                                     ),
+                                    SizedBox(width: screenWidth / 30)
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: screenHeight / 40,
+                                ),
+                                Container(
+                                  height: screenHeight / 15,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: leftpadding / 40,
                                   ),
-                                  const SizedBox(width: 10)
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height:60,
-      padding: const EdgeInsets.symmetric(horizontal: 15, ),
-                                child: LayoutBuilder(
-                                  builder: (context, constraints) {
-                                    final maxLines = constraints.maxHeight ~/ 12;
-                                    
+                                  child: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      final maxLines =
+                                          constraints.maxHeight ~/ 12;
+
                                       return SingleChildScrollView(
                                         controller: ScrollController(),
                                         child: Text(
-                            books[index].description,
-                            maxLines: maxLines > 3 ? 3 : maxLines, 
-                            overflow: TextOverflow.ellipsis, 
-                            style: GoogleFonts.jost(
-                              fontSize: 12,
-                              height: 1,
-                              color: branaWhite,
-                            ),
-                                        ),
-                                      );
-                                    
-                                  },
-                                ),
-                              ),
-                              Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Author ",
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        books[index].author,
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.09,
-                                          vertical: 10),
-                                      child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.01,
-                                        height: 15,
-                                        child: Container(
-                                          decoration: BoxDecoration(
+                                          books[index].description,
+                                          maxLines: maxLines > 3 ? 3 : maxLines,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.jost(
+                                            fontSize: fontSize / 35,
+                                            height: 1,
                                             color: branaWhite,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
                                           ),
                                         ),
-                                      )),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Narrator ",
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        books[index].narrator,
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                        ),
-                                      ),
-                                    ],
+                                      );
+                                    },
                                   ),
-                                ],
-                              )),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                              padding: const EdgeInsets.symmetric( vertical: 10),
-                              child:Row(
-                                children: <Widget>[
-                                  _chip(books[index].chapter, branaWhite,
-                                      height: 5),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                ],
-                              ))
-                            ],
-                          ),
-                        )
-                    ],
+                                ),
+                                Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: leftpadding / 40,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Author ",
+                                              style: GoogleFonts.jost(
+                                                fontSize: fontSize / 30,
+                                                height: 1,
+                                                color: branaWhite,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              books[index].author,
+                                              style: GoogleFonts.jost(
+                                                fontSize: fontSize / 30,
+                                                height: 1,
+                                                color: branaWhite,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: leftpadding / 10,
+                                                vertical: toppadding / 40),
+                                            child: SizedBox(
+                                              width: screenWidth / 190,
+                                              height: screenHeight / 30,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: branaWhite,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            )),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Narrator ",
+                                              style: GoogleFonts.jost(
+                                                fontSize: fontSize / 30,
+                                                height: 1,
+                                                color: branaWhite,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              books[index].narrator,
+                                              style: GoogleFonts.jost(
+                                                fontSize: fontSize / 30,
+                                                height: 1,
+                                                color: branaWhite,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                                SizedBox(
+                                  height: screenHeight / 180,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: toppadding / 190),
+                                    child: Row(
+                                      children: <Widget>[
+                                        _chip(books[index].chapter, branaWhite,
+                                            height: screenHeight / 40),
+                                        SizedBox(
+                                          width: screenWidth / 3,
+                                        ),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                )
-                );
+                ));
           },
         ));
   }

@@ -26,7 +26,7 @@ class _MyWidgetState extends State<LoginPage> {
     double leftRightPadding;
 
     mediaSize = MediaQuery.of(context).size;
-    toppadding = mediaSize.height / 5;
+    toppadding = mediaSize.height;
     bottomPadding = mediaSize.height / 5;
     leftRightPadding = mediaSize.width * 0.05;
 
@@ -36,11 +36,14 @@ class _MyWidgetState extends State<LoginPage> {
       body: Stack(children: [
         Padding(
           padding: EdgeInsets.only(
-              left: leftRightPadding, top: toppadding, bottom: bottomPadding),
+              left: leftRightPadding,
+              top: toppadding / 9,
+              right: leftRightPadding,
+              bottom: toppadding / 25),
           child: Container(
             color: branaDarkBlue,
             width: mediaSize.width - 50,
-            height: mediaSize.height,
+            height: mediaSize.height / 1.2,
             child: Column(
               children: [
                 Container(
@@ -106,12 +109,18 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Widget _buildForm() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double toppadding = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double fontSize = screenWidth;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60),
+            padding: EdgeInsets.symmetric(horizontal: leftpadding),
             // child: _buildTop(),
           ),
         ),
@@ -120,40 +129,42 @@ class _MyWidgetState extends State<LoginPage> {
             "Welcome Back",
             style: GoogleFonts.jost(
               color: branaWhite,
-              fontSize: 32,
+              fontSize: fontSize / 15,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 20,
+          height: screenHeight / 20,
         ),
         Center(
           child: _buildPrimaryText("Please Login"),
         ),
-        const SizedBox(height: 15),
+        SizedBox(height: screenHeight / 30),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
           child: _buildInputFieldEmail(emailController),
         ),
-        const SizedBox(height: 30),
+        SizedBox(
+          height: screenHeight / 20,
+        ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
           child:
               _buildInputFieldPassword(passwordController, isPassword: false),
         ),
-        const SizedBox(height: 5),
+        SizedBox(height: screenHeight / 30),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
           child: _buildRememberForgot(),
         ),
-        const SizedBox(height: 15),
+        SizedBox(height: screenHeight / 30),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
           child: _buildLoginButton(),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 20,
+          height: screenHeight / 20,
         ),
       ],
     );
@@ -245,12 +256,17 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Widget _buildLoginButton() {
-    var toppadding = MediaQuery.of(context).size.height / 20;
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double toppadding = mediaSize.height;
+    double leftpadding = mediaSize.width;
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, toppadding, 0, 0),
+      padding: EdgeInsets.fromLTRB(leftpadding / 4.5, toppadding / 150,
+          leftpadding / 4, toppadding / 200),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width / 3,
-        height: MediaQuery.of(context).size.height / 20,
+        width: screenWidth / 3,
+        height: screenHeight / 20,
         child: ElevatedButton(
           onPressed: () {
             // debugPrint("Email : ${emailController.text}");
