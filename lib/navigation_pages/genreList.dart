@@ -1,4 +1,5 @@
 import 'package:brana_mobile/book_detail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -127,9 +128,9 @@ class _GenreListPageState extends State<GenreListPage> {
                     MaterialPageRoute(
                       builder: (context) => BookDetail(
                         title: books[index].title,
-                    author: books[index].author,
-                    description: books[index].description,
-                    thumbnail: books[index].thumbnail,
+                        author: books[index].author,
+                        description: books[index].description,
+                        thumbnail: books[index].thumbnail,
                       ),
                     ),
                   );
@@ -147,7 +148,8 @@ class _GenreListPageState extends State<GenreListPage> {
                             child: SizedBox(
                               width: 150,
                               height: 120,
-                              child: Image.network(books[index].thumbnail),
+                              child: CachedNetworkImage(
+                                  imageUrl: books[index].thumbnail),
                             )),
                         Expanded(
                           child: Column(
@@ -182,120 +184,125 @@ class _GenreListPageState extends State<GenreListPage> {
                                 height: 10,
                               ),
                               Container(
-                                height:60,
-      padding: const EdgeInsets.symmetric(horizontal: 15, ),
+                                height: 60,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                ),
                                 child: LayoutBuilder(
                                   builder: (context, constraints) {
-                                    final maxLines = constraints.maxHeight ~/ 12;
-                                    
-                                      return SingleChildScrollView(
-                                        controller: ScrollController(),
-                                        child: Text(
-                            books[index].description,
-                            maxLines: maxLines > 3 ? 3 : maxLines, 
-                            overflow: TextOverflow.ellipsis, 
-                            style: GoogleFonts.jost(
-                              fontSize: 12,
-                              height: 1,
-                              color: branaWhite,
-                            ),
+                                    final maxLines =
+                                        constraints.maxHeight ~/ 12;
+
+                                    return SingleChildScrollView(
+                                      controller: ScrollController(),
+                                      child: Text(
+                                        books[index].description,
+                                        maxLines: maxLines > 3 ? 3 : maxLines,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.jost(
+                                          fontSize: 12,
+                                          height: 1,
+                                          color: branaWhite,
                                         ),
-                                      );
-                                    
+                                      ),
+                                    );
                                   },
                                 ),
                               ),
                               Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Author ",
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        books[index].author,
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                        ),
-                                      ),
-                                    ],
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
                                   ),
-                                  Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.09,
-                                          vertical: 10),
-                                      child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.01,
-                                        height: 15,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: branaWhite,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "Author ",
+                                            style: GoogleFonts.jost(
+                                              fontSize: 15,
+                                              height: 1,
+                                              color: branaWhite,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                      )),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Narrator ",
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                          Text(
+                                            books[index].author,
+                                            style: GoogleFonts.jost(
+                                              fontSize: 15,
+                                              height: 1,
+                                              color: branaWhite,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        books[index].narrator,
-                                        style: GoogleFonts.jost(
-                                          fontSize: 15,
-                                          height: 1,
-                                          color: branaWhite,
-                                        ),
+                                      Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.09,
+                                              vertical: 10),
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.01,
+                                            height: 15,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: branaWhite,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                            ),
+                                          )),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "Narrator ",
+                                            style: GoogleFonts.jost(
+                                              fontSize: 15,
+                                              height: 1,
+                                              color: branaWhite,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            books[index].narrator,
+                                            style: GoogleFonts.jost(
+                                              fontSize: 15,
+                                              height: 1,
+                                              color: branaWhite,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
-                                  ),
-                                ],
-                              )),
+                                  )),
                               const SizedBox(
                                 height: 10,
                               ),
                               Container(
-                              padding: const EdgeInsets.symmetric( vertical: 10),
-                              child:Row(
-                                children: <Widget>[
-                                  _chip(books[index].chapter, branaWhite,
-                                      height: 5),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                ],
-                              ))
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Row(
+                                    children: <Widget>[
+                                      _chip(books[index].chapter, branaWhite,
+                                          height: 5),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
+                                  ))
                             ],
                           ),
                         )
-                    ],
+                      ],
                     ),
                   ),
-                )
-                );
+                ));
           },
         ));
   }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import "package:brana_mobile/constants.dart";
@@ -30,39 +31,35 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
   }
 
   Future<void> fetchData() async {
-  final response = await http.get(Uri.parse(
-      'https://app.berana.app/api/method/brana_audiobook.api.authors_api.retrieve_author?author_id=${widget.author}'));
-  
-  if (response.statusCode == 200) {
-    final jsonResponse = jsonDecode(response.body);
+    final response = await http.get(Uri.parse(
+        'https://app.berana.app/api/method/brana_audiobook.api.authors_api.retrieve_author?author_id=${widget.author}'));
 
-    final messages = jsonResponse['message'];
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
 
-    if (messages != null && messages is List && messages.isNotEmpty) {
-      final authorData = messages[0];
+      final messages = jsonResponse['message'];
 
-      final books = authorData['books'];
+      if (messages != null && messages is List && messages.isNotEmpty) {
+        final authorData = messages[0];
 
-      if (books != null && books is List) {
-        setState(() {
-          audiobooks = books;
-        });
+        final books = authorData['books'];
+
+        if (books != null && books is List) {
+          setState(() {
+            audiobooks = books;
+          });
+        } else {
+          // Handle the case where 'books' is null or not a List
+          throw Exception('Invalid books data');
+        }
       } else {
-        // Handle the case where 'books' is null or not a List
-        throw Exception('Invalid books data');
+        // Handle the case where 'message' is null, not a List, or empty
+        throw Exception('Invalid message data');
       }
     } else {
-      // Handle the case where 'message' is null, not a List, or empty
-      throw Exception('Invalid message data');
+      throw Exception('Failed to fetch data');
     }
-  } else {
-    throw Exception('Failed to fetch data');
   }
-}
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -184,77 +181,78 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
   }
 
   Widget buildAuthorBooks(BuildContext context) {
-  double containerWidth = MediaQuery.of(context).size.width * 0.3;
-  return SizedBox(
-    height: MediaQuery.of(context).size.height,
-    child: GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 10,
-      ),
-      itemCount: audiobooks.length,
-      itemBuilder: (context, index) {
-        final audiobook = audiobooks[index];
-        return AspectRatio(
-          aspectRatio: 1,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BookDetail(
-                    title: audiobook['title'] ?? '',
-                    author: audiobook['author'] ?? '',
-                    description: audiobook['description'] ?? '',
-                    thumbnail: audiobook['thumbnail'] ?? '',
+    double containerWidth = MediaQuery.of(context).size.width * 0.3;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+        ),
+        itemCount: audiobooks.length,
+        itemBuilder: (context, index) {
+          final audiobook = audiobooks[index];
+          return AspectRatio(
+            aspectRatio: 1,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BookDetail(
+                      title: audiobook['title'] ?? '',
+                      author: widget.author,
+                      description: audiobook['description'] ??
+                          'No description available',
+                      thumbnail:
+                          audiobook['thumbnail'] ?? 'No thumbnail available',
+                    ),
                   ),
+                );
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: MediaQuery.of(context).size.height * 0.3,
+                margin: const EdgeInsets.only(right: 5, left: 5),
+                color: kLightBlue.withOpacity(0.1),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: audiobook['thumbnail'] != null
+                          ? CachedNetworkImage(
+                              imageUrl: audiobook['thumbnail'],
+                              width: containerWidth * 1.2,
+                              height: containerWidth * 1.2,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                    Flexible(
+                      child: Text(
+                        audiobook['title'] ?? '',
+                        style: GoogleFonts.jost(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: branaGrey,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        widget.author,
+                        style: GoogleFonts.jost(
+                          fontSize: 14,
+                          color: branaWhite,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.3,
-              height: MediaQuery.of(context).size.height * 0.3,
-              margin: const EdgeInsets.only(right: 5, left: 5),
-              color: kLightBlue.withOpacity(0.1),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: audiobook['thumbnail'] != null
-                        ? Image.network(
-                            audiobook['thumbnail'],
-                            width: containerWidth * 1.2,
-                            height: containerWidth * 1.2,
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                  Flexible(
-                    child: Text(
-                      audiobook['title'] ?? '',
-                      style: GoogleFonts.jost(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: branaGrey,
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: Text(
-                      audiobook['author'] ?? '',
-                      style: GoogleFonts.jost(
-                        fontSize: 14,
-                        color: branaWhite,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
-          ),
-        );
-      },
-    ),
-  );
-}
-
+          );
+        },
+      ),
+    );
+  }
 }

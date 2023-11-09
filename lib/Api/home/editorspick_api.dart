@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:brana_mobile/book_detail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
@@ -43,58 +44,58 @@ class _AudiobookListState extends State<EditorsPickList> {
       itemBuilder: (context, index) {
         final audiobook = audiobooks[index];
         return ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BookDetail(
-                    title: audiobook['title'] ?? '',
-                    author: audiobook['author'] ?? '',
-                    description: audiobook['description'] ?? '',
-                    thumbnail: audiobook['thumbnail'] ?? '',
+            borderRadius: BorderRadius.circular(20),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BookDetail(
+                      title: audiobook['title'] ?? '',
+                      author: audiobook['author'] ?? '',
+                      description: audiobook['description'] ?? '',
+                      thumbnail: audiobook['thumbnail'] ?? '',
+                    ),
                   ),
+                );
+              },
+              child: Container(
+                width: 140,
+                height: 50,
+                margin: const EdgeInsets.only(right: 5, left: 5),
+                color: kLightBlue.withOpacity(0.1),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: audiobook['thumbnail'] != null
+                          ? CachedNetworkImage(
+                              imageUrl: audiobook['thumbnail'],
+                              width: 120,
+                              height: 120,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      audiobook['title'] ?? '',
+                      style: GoogleFonts.jost(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: branaGrey,
+                      ),
+                    ),
+                    Text(
+                      audiobook['Author'] ?? '',
+                      style: GoogleFonts.jost(
+                        fontSize: 12,
+                        color: branaWhite,
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            },
-            child:Container(
-            width: 140,
-            height: 50,
-            margin: const EdgeInsets.only(right: 5, left: 5),
-            color: kLightBlue.withOpacity(0.1),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: audiobook['thumbnail'] != null
-                      ? Image.network(
-                          audiobook['thumbnail'],
-                          width: 120,
-                          height: 120,
-                        )
-                      : const SizedBox.shrink(),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  audiobook['title'] ?? '',
-                  style: GoogleFonts.jost(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: branaGrey,
-                  ),
-                ),
-                Text(
-                  audiobook['Author'] ?? '',
-                  style: GoogleFonts.jost(
-                    fontSize: 12,
-                    color: branaWhite,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+              ),
+            ));
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
@@ -68,10 +69,11 @@ class _AudiobookListState extends State<RecommendedList> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: audiobook['thumbnail'] != null
-                        ? Image.network(
-                            audiobook['thumbnail'],
+                        ? CachedNetworkImage(
+                            imageUrl: audiobook['thumbnail'],
                             width: 140,
                             height: 140,
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                           )
                         : const SizedBox.shrink(),
                   ),
