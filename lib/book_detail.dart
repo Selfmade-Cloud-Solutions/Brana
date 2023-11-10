@@ -65,12 +65,6 @@ class _BookDetailState extends State<BookDetail> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    ScrollController scrollController = ScrollController();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollController.jumpTo(0);
-    });
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -86,10 +80,11 @@ class _BookDetailState extends State<BookDetail> {
       ),
       body: Container(
         decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
-          image: NetworkImage(widget.thumbnail),
-          fit: BoxFit.cover,
-        )),
+              image: NetworkImage(widget.thumbnail),
+              fit: BoxFit.cover,
+            )),
         child: Stack(
           children: [
             Container(
@@ -104,20 +99,12 @@ class _BookDetailState extends State<BookDetail> {
                 ),
               ),
             ),
-            NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification notification) {
-                if (notification.metrics.pixels < -1000) {
-                  scrollController.jumpTo(-1000);
-                }
-                return true;
-              },
-              child: isLoading
+              isLoading
                   ? const Center(
                       // Display the preloader if isLoading is true
                       child: CircularProgressIndicator(color: branaWhite),
                     )
                   : SingleChildScrollView(
-                      controller: scrollController,
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 16, bottom: 110, right: 16, top: 50),
@@ -176,8 +163,7 @@ class _BookDetailState extends State<BookDetail> {
                             Text(
                               showFullDescription
                                   ? widget.description
-                                  : truncateDescription(
-                                      widget.description),
+                                  : truncateDescription(widget.description),
                               style: GoogleFonts.jost(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w300,
@@ -206,7 +192,7 @@ class _BookDetailState extends State<BookDetail> {
                         ),
                       ),
                     ),
-            ),
+            
             Positioned(
               bottom: 0,
               child: Container(

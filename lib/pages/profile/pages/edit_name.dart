@@ -280,7 +280,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                                       child: Text(
                                         'Update',
                                         style: GoogleFonts.jost(
-                                            fontSize: fontSize / 20,
+                                            fontSize: fontSize / 25,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.blue),
                                       ),

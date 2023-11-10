@@ -1,6 +1,6 @@
 {
-    "name": "flutter_web_app",
-    "short_name": "flutter_web_app",
+    "name": "brana_mobile",
+    "short_name": "brana_mobile",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -18,10 +18,47 @@ class HomePage extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<HomePage> {
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
-  
+    // Simulate data loading for 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+  // Function to check internet connection
+  Future<void> checkInternetConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        hasInternet = false;
+        isLoading = false;
+      });
+    }
+  }
+
+  Widget buildNoInternetWidget() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error,
+            size: 40,
+            color: Colors.red,
+          ),
+          SizedBox(height: 10),
+          Text(
+            'No Internet Connection',
+            style: TextStyle(color: Colors.red, fontSize: 18),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -47,15 +84,17 @@ class _MyWidgetState extends State<HomePage> {
                   ],
                 )),
               ),
-        body: NotificationListener<ScrollNotification>(
-            onNotification: (scrollDetails) {
-              return true;
-            },
-            child: ListView(
-              children: [
-              Container(
+        body:  isLoading
+          ? const Center(
+              // Display a circular preloader if isLoading is true
+              child: CircularProgressIndicator(
+                color: branaWhite,
+              ),
+            )
+          : SingleChildScrollView(
+              child:Container(
                   color: branaDeepBlack,
-                  child: SingleChildScrollView(
+                  
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -318,7 +357,7 @@ class _MyWidgetState extends State<HomePage> {
                         const SizedBox(height: 200, child: ChildrenList()),
                       ],
                     ),
-                  ))
-            ])));
+                  )
+            ));
   }
 }

@@ -41,7 +41,7 @@ dependencies:
   audio_session: ^0.1.16
   rxdart: ^0.27.7
   audio_service: ^0.18.11
-  
+  connectivity_plus: ^5.0.1
   carousel_slider:
   http: ^1.1.0
   shared_preferences: ^2.2.1
@@ -54,10 +54,10 @@ dependencies:
   logger: ^2.0.2
   just_audio_background: ^0.0.1-beta.10
   flutter_cache_manager: ^3.3.1
-  google_sign_in: ^6.1.5
   another_transformer_page_view: ^2.0.1
   smooth_page_indicator:
   device_preview: ^1.1.0
+  google_sign_in: ^6.1.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

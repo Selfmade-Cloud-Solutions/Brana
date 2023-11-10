@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/signup_page.dart';
 import 'package:brana_mobile/login_page.dart';
 import 'package:brana_mobile/constants.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:brana_mobile/navigation.dart';
 
 class LoginSignupOption extends StatefulWidget {
   const LoginSignupOption({super.key, required double screenHeight});
@@ -13,7 +14,7 @@ class LoginSignupOption extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<LoginSignupOption> {
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
   late Size mediaSize;
   late Color myColor;
 
@@ -137,8 +138,9 @@ class _MyWidgetState extends State<LoginSignupOption> {
   Widget _buildOtherLogin() {
     mediaSize = MediaQuery.of(context).size;
     double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
 
-    double leftppadding = mediaSize.width;
+    // double leftppadding = mediaSize.width;
     return Center(
       child: Column(
         children: [
@@ -146,23 +148,58 @@ class _MyWidgetState extends State<LoginSignupOption> {
           SizedBox(height: screenHeight / 35),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Tab(
-                icon: InkWell(
-                    onTap: () async {
-                      final GoogleSignInAccount? googleUser =
-                          await googleSignIn.signIn();
 
-                      if (googleUser != null) {
-                        // user signed in
-                      } else {
-                        // user canceled
-                      }
-                    },
-                    child: Image.asset("assets/images/google.png")),
+            // children: [
+            //   Tab(
+            //     icon: InkWell(
+            //         onTap: () async {
+            //           final GoogleSignInAccount? googleUser =
+            //               await googleSignIn.signIn();
+
+            //           if (googleUser != null) {
+            //             // user signed in
+            //           } else {
+            //             // user canceled
+            //           }
+            //         },
+            //         child: Image.asset("assets/images/google.png")),
+            //   ),
+            //   Tab(icon: Image.asset("assets/images/facebook.png")),
+            //   Tab(icon: Image.asset("assets/images/twitter.png"))
+            // ],
+            children: [
+              ElevatedButton.icon(
+                onPressed: () async {
+                  try {
+                    final GoogleSignInAccount? googleUser =
+                        await googleSignIn.signIn();
+
+                    if (googleUser != null) {
+                      // Perform authentication with googleUser.id and googleUser.displayName
+                      // Navigate to the next page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Navigation()),
+                      );
+                    } else {
+                      // User canceled
+                    }
+                  } catch (error) {
+                    // Handle errors
+                    print('Google Sign-In failed: $error');
+                  }
+                },
+                icon: Image.asset("assets/images/google.png",
+                    height: screenHeight / 30, width: screenWidth / 30),
+                label: const Text(""),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,  // Text color
+                  minimumSize: const Size(100, 40),
+                ),
               ),
               Tab(icon: Image.asset("assets/images/facebook.png")),
-              Tab(icon: Image.asset("assets/images/twitter.png"))
+              Tab(icon: Image.asset("assets/images/twitter.png")),
             ],
           ),
         ],
@@ -176,8 +213,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
     mediaSize = MediaQuery.of(context).size;
     double screenHeight = mediaSize.height;
     double screenWidth = mediaSize.width;
-    return Flexible(
-      child: Container(
+    return  Container(
         decoration: const BoxDecoration(
           color: branaDeepBlack,
         ),
@@ -186,12 +222,12 @@ class _MyWidgetState extends State<LoginSignupOption> {
             body: Stack(children: <Widget>[
               Positioned(
                   top: screenHeight / 6,
-                  bottom: screenHeight / 6,
+                  bottom: screenHeight / 9,
                   left: screenWidth / 20,
                   right: screenWidth / 20,
                   child: _buildBottom())
             ])),
-      ),
+      
     );
   }
 }
