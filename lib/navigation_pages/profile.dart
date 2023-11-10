@@ -42,19 +42,22 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
         backgroundColor: branaDeepBlack,
         flexibleSpace: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "My Profile",
-              style: GoogleFonts.jost(
-                fontWeight: FontWeight.w600,
-                fontSize: fontSize / 20,
-                height: screenHeight / 200,
-                color: branaWhite,
+            child: Padding(
+          padding: EdgeInsets.only(bottom: bottompadding / 500),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "My Profile",
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w600,
+                  fontSize: fontSize / 20,
+                  // height: screenHeight / 200,
+                  color: branaWhite,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         )),
         actions: [
           InkWell(
@@ -75,44 +78,50 @@ class _ProfilePageState extends State<ProfilePage> {
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: toppadding / 30),
+                padding: EdgeInsets.only(
+                    top: toppadding / 30, bottom: bottompadding / 15),
                 child: Container(
                   width: screenWidth / 1.3,
                   height: screenHeight / 2.7,
                   decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 2, 16, 27),
                       borderRadius: BorderRadius.circular(12)),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: screenHeight / 30,
-                      ),
-                      imdisplay(),
-                      SizedBox(
-                        height: screenHeight / 80,
-                      ),
-                      buildUserInfoDisplay(user.firstName, user.lastName),
-                      SizedBox(
-                        height: screenHeight / 250,
-                      ),
-                      emailDisplay(user.email),
-                      SizedBox(
-                        height: screenHeight / 20,
-                      ),
-                      buildEditButton(),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: bottompadding / 190),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: screenHeight / 30,
+                        ),
+                        imdisplay(),
+                        SizedBox(
+                          height: screenHeight / 80,
+                        ),
+                        buildUserInfoDisplay(user.firstName, user.lastName),
+                        SizedBox(
+                          height: screenHeight / 250,
+                        ),
+                        emailDisplay(user.email),
+                        SizedBox(
+                          height: screenHeight / 25,
+                        ),
+                        buildEditButton(),
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
-                height: screenHeight / 50,
+                height: screenHeight / 100,
               ),
-              Container(
-                width: screenWidth / 0.5,
-                height: screenHeight / 3,
-                color: branaDeepBlack,
-                child: Center(
+              Padding(
+                padding: EdgeInsets.only(left: leftpadding / 15),
+                child: Container(
+                  // width: screenWidth / 0.5,
+                  // height: screenHeight / 3,
+                  color: branaDeepBlack,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
                         children: [
@@ -178,17 +187,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildSettingsIcon(Color color) {
     mediaSize = MediaQuery.of(context).size;
-    double toppadding = mediaSize.height;
+    // double toppadding = mediaSize.height;
     double rightpadding = mediaSize.width;
     double screenWidth = mediaSize.width;
     double fontSize = screenWidth;
 
     return Container(
-      padding: EdgeInsets.only(right: rightpadding / 40, top: toppadding / 250),
+      padding: EdgeInsets.only(
+        right: rightpadding / 10,
+      ),
       child: Icon(
         Icons.settings,
         color: branaWhite,
-        size: fontSize / 13,
+        size: fontSize / 20,
       ),
     );
   }
@@ -295,38 +306,33 @@ class _ProfilePageState extends State<ProfilePage> {
     double screenHeight = mediaSize.height;
 
     double fontSize = screenWidth;
-    return SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.only(top: 0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: screenWidth / 3 - 10,
-                height: screenHeight / 10 - 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const EditNameFormPage()));
-                  },
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      backgroundColor: MaterialStateProperty.all(Colors.white)),
-                  child: Text(
-                    'View Profile',
-                    style: GoogleFonts.jost(
-                        fontSize: fontSize / 30,
-                        color: const Color.fromARGB(255, 2, 16, 27),
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
+    return SizedBox(
+      width: screenWidth / 3,
+      height: screenHeight / 10 - 40,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const EditNameFormPage()));
+        },
+        style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
               ),
-            )));
+            ),
+            backgroundColor: MaterialStateProperty.all(Colors.white)),
+        child: Text(
+          'View Profile',
+          overflow: TextOverflow.visible,
+          style: GoogleFonts.jost(
+              fontSize: fontSize / 30,
+              color: const Color.fromARGB(255, 2, 16, 27),
+              fontWeight: FontWeight.w400),
+        ),
+      ),
+    );
   }
 
   // Refrshes the Page after updating user info.
@@ -353,9 +359,10 @@ class _ProfilePageState extends State<ProfilePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: leftpadding / 10),
+            padding: EdgeInsets.only(
+                left: leftpadding / 10, right: leftpadding / 10),
             child: SizedBox(
-              width: screenWidth / 2 + 100,
+              width: screenWidth / 1.5,
               height: screenHeight / 12,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -409,7 +416,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Padding(
             padding: EdgeInsets.only(left: leftpadding / 10),
             child: SizedBox(
-              width: screenWidth / 2 + 100,
+              width: screenWidth / 1.5,
               height: screenHeight / 12,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -418,7 +425,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: screenWidth / 30,
+                      width: screenWidth / 25,
                     ),
                     const Padding(
                       padding: EdgeInsets.only(top: 0.0),
@@ -434,7 +441,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text(
                       "390 Minutes ",
                       style: GoogleFonts.jost(
-                          fontSize: fontSize / 20,
+                          fontSize: fontSize / 25,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
@@ -469,6 +476,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
-  buildProfileCard() {}
 }

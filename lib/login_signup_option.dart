@@ -4,7 +4,7 @@ import 'package:brana_mobile/login_page.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:brana_mobile/navigation.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginSignupOption extends StatefulWidget {
   const LoginSignupOption({super.key, required double screenHeight});

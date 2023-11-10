@@ -33,25 +33,22 @@ class _MyWidgetState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:branaDeepBlack,
+        backgroundColor: branaDeepBlack,
         appBar: AppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: branaDeepBlack,
-                flexibleSpace: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Brana Audiobooks",
-                      style: GoogleFonts.jost(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 25,
-                        height: 1,
-                        color: branaWhite,
-                      ),
-                    ),
-                  ],
-                )),
+          automaticallyImplyLeading: false,
+          backgroundColor: branaDeepBlack,
+          flexibleSpace: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Brana Audiobooks",
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25,
+                  height: 1,
+                  color: branaWhite,
+                ),
               ),
         body:  isLoading
           ? const Center(
@@ -128,8 +125,14 @@ class _MyWidgetState extends State<HomePage> {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                      height: 100, child: AuthorList())
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 2.0),
+                                    child: const SizedBox(
+                                        height: 100, child: AuthorList()),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
                                 ],
                               ),
                             ),
