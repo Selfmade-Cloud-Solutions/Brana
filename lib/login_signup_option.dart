@@ -193,12 +193,12 @@ class _MyWidgetState extends State<LoginSignupOption> {
                 },
                 icon: Image.asset("assets/images/google.png",
                     height: screenHeight / 30, width: screenWidth / 30),
-                // label: Text(""),
-                // style: ElevatedButton.styleFrom(
-                //   primary: Colors.white, // Background color
-                //   onPrimary: Colors.black, // Text color
-                //   minimumSize: Size(100, 40),
-                // ),
+                label: Text(""),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white, // Background color
+                  onPrimary: Colors.black, // Text color
+                  minimumSize: Size(screenHeight / 30, screenWidth / 30),
+                ),
               ),
               Tab(icon: Image.asset("assets/images/facebook.png")),
               Tab(icon: Image.asset("assets/images/twitter.png")),
