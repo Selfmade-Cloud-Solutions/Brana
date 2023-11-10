@@ -211,7 +211,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                             ),
                             title: Text(
                               song.artist,
-                              style: const TextStyle(
+                              style: const GoogleFonts.jost(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.teal,
@@ -290,7 +290,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                                                           _currentSong?.title ??
                                                               'Chapter 1',
                                                           style:
-                                                              const TextStyle(
+                                                              const GoogleFonts.jost(
                                                             fontSize: 14.0,
                                                             color: Colors.white,
                                                           ),
@@ -300,7 +300,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                                                                   ?.artist ??
                                                               'Chapter 1',
                                                           style:
-                                                              const TextStyle(
+                                                              const GoogleFonts.jost(
                                                             fontSize: 14.0,
                                                             color: Colors.white,
                                                           ),
@@ -385,14 +385,14 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                                                       Text(
                                                         formatDuration(
                                                             position),
-                                                        style: const TextStyle(
+                                                        style: const GoogleFonts.jost(
                                                             fontSize: 16),
                                                       ),
                                                       Text(
                                                         formatDuration(
                                                             duration -
                                                                 position),
-                                                        style: const TextStyle(
+                                                        style: const GoogleFonts.jost(
                                                             fontSize: 16),
                                                       ),
                                                     ],
@@ -647,7 +647,7 @@ one
                                                     (Text(
                                                       _currentSong?.title ??
                                                           'Chapter 1',
-                                                      style: const TextStyle(
+                                                      style: const GoogleFonts.jost(
                                                         fontSize: 14.0,
                                                         color: Colors.white,
                                                       ),
@@ -655,7 +655,7 @@ one
                                                     Text(
                                                       _currentSong?.artist ??
                                                           'Chapter 1',
-                                                      style: const TextStyle(
+                                                      style: const GoogleFonts.jost(
                                                         fontSize: 14.0,
                                                         color: Colors.white,
                                                       ),
@@ -794,7 +794,7 @@ one
           //                         bufferedBarColor: Colors.grey,
           //                         progressBarColor: Colors.yellow,
           //                         thumbColor: Colors.yellow,
-          //                         timeLabelTextStyle: const TextStyle(
+          //                         timeLabelTextStyle: const GoogleFonts.jost(
           //                           color: Colors.white,
           //                           fontWeight: FontWeight.w200,
           //                         ),

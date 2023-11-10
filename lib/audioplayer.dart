@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:brana_mobile/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:brana_mobile/screens/Loading.dart';
 import 'package:flutter/material.dart';
 // import 'package:just_audio_background/just_audio_background.dart';
@@ -42,7 +43,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
   Song? _currentSong;
   bool _isPlaying = false;
   bool _isExpanded = false;
-  Color appBarColor = Colors.white;
+  Color appBarColor = branaWhite;
   late String appBarText;
   Icon iconview = const Icon(Icons.arrow_back);
   // late AudioPlayer audioPlayer;
@@ -56,7 +57,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
     printEmojis: true,
     printTime: true,
   ));
-  double _sliderValue = 0.0;
+  // final double _sliderValue = 0.0;
   bool isFetching = false;
   int currentIndex = 0;
   final playlist = ConcatenatingAudioSource(
@@ -217,12 +218,12 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
           title: _isExpanded ? null : const Text("widget.book.title"),
           leading: IconButton(
             icon: iconview,
-            color: _isExpanded ? Colors.white : Colors.black,
+            color: _isExpanded ? branaWhite : Colors.black,
             onPressed: () {
               if (_isExpanded) {
                 setState(() {
                   _isExpanded = !_isExpanded;
-                  appBarColor = Colors.white;
+                  appBarColor = branaWhite;
                   iconview = const Icon(Icons.arrow_back);
                 });
               } else {
@@ -233,7 +234,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
           actions: [
             IconButton(
               icon: const Icon(Icons.more_vert_outlined),
-              color: _isExpanded ? Colors.white : Colors.black,
+              color: _isExpanded ? branaWhite : Colors.black,
               onPressed: () {
                 // Handle search icon press
               },
@@ -255,7 +256,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                     ),
                     title: Text(
                       song.artist,
-                      style: const TextStyle(
+                      style: GoogleFonts.jost(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: branaDarkBlue,
@@ -302,7 +303,8 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                               },
                               iconSize: 80,
                               icon: const Icon(Icons.play_arrow_rounded));
-                        } else if (processingState != ProcessingState.completed) {
+                        } else if (processingState !=
+                            ProcessingState.completed) {
                           return IconButton(
                               onPressed: () {
                                 audioPlayer.pause();
@@ -312,7 +314,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                         }
                         return const Icon(
                           Icons.play_arrow_rounded,
-                          color: Colors.white,
+                          color: branaWhite,
                           size: 80,
                         );
                       },
@@ -329,12 +331,12 @@ class _AudioPlayerPageState extends State<AudioPlayerPage>
                                     const EdgeInsets.fromLTRB(15, 10, 15, 0),
                                 child: ProgressBar(
                                   barHeight: 6,
-                                  baseBarColor: Colors.white,
+                                  baseBarColor: branaWhite,
                                   bufferedBarColor: Colors.grey,
                                   progressBarColor: Colors.yellow,
                                   thumbColor: Colors.yellow,
-                                  timeLabelTextStyle: const TextStyle(
-                                    color: Colors.white,
+                                  timeLabelTextStyle: GoogleFonts.jost(
+                                    color: branaWhite,
                                     fontWeight: FontWeight.w200,
                                   ),
                                   progress:

@@ -1,11 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/navigation_pages/genreList.dart';
-import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/pages/explore/latest.dart';
 import 'package:brana_mobile/pages/explore/liked.dart';
 import 'package:brana_mobile/pages/explore/wishlist.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -20,79 +22,42 @@ class _HomeScreenState extends State<ExplorePage> {
   bool closeTopContainer = false;
   double topContainer = 0;
 
-  List<Book> books = getBookList();
-  List<Author> authors = getAuthorList();
   List<Widget> itemsData = [];
+  Future<void> getPostsData() async {
+    final response = await http.get(Uri.parse(
+        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retreive_audiobook_genres'));
 
-  void getPostsData() {
-    List<dynamic> responseList = booksExplore;
-    List<Widget> listItems = [];
-    for (var post in responseList) {
-      listItems.add(GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const GenreListPage()),
-            );
-          },
-          child: Container(
-              height: 130,
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                  color: branaDarkBlue,
-                  boxShadow: [
-                    BoxShadow(
-                        color:
-                            const Color.fromARGB(255, 3, 3, 3).withAlpha(100),
-                        blurRadius: 10.0),
-                  ]),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          post["genre"],
-                          style: GoogleFonts.jost(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 28,
-                            height: 1,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Flexible(
-                          flex: 0,
-                          child: Text(
-                            post["subGenre"],
-                            style: GoogleFonts.jost(
-                              fontWeight: FontWeight.w200,
-                              fontSize: 17,
-                              height: 1,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                    Image.asset(
-                      "assets/books/${post["image"]}",
-                      height: double.infinity,
-                    )
-                  ],
-                ),
-              ))));
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+
+      if (jsonResponse['message'] is List<dynamic>) {
+        final List<dynamic> genreList = jsonResponse['message'];
+
+        List<Widget> listItems = [];
+
+        for (var genreData in genreList) {
+          if (genreData is Map<String, dynamic>) {
+            final genreName = genreData['Genre Name'] as String;
+            final audiobookCount = genreData['Audiobooks'] as int;
+            final thumbnailUrls = genreData['thumbnail'] as List<dynamic>;
+
+            if (thumbnailUrls.isNotEmpty && thumbnailUrls.first is String) {
+              listItems.add(GenreWidget(
+                genreName: genreName,
+                audiobookCount: audiobookCount,
+                thumbnailUrl: thumbnailUrls.first as String,
+              ));
+            }
+          }
+        }
+
+        setState(() {
+          itemsData = listItems;
+        });
+      }
+    } else {
+      throw Exception('Failed to fetch data from API');
     }
-    setState(() {
-      itemsData = listItems;
-    });
   }
 
   @override
@@ -123,10 +88,10 @@ class _HomeScreenState extends State<ExplorePage> {
               Text(
                 "Explore Audiobooks",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
@@ -180,6 +145,87 @@ class _HomeScreenState extends State<ExplorePage> {
   }
 }
 
+class GenreWidget extends StatelessWidget {
+  final String genreName;
+  final int audiobookCount;
+  final String thumbnailUrl;
+
+  const GenreWidget({
+    super.key,
+    required this.genreName,
+    required this.audiobookCount,
+    required this.thumbnailUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GenreListPage(genreName: genreName)),
+        );
+      },
+      child: Container(
+        height: 130,
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+          color: branaDarkBlue,
+          boxShadow: [
+            BoxShadow(
+              color: const Color.fromARGB(255, 3, 3, 3).withAlpha(100),
+              blurRadius: 10.0,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    genreName,
+                    style: GoogleFonts.jost(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 28,
+                      height: 1,
+                      color: branaWhite,
+                    ),
+                  ),
+                  Flexible(
+                    flex: 0,
+                    child: Text(
+                      " $audiobookCount Audiobooks",
+                      style: GoogleFonts.jost(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 17,
+                        height: 1,
+                        color: branaWhite,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+              CachedNetworkImage(
+                imageUrl: thumbnailUrl,
+                height: double.infinity,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class CategoriesScroller extends StatelessWidget {
   const CategoriesScroller({super.key});
 
@@ -199,7 +245,8 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LikedPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const LikedPage()),
                     );
                   },
                   child: Container(
@@ -218,7 +265,7 @@ class CategoriesScroller extends StatelessWidget {
                             "Liked",
                             style: GoogleFonts.jost(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: branaWhite,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -228,7 +275,7 @@ class CategoriesScroller extends StatelessWidget {
                             "14 Books",
                             style: GoogleFonts.jost(
                               fontSize: 16,
-                              color: Colors.white,
+                              color: branaWhite,
                             ),
                           ),
                         ],
@@ -239,7 +286,8 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  const LatestPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const LatestPage()),
                     );
                   },
                   child: Container(
@@ -258,7 +306,7 @@ class CategoriesScroller extends StatelessWidget {
                             "Latest",
                             style: GoogleFonts.jost(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: branaWhite,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -268,7 +316,7 @@ class CategoriesScroller extends StatelessWidget {
                             "20 Books",
                             style: GoogleFonts.jost(
                               fontSize: 16,
-                              color: Colors.white,
+                              color: branaWhite,
                             ),
                           ),
                         ],
@@ -279,7 +327,8 @@ class CategoriesScroller extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const WishlistPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const WishlistPage()),
                     );
                   },
                   child: Container(
@@ -298,7 +347,7 @@ class CategoriesScroller extends StatelessWidget {
                             "Wishlist",
                             style: GoogleFonts.jost(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: branaWhite,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -308,7 +357,7 @@ class CategoriesScroller extends StatelessWidget {
                             "20 Books",
                             style: GoogleFonts.jost(
                               fontSize: 16,
-                              color: Colors.white,
+                              color: branaWhite,
                             ),
                           ),
                         ],

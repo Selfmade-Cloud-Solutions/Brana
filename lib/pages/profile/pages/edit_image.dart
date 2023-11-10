@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:brana_mobile/widgets/appbar_widget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EditImagePage extends StatefulWidget {
   const EditImagePage({Key? key}) : super(key: key);
@@ -25,11 +27,11 @@ class _EditImagePageState extends State<EditImagePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(
+          SizedBox(
               width: 330,
               child: Text(
                 "Upload a photo of yourself:",
-                style: TextStyle(
+                style: GoogleFonts.jost(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
                 ),
@@ -53,7 +55,7 @@ class _EditImagePageState extends State<EditImagePage> {
                       setState(
                           () => user = user.copy(imagePath: newImage.path));
                     },
-                    child: Image.network(user.image),
+                    child: CachedNetworkImage(imageUrl: user.image),
                   ))),
           Padding(
               padding: const EdgeInsets.only(top: 40),
@@ -64,9 +66,9 @@ class _EditImagePageState extends State<EditImagePage> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: const Text(
+                      child: Text(
                         'Update',
-                        style: TextStyle(fontSize: 15),
+                        style: GoogleFonts.jost(fontSize: 15),
                       ),
                     ),
                   )))

@@ -202,7 +202,6 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
   Future<void> _goToLogin() async {
     await _rippleAnimationController.forward();
-    // ignore: use_build_context_synchronously
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => LoginSignupOption(screenHeight: widget.screenHeight),
@@ -218,7 +217,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         children: <Widget>[
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(kPaddingL),
+              padding: const EdgeInsets.all(kPaddingL/2),
               child: Column(
                 children: <Widget>[
                   Header(onSkip: _goToLogin),

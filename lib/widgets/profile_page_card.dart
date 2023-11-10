@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:brana_mobile/constants.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
@@ -16,20 +18,20 @@ class InfoCard extends StatelessWidget {
         backgroundColor: Colors.white24,
         child: Icon(
           CupertinoIcons.person,
-          color: Colors.white,
+          color: branaWhite,
         ),
       ),
       title: Text(
         name,
-        style: const TextStyle(color: Colors.white),
+        style: GoogleFonts.jost(color: branaWhite),
       ),
       subtitle: Text(
         bio,
-        style: const TextStyle(color: Colors.white70),
+        style: GoogleFonts.jost(color: Colors.white70),
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     throw UnimplementedError();

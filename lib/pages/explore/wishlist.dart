@@ -20,7 +20,7 @@ class _MyWidgetState extends State<WishlistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: branaDeepBlack,
+        backgroundColor: branaDeepBlack,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: branaDeepBlack,
@@ -29,7 +29,7 @@ class _MyWidgetState extends State<WishlistPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.white,
+            color: branaWhite,
           ),
           flexibleSpace: Center(
               child: Column(
@@ -38,10 +38,10 @@ class _MyWidgetState extends State<WishlistPage> {
               Text(
                 "Wishlist",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
@@ -53,8 +53,8 @@ class _MyWidgetState extends State<WishlistPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  color:kLightBlue.withOpacity(0.1),
-                height:20,
+                  color: kLightBlue.withOpacity(0.1),
+                  height: 20,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -64,13 +64,13 @@ class _MyWidgetState extends State<WishlistPage> {
                     ),
                   ),
                 ),
-                  SizedBox(
+                SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: Container(
                     color: kLightBlue.withOpacity(0.1),
                     child: GridView.count(
                       physics: const BouncingScrollPhysics(),
-                      crossAxisCount: 3,
+                      crossAxisCount: 2,
                       children: buildBooks()
                           .map((book) => SizedBox(
                                 child: book,
@@ -94,18 +94,20 @@ class _MyWidgetState extends State<WishlistPage> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+    return 
+    // GestureDetector(
+    //   onTap: () {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+    //     );
+    //   },
+    //   child: 
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
           Expanded(
-              child: Container(
+            child: Container(
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -117,35 +119,33 @@ class _MyWidgetState extends State<WishlistPage> {
                     ),
                   ],
                 ),
-                    child: Hero(
-                      tag: book.image,
-                      child: Image.asset(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width/5,
-                        book.image,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-              ),
-            
-            Text(
-              book.title,
-              style: GoogleFonts.jost(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white70),
-            ),
-            Text(
-              book.author.fullname,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white,
+                child: Hero(
+                  tag: book.image,
+                  child: Image.asset(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width / 5,
+                    book.image,
+                    fit: BoxFit.cover,
+                  ),
+                )),
+          ),
+          Text(
+            book.title,
+            style: GoogleFonts.jost(
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: Colors.white70),
+          ),
+          Text(
+            book.author.fullname,
+            style: GoogleFonts.jost(
+              fontSize: 14,
+              color: branaWhite,
+              fontWeight: FontWeight.bold,
             ),
-        )
+          )
         ],
-        ),
-      
+      // ),
     );
   }
 }

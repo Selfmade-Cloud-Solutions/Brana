@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/signup_page.dart';
 import 'package:brana_mobile/login_page.dart';
 import 'package:brana_mobile/constants.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:brana_mobile/navigation.dart';
 
 class LoginSignupOption extends StatefulWidget {
   const LoginSignupOption({super.key, required double screenHeight});
@@ -12,19 +15,22 @@ class LoginSignupOption extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<LoginSignupOption> {
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
   late Size mediaSize;
   late Color myColor;
 
   Widget _buildTop() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
     return SizedBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             "assets/images/logo.png",
-            width:100,
-            height:100,
+            width: screenWidth / 4,
+            height: screenHeight / 8,
           ),
         ],
       ),
@@ -32,6 +38,8 @@ class _MyWidgetState extends State<LoginSignupOption> {
   }
 
   Widget _buildBottom() {
+    mediaSize = MediaQuery.of(context).size;
+    double topppadding = mediaSize.height;
     return SizedBox(
       width: mediaSize.width,
       child: Card(
@@ -40,7 +48,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
         ),
         color: kLightBlue.withOpacity(0.1),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(topppadding / 15),
           child: _buildForm(),
         ),
       ),
@@ -48,28 +56,29 @@ class _MyWidgetState extends State<LoginSignupOption> {
   }
 
   Widget _buildForm() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenHeight = mediaSize.height;
+
+    double leftppadding = mediaSize.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 60),
-      child: _buildTop(),
-    ),  
-  ),
-        const SizedBox(height: 40),
+          child: _buildTop(),
+        ),
+        SizedBox(height: screenHeight / 20),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 60),
+          padding: EdgeInsets.symmetric(horizontal: leftppadding / 7),
           child: _buildLoginButton(),
         ),
-        const SizedBox(height: 40),
+        SizedBox(height: screenHeight / 40),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 60),
+          padding: EdgeInsets.symmetric(horizontal: leftppadding / 7),
           child: _buildSignupButton(),
         ),
-        const SizedBox(height: 30),
+        SizedBox(height: screenHeight / 25),
         _buildOtherLogin(),
-        const SizedBox(height: 10),
+        SizedBox(height: screenHeight / 25),
       ],
     );
   }
@@ -77,7 +86,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
   Widget _buildPrimaryText(String text) {
     return Text(
       text,
-      style: const TextStyle(color: branaWhite),
+      style: GoogleFonts.jost(color: branaWhite),
     );
   }
 
@@ -96,8 +105,8 @@ class _MyWidgetState extends State<LoginSignupOption> {
         shadowColor: const Color.fromARGB(50, 110, 105, 105),
         minimumSize: const Size.fromHeight(50),
       ),
-      child: const Text("LOGIN",
-          style: TextStyle(
+      child: Text("LOGIN",
+          style: GoogleFonts.jost(
             color: branaWhite,
             fontWeight: FontWeight.w800,
           )),
@@ -120,7 +129,7 @@ class _MyWidgetState extends State<LoginSignupOption> {
         minimumSize: const Size.fromHeight(50),
       ),
       child: Text("SIGN UP",
-          style: TextStyle(
+          style: GoogleFonts.jost(
             color: branaPrimaryColor,
             fontWeight: FontWeight.w800,
           )),
@@ -128,30 +137,71 @@ class _MyWidgetState extends State<LoginSignupOption> {
   }
 
   Widget _buildOtherLogin() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
+
+    // double leftppadding = mediaSize.width;
     return Center(
       child: Column(
         children: [
           _buildPrimaryText("Or Login with"),
-          const SizedBox(height: 20),
+          SizedBox(height: screenHeight / 35),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Tab(
-                icon: InkWell(
-                    onTap: () async {
-                      final GoogleSignInAccount? googleUser =
-                          await googleSignIn.signIn();
 
-                      if (googleUser != null) {
-                        // user signed in
-                      } else {
-                        // user canceled
-                      }
-                    },
-                    child: Image.asset("assets/images/google.png")),
+            // children: [
+            //   Tab(
+            //     icon: InkWell(
+            //         onTap: () async {
+            //           final GoogleSignInAccount? googleUser =
+            //               await googleSignIn.signIn();
+
+            //           if (googleUser != null) {
+            //             // user signed in
+            //           } else {
+            //             // user canceled
+            //           }
+            //         },
+            //         child: Image.asset("assets/images/google.png")),
+            //   ),
+            //   Tab(icon: Image.asset("assets/images/facebook.png")),
+            //   Tab(icon: Image.asset("assets/images/twitter.png"))
+            // ],
+            children: [
+              ElevatedButton.icon(
+                onPressed: () async {
+                  try {
+                    final GoogleSignInAccount? googleUser =
+                        await googleSignIn.signIn();
+
+                    if (googleUser != null) {
+                      // Perform authentication with googleUser.id and googleUser.displayName
+                      // Navigate to the next page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Navigation()),
+                      );
+                    } else {
+                      // User canceled
+                    }
+                  } catch (error) {
+                    // Handle errors
+                    print('Google Sign-In failed: $error');
+                  }
+                },
+                icon: Image.asset("assets/images/google.png",
+                    height: screenHeight / 30, width: screenWidth / 30),
+                label: Text(""),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white, // Background color
+                  onPrimary: Colors.black, // Text color
+                  minimumSize: Size(screenHeight / 30, screenWidth / 30),
+                ),
               ),
               Tab(icon: Image.asset("assets/images/facebook.png")),
-              Tab(icon: Image.asset("assets/images/twitter.png"))
+              Tab(icon: Image.asset("assets/images/twitter.png")),
             ],
           ),
         ],
@@ -163,22 +213,23 @@ class _MyWidgetState extends State<LoginSignupOption> {
   Widget build(BuildContext context) {
     myColor = Theme.of(context).primaryColorLight;
     mediaSize = MediaQuery.of(context).size;
-    return Container(
-      decoration: const BoxDecoration(
-        color: branaDeepBlack,
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-    children: <Widget>[
-      Positioned(
-        bottom: 10, 
-        left: 10,
-        right: 10, 
-        child: _buildBottom()
-      )
-    ]
-  )
+    double screenHeight = mediaSize.height;
+    double screenWidth = mediaSize.width;
+    return Flexible(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: branaDeepBlack,
+        ),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Stack(children: <Widget>[
+              Positioned(
+                  top: screenHeight / 6,
+                  bottom: screenHeight / 9,
+                  left: screenWidth / 20,
+                  right: screenWidth / 20,
+                  child: _buildBottom())
+            ])),
       ),
     );
   }

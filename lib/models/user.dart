@@ -34,7 +34,6 @@ class User {
     String? name,
     String? email,
     String? about,
-    bool? isDarkMode,
   }) {
     return User(
       imagePath: imagePath ?? this.imagePath,

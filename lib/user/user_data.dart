@@ -10,11 +10,11 @@ class UserData {
   static User myUser = User(
     image:
         "https://borkena.com/wp-content/uploads/2023/07/Bealu-Girma-_-Ethiopian-Writers.jpg",
-    name: 'Test Test',
+    firstName: 'tsrif ',
+    lastName: 'tsal',
     email: 'test.gk@gmail.com',
     phone: '(251) 9206-5039',
-    aboutMeDescription:
-        '12 Jan 1994',
+    aboutMeDescription: '12 Jan 1994',
   );
 
   static Future init() async =>

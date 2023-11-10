@@ -1,6 +1,7 @@
 import 'package:brana_mobile/data.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class genreBookDetail extends StatelessWidget {
   final BookModel? model;
@@ -37,7 +38,7 @@ class genreBookDetail extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               model!.name,
-              style: TextStyle(
+              style: GoogleFonts.jost(
                 color: branaPrimaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -46,14 +47,14 @@ class genreBookDetail extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               model!.author,
-              style: const TextStyle(fontSize: 16),
+              style: GoogleFonts.jost(fontSize: 16),
             ),
             const SizedBox(height: 10),
             Flexible(
               fit: FlexFit.loose,
               child: Text(
                 model!.description,
-                style: const TextStyle(fontSize: 14),
+                style: GoogleFonts.jost(fontSize: 14),
               ),
             ),
           ],

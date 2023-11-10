@@ -1,53 +1,98 @@
-// import 'package:brana_mobile/player/audioplayerscreen.dart';
 import 'package:brana_mobile/audioplayerscreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:brana_mobile/data.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:brana_mobile/widgets/back_button.dart';
-// import 'package:brana_mobile/audioplayer.dart';
-// import 'package:brana_mobile/constants.dart';
-// import 'package:brana_mobile/widgets/back_button.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:brana_mobile/constants.dart';
 
-class BookDetail extends StatelessWidget {
+class BookDetail extends StatefulWidget {
   const BookDetail({
     Key? key,
-    required this.book,
+    required this.title,
+    required this.author,
+    required this.description,
+    required this.thumbnail,
   }) : super(key: key);
 
-  final Book book;
+  final String title;
+  final String author;
+  final String description;
+  final String thumbnail;
+
+  @override
+  _BookDetailState createState() => _BookDetailState();
+}
+
+class _BookDetailState extends State<BookDetail> {
+  late Map<String, dynamic> audiobook = {};
+  bool showFullDescription = false;
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final apiUrl =
+        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobook?audiobook_id=${widget.title}';
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        audiobook = jsonDecode(response.body)['message'];
+        isLoading = false;
+      });
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+  }
+
+  String truncateDescription(String description) {
+    List<String> words = description.split(' ');
+    int numWords =
+        30; // Change this value to control the number of displayed words
+
+    if (words.length <= numWords) {
+      return description;
+    }
+
+    return '${words.sublist(0, numWords).join(' ')}...';
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    // Scroll Controller
     ScrollController scrollController = ScrollController();
 
-    // Scroll to top on widget build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.jumpTo(0);
     });
 
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: const Color.fromARGB(255, 2, 22, 41),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 2, 22, 41),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Container(
-          decoration: BoxDecoration(
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
-              image: AssetImage(book.image),
+              image: NetworkImage(widget.thumbnail),
               fit: BoxFit.cover,
-            ),
-          ),
-          child: Stack(children: [
+            )),
+        child: Stack(
+          children: [
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -67,131 +112,144 @@ class BookDetail extends StatelessWidget {
                 }
                 return true;
               },
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, bottom: 0, right: 16, top: 50),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 0),
-                      // Modified poster layout
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.9),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: const Offset(0, 3),
+              child: isLoading
+                  ? const Center(
+                      // Display the preloader if isLoading is true
+                      child: CircularProgressIndicator(color: branaWhite),
+                    )
+                  : SingleChildScrollView(
+                      controller: scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16, bottom: 110, right: 16, top: 50),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child:CachedNetworkImage(
+                                        imageUrl:widget.thumbnail,
+                                        fit: BoxFit.cover,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                      )
+                                    
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.title,
+                                      style: GoogleFonts.jost(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w800,
+                                        color: branaWhite, // Use branaWhite
+                                      ),
+                                    ),
+                                    Text(
+                                      widget.author,
+                                      style: GoogleFonts.jost(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color: branaWhite, // Use branaWhite
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                  color: branaWhite, // Use branaWhite
+                                  icon:
+                                      const Icon(Icons.bookmark_add, size: 30),
+                                  onPressed: () {},
                                 ),
                               ],
                             ),
-                            child: Image.asset(
-                              book.image,
-                              fit: BoxFit.cover,
+                            Text(
+                              showFullDescription
+                                  ? widget.description
+                                  : truncateDescription(widget.description),
+                              style: GoogleFonts.jost(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w300,
+                                color: branaWhite, // Use branaWhite
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                book.title,
-                                style: GoogleFonts.jost(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
-                                ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  showFullDescription = !showFullDescription;
+                                });
+                              },
+                              child: Center(
+                                child: Text(
+                                    showFullDescription
+                                        ? 'Read Less'
+                                        : 'Read More',
+                                    style: const TextStyle(
+                                      color:
+                                          branaWhite, // Customize the color if desired
+                                      fontWeight: FontWeight.bold,
+                                    )),
                               ),
-                              Text(
-                                book.author.fullname,
-                                style: GoogleFonts.jost(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          IconButton(
-                            color: Colors.white,
-                            icon: const Icon(Icons.bookmark_add, size: 30),
-                            // label: const Center(child: Text('Add to Wishlist')),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      // const SizedBox(height: 4),
-                      // const SizedBox(height: 4),
-                      Text(
-                        book.description,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white,
-                        ),
-                      ),
-                      
-                  Container(
-                        height: 200,
-                        width: size.width,
-                        padding: const EdgeInsets.only(
-                          top: 100,
-                          left: 32,
-                          right: 32,
-                          bottom: 40,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(
-                                    MediaQuery.of(context).size.width * 0.4,
-                                    20),
-                                textStyle: const TextStyle(fontSize: 16),
-                                foregroundColor: Colors.white,
-                                backgroundColor:
-                                    const Color.fromARGB(255, 2, 22, 41),
-                                shadowColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                elevation: 5,
-                              ),
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      AudioPlayerScreen(book: book),
-                                ),
-                              ),
-                              icon: const Icon(Icons.play_arrow_rounded,
-                                  size: 30),
-                              label: const Center(child: Text('Listen')),
                             ),
                           ],
                         ),
                       ),
-                    ],
+                    ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                height: 200,
+                width: size.width,
+                padding: EdgeInsets.only(
+                  top: 110,
+                  left: MediaQuery.of(context).size.width * 0.55,
+                  right: MediaQuery.of(context).size.width * 0.05,
+                  bottom: 30,
+                ),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width * 0.4, 20),
+                    textStyle: GoogleFonts.jost(fontSize: 16),
+                    foregroundColor: branaWhite,
+                    backgroundColor: const Color.fromARGB(255, 2, 22, 41),
+                    shadowColor: branaDeepBlack,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    elevation: 5,
                   ),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookDetail(
+                        title: audiobook['title'] ?? '',
+                        author: audiobook['author'] ?? '',
+                        description: audiobook['description'] ?? '',
+                        thumbnail: audiobook['thumbnail'] ?? '',
+                      ),
+                    ),
+                  ),
+                  icon: const Icon(Icons.play_arrow_rounded, size: 30),
+                  label: const Text('Listen'),
                 ),
               ),
-            )
-          ]),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

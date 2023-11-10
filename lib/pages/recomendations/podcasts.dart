@@ -28,7 +28,7 @@ class _MyWidgetState extends State<Podcast> {
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.white,
+            color: branaWhite,
           ),
           flexibleSpace: Center(
               child: Column(
@@ -37,10 +37,10 @@ class _MyWidgetState extends State<Podcast> {
               Text(
                 "Podcast",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
@@ -83,20 +83,19 @@ class _MyWidgetState extends State<Podcast> {
                         ),
                       ),
                     ),
-                      SizedBox(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: Container(
-                        color: kLightBlue.withOpacity(0.1),
-                        child: GridView.count(
-                          physics: const BouncingScrollPhysics(),
-                          crossAxisCount: 3,
-                          children: buildBooks()
-                              .map((book) => SizedBox(
-                                    child: book,
-                                  ))
-                              .toList(),
-                        )),
-                      
+                          color: kLightBlue.withOpacity(0.1),
+                          child: GridView.count(
+                            physics: const BouncingScrollPhysics(),
+                            crossAxisCount: 2,
+                            children: buildBooks()
+                                .map((book) => SizedBox(
+                                      child: book,
+                                    ))
+                                .toList(),
+                          )),
                     ),
                   ],
                 ),
@@ -113,14 +112,16 @@ class _MyWidgetState extends State<Podcast> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-      child: Center(
+    return 
+    // GestureDetector(
+    //   onTap: () {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+    //     );
+    //   },
+    //   child: 
+      Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -138,14 +139,14 @@ class _MyWidgetState extends State<Podcast> {
                     ),
                   ],
                 ),
-                padding:const EdgeInsets.only(top: 10,bottom:10),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: Hero(
                       tag: book.image,
                       child: Image.asset(
                         height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width/5,
+                        width: MediaQuery.of(context).size.width / 5,
                         book.image,
                         fit: BoxFit.cover,
                       ),
@@ -161,15 +162,15 @@ class _MyWidgetState extends State<Podcast> {
             ),
             Text(
               book.author.fullname,
-              style: const TextStyle(
+              style: GoogleFonts.jost(
                 fontSize: 14,
-                color: Colors.white,
+                color: branaWhite,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
-      ),
+      // ),
     );
   }
 }

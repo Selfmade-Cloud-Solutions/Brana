@@ -44,7 +44,7 @@ class _MyWidgetState extends State<Navigation> {
             BoxShadow(
               blurRadius: 0,
               color:
-                  branaDark, // Adjust the opacity (alpha value) and color as needed
+                  branaDark, 
               spreadRadius: 1,
             ),
           ],
@@ -53,8 +53,8 @@ class _MyWidgetState extends State<Navigation> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(
             gap: 8,
-            color: branaBlue,
-            activeColor: Colors.white,
+            color: branaWhite,
+            activeColor: branaWhite,
             tabBackgroundColor: branaPrimaryColor,
             padding: const EdgeInsets.all(10),
             selectedIndex: _currentIndex,

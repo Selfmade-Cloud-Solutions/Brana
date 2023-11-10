@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:brana_mobile/login_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:brana_mobile/constants.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -9,175 +11,554 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  late Size mediaSize;
   @override
   Widget build(BuildContext context) {
+    mediaSize = MediaQuery.of(context).size;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
+        backgroundColor: branaDeepBlack,
+        // appBar: AppBar(
+        //   backgroundColor: const Color.fromARGB(255, 2, 16, 27),
+        //   elevation: 1,
+        //   leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //     icon: const Icon(
+        //       Icons.arrow_back,
+        //       color: branaWhite,
+        //     ),
+        //   ),
+        // ),
+
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Color.fromARGB(255, 2, 16, 27),
+
+          flexibleSpace: Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: branaWhite,
+                ),
+              ),
+              SizedBox(
+                width: mediaSize.width / 2 - 80,
+              ),
+              Text(
+                "Setting",
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25,
+                  height: 1,
+                  color: branaWhite,
+                ),
+              ),
+              SizedBox(
+                height: mediaSize.height / 4,
+              )
+            ],
+          )),
+          // actions: [
+          //   InkWell(
+          //     onTap: () {},
+          //   ),
+          // ],
+        ),
+        body: Container(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: ListView(
+            children: [
+              SizedBox(
+                height: mediaSize.height / 500,
+              ),
+              // Text(
+              //   "Settings",
+              //   style: GoogleFonts.jost(
+              //     fontSize: 25,
+              //     fontWeight: FontWeight.w500,
+              //     color: branaWhite,
+              //   ),
+              // ),
+              // const Divider(
+              //   height: 15,
+              //   thickness: 2,
+              // ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                  width: mediaSize.width,
+                  height: mediaSize.height,
+                  color: branaDeepBlack,
+                  // padding: const EdgeInsets.only(left: 70, top: 20, right: 70),
+                  child: Column(children: [
+                    SizedBox(
+                      height: mediaSize.height / 20,
+                    ),
+                    label("General Setting"),
+                    buildChangePassword(context, "Change password"),
+                    SizedBox(
+                      height: mediaSize.height / 100,
+                    ),
+                    buildContentSettings(context, "Content settings"),
+                    SizedBox(
+                      height: mediaSize.height / 100,
+                    ),
+                    buildPreferences(context, "Preferences"),
+                    SizedBox(
+                      height: mediaSize.height / 40,
+                    ),
+                    label("Privacy Setting"),
+                    buildAccountOptionRow(context, "Privacy and security"),
+                    SizedBox(
+                      height: mediaSize.height / 100,
+                    ),
+                    buildTermsAndConditions(context, "Terms and conditions"),
+                    buildLogoutButton(context),
+                  ]))
+            ],
+          ),
+        ));
+  }
+}
+
+GestureDetector buildAccountOptionRow(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title),
+              content: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("Option 1"),
+                  Text("Option 2"),
+                  Text("Option 3"),
+                ],
+              ),
+            );
+          });
+    },
+    child: Padding(
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
           ),
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
-        child: ListView(
-          children: [
-            const Text(
-              "Settings",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            const Row(
-              children: [
-                Icon(
-                  Icons.person,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "Account",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const Divider(
-              height: 15,
-              thickness: 2,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            buildAccountOptionRow(context, "Change password"),
-            buildAccountOptionRow(context, "Content settings"),
-            buildAccountOptionRow(context, "Social"),
-            buildAccountOptionRow(context, "Language"),
-            buildAccountOptionRow(context, "Privacy and security"),
-            const SizedBox(
-              height: 40,
-            ),
-            const Row(
-              children: [
-                Icon(
-                  Icons.volume_up_outlined,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "Notifications",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const Divider(
-              height: 15,
-              thickness: 2,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            buildNotificationOptionRow("New for you", true),
-            buildNotificationOptionRow("Account activity", true),
-            buildNotificationOptionRow("Opportunity", false),
-            const SizedBox(
-              height: 50,
-            ),
-            // Center(
-            //   child: OutlineButton(
-            //     padding: const EdgeInsets.symmetric(horizontal: 40),
-            //     shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(20)),
-            //     onPressed: () {},
-            //     child: const Text("SIGN OUT",
-            //         style: TextStyle(
-            //             fontSize: 16, letterSpacing: 2.2, color: Colors.black)),
-            //   ),
-            // )
-          ],
-        ),
-      ),
-    );
-  }
+    ),
+  );
+}
 
-  Row buildNotificationOptionRow(String title, bool isActive) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey[600]),
-        ),
-        Transform.scale(
-            scale: 0.7,
-            child: CupertinoSwitch(
-              value: isActive,
-              onChanged: (bool val) {},
-            ))
-      ],
-    );
-  }
-
-  GestureDetector buildAccountOptionRow(BuildContext context, String title) {
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text(title),
-                content: const Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("Option 1"),
-                    Text("Option 2"),
-                    Text("Option 3"),
-                  ],
+GestureDetector buildChangePassword(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                backgroundColor: Colors.black,
+                title: Text('Change Password',
+                    style: GoogleFonts.jost(color: branaWhite)),
+                actions: [
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Old Password',
+                      labelStyle: GoogleFonts.jost(color: branaWhite),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: branaWhite),
+                          borderRadius: BorderRadius.circular(8)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: branaWhite),
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'New Password',
+                      labelStyle: GoogleFonts.jost(color: branaWhite),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: branaWhite),
+                          borderRadius: BorderRadius.circular(8)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: branaWhite),
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 3,
+                        height: MediaQuery.of(context).size.height / 20,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6))),
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Update',
+                              style: GoogleFonts.jost(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ]);
+          });
+    },
+    child: Padding(
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
                 ),
-                // actions: [
-                //   FlatButton(
-                //       onPressed: () {
-                //         Navigator.of(context).pop();
-                //       },
-                //       child: const Text("Close")),
-                // ],
-              );
-            });
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey[600],
               ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.grey,
-            ),
-          ],
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
+          ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+GestureDetector buildContentSettings(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title, style: GoogleFonts.jost(color: branaWhite)),
+              backgroundColor: Colors.black,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("Explicit content",
+                      style: GoogleFonts.jost(color: branaWhite)),
+                  Text("Children Content",
+                      style: GoogleFonts.jost(color: branaWhite)),
+                  Text("Option 3", style: GoogleFonts.jost(color: branaWhite)),
+                ],
+              ),
+            );
+          });
+    },
+    child: Padding(
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+GestureDetector buildTermsAndConditions(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                backgroundColor: Colors.black,
+                title: Text('Brana Audiobooks Terms and Conditions',
+                    style: GoogleFonts.jost(color: branaWhite)),
+                content: SingleChildScrollView(
+                    child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: RichText(
+                            text: TextSpan(
+                                style: GoogleFonts.jost(
+                                    fontSize: 16, color: branaWhite),
+                                children: [
+                              TextSpan(
+                                  text: "Terms and Conditions\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: "\n1. Introduction\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                              TextSpan(
+                                  text: "\n2. Intellectual Property Rights\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                              TextSpan(
+                                  text: "\n3. Intellectual Property Rights\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                              TextSpan(
+                                  text: "\n4. User Accounts\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                              TextSpan(
+                                  text: "\n5. Introduction\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                              TextSpan(
+                                  text: "\n6. Intellectual Property Rights\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                              TextSpan(
+                                  text: "\n7. Intellectual Property Rights\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                              TextSpan(
+                                  text: "\n8. User Accounts\n",
+                                  style: GoogleFonts.jost(
+                                      fontWeight: FontWeight.bold)),
+                              const TextSpan(
+                                  text:
+                                      "\n These terms and conditions govern your use of the audiobook streaming app. By accessing or using the app, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms and conditions, you must not use the app.\n"),
+                            ])))));
+          });
+    },
+    child: SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
+          ),
+        ),
+      ),
+    )),
+  );
+}
+
+GestureDetector buildPreferences(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title),
+              content: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [],
+              ),
+            );
+          });
+    },
+    child: Padding(
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget buildLogoutButton(BuildContext context) {
+  return Padding(
+      padding: const EdgeInsets.only(top: 30),
+      child: Align(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+              width: MediaQuery.of(context).size.width / 3,
+              height: MediaQuery.of(context).size.height / 20,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6))),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => _logoutDialog(context),
+                  );
+                },
+                child: Text('Logout',
+                    style: GoogleFonts.jost(
+                        color: branaDarkBlue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
+              ))));
+}
+
+// dialog widget
+
+Widget _logoutDialog(BuildContext context) {
+  return AlertDialog(
+    backgroundColor: Colors.black,
+    title:
+        Text('Logout Confirmation', style: GoogleFonts.jost(color: branaWhite)),
+    content: Text('Are you sure you want to logout?',
+        style: GoogleFonts.jost(color: branaWhite)),
+    actions: [
+      TextButton(
+        onPressed: () async {
+          // Log out user
+          // await AuthService().signOut();
+
+          // Navigate to login page
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const LoginPage()));
+        },
+        child: Text(
+          'Logout',
+          style: GoogleFonts.jost(fontSize: 15),
+        ),
+      ),
+      TextButton(
+          onPressed: () => Navigator.pop(context), child: const Text('No'))
+    ],
+  );
+}
+
+Widget label(String label) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 30.0),
+    child: Container(
+      alignment: Alignment.topLeft,
+      child: Text(
+        label,
+        style: GoogleFonts.jost(
+            color: const Color.fromARGB(255, 190, 188, 188),
+            fontWeight: FontWeight.w300,
+            letterSpacing: 0.2,
+            fontSize: 16.5),
+      ),
+    ),
+  );
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:brana_mobile/data.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LatestPage extends StatelessWidget {
   const LatestPage({Key? key}) : super(key: key);
@@ -38,8 +39,6 @@ class LatestTop extends StatefulWidget {
 }
 
 class _LatestTopState extends State<LatestTop> {
-
-
   final _pageController = PageController();
   int _currentPage = 0;
 
@@ -110,21 +109,21 @@ class _LatestTopState extends State<LatestTop> {
                                     Colors.black.withOpacity(0)
                                   ])),
                         ),
-                        const Positioned(
+                        Positioned(
                             left: 30,
                             top: 20,
                             child: Text(
                               'Upcoming Book',
-                              style:
-                                  TextStyle(fontSize: 24, color: Colors.white),
+                              style: GoogleFonts.jost(
+                                  fontSize: 24, color: branaWhite),
                             )),
-                        const Positioned(
+                        Positioned(
                             left: 30,
                             top: 55,
                             child: Text(
                               '30+ new book coming with various \nStories are waiting for you',
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.grey),
+                              style: GoogleFonts.jost(
+                                  fontSize: 12, color: Colors.grey),
                             ))
                       ],
                     ))
@@ -140,7 +139,7 @@ class _LatestTopState extends State<LatestTop> {
                   expansionFactor: 4,
                   dotWidth: 8,
                   dotHeight: 4,
-                  activeDotColor: Colors.white,
+                  activeDotColor: branaWhite,
                 ),
                 onDotClicked: (index) {
                   _pageController.animateToPage(index,

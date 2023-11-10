@@ -1,23 +1,44 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:brana_mobile/data.dart';
-import 'package:brana_mobile/constants.dart';
+import 'dart:convert';
 import 'package:brana_mobile/book_detail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:google_fonts/google_fonts.dart';
+import 'package:brana_mobile/constants.dart';
+
 class EditorsPicks extends StatefulWidget {
-  const EditorsPicks({super.key});
+  const EditorsPicks({Key? key}) : super(key: key);
 
   @override
-  State<EditorsPicks> createState() => _MyWidgetState();
+  State<EditorsPicks> createState() => _AudiobookListState();
 }
 
-class _MyWidgetState extends State<EditorsPicks> {
-  TextEditingController textController = TextEditingController();
+class _AudiobookListState extends State<EditorsPicks> {
+  late List<dynamic> audiobooks = [];
 
-  List<Book> books = getBookList();
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final response = await http.get(Uri.parse(
+        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_editors_picks'));
+    if (response.statusCode == 200) {
+      setState(() {
+        audiobooks = jsonDecode(response.body)['message'];
+      });
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    double containerWidth = MediaQuery.of(context).size.width * 0.3;
     return Scaffold(
+        backgroundColor: branaDeepBlack,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: branaDeepBlack,
@@ -35,134 +56,74 @@ class _MyWidgetState extends State<EditorsPicks> {
               Text(
                 "Editors Picks",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
           )),
         ),
-        body: ListView(children: [
-          Container(
-              color: branaDeepBlack,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      color: Colors.black,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: kLightBlue.withOpacity(0.1),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(40),
-                            ),
+        body: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, mainAxisSpacing: 10),
+          itemCount: audiobooks.length,
+          itemBuilder: (context, index) {
+            final audiobook = audiobooks[index];
+            return AspectRatio(
+                aspectRatio: 1,
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookDetail(
+                            title: audiobook['title'] ?? '',
+                            author: audiobook['author'] ?? '',
+                            description: audiobook['description'] ?? '',
+                            thumbnail: audiobook['thumbnail'] ?? '',
                           ),
                         ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      margin: const EdgeInsets.only(right: 5, left: 5),
+                      color: kLightBlue.withOpacity(0.1),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: audiobook['thumbnail'] != null
+                                ? CachedNetworkImage(
+                                    imageUrl: audiobook['thumbnail'],
+                                    width: containerWidth * 1.2,
+                                    height: containerWidth * 1.2)
+                                : const SizedBox.shrink(),
+                          ),
+                          Flexible(
+                              child: Text(
+                            audiobook['title'] ?? '',
+                            style: GoogleFonts.jost(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: branaGrey,
+                            ),
+                          )),
+                          Flexible(
+                              child: Text(
+                            audiobook['Author'] ?? '',
+                            style: GoogleFonts.jost(
+                              fontSize: 14,
+                              color: branaWhite,
+                            ),
+                          )),
+                        ],
                       ),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(40),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: kLightBlue.withOpacity(0.1),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(40),
-                        ),
-                      ),
-                    ),
-                      SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: Container(
-                        color: kLightBlue.withOpacity(0.1),
-                        child: GridView.count(
-                          physics: const BouncingScrollPhysics(),
-                          crossAxisCount: 3,
-                          children: buildBooks()
-                              .map((book) => SizedBox(
-                                    child: book,
-                                  ))
-                              .toList(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ))
-        ]));
-  }
-
-  List<Widget> buildBooks() {
-    List<Widget> list = [];
-    for (var i = 0; i < books.length; i++) {
-      list.add(buildBook(books[i], i));
-    }
-    return list;
-  }
-
-  Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-          Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
-                      spreadRadius: 8,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                    child: Hero(
-                      tag: book.image,
-                      child: Image.asset(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width/5,
-                        book.image,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-              ),
-            
-            Text(
-              book.title,
-              style: GoogleFonts.jost(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white70),
-            ),
-            Text(
-              book.author.fullname,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-            ),
-        )
-        ],
-        ),
-      
-    );
+                    )));
+          },
+        ));
   }
 }

@@ -13,13 +13,12 @@ class LikedPage extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<LikedPage> {
-
   List<Book> books = getBookList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: branaDeepBlack,
+        backgroundColor: branaDeepBlack,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: branaDeepBlack,
@@ -28,7 +27,7 @@ class _MyWidgetState extends State<LikedPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.white,
+            color: branaWhite,
           ),
           flexibleSpace: Center(
               child: Column(
@@ -37,10 +36,10 @@ class _MyWidgetState extends State<LikedPage> {
               Text(
                 "Liked",
                 style: GoogleFonts.jost(
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w600,
                   fontSize: 25,
                   height: 1,
-                  color: Colors.white,
+                  color: branaWhite,
                 ),
               ),
             ],
@@ -52,8 +51,8 @@ class _MyWidgetState extends State<LikedPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  color:kLightBlue.withOpacity(0.1),
-                height:20,
+                  color: kLightBlue.withOpacity(0.1),
+                  height: 20,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -63,7 +62,7 @@ class _MyWidgetState extends State<LikedPage> {
                     ),
                   ),
                 ),
-                  SizedBox(
+                SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: Container(
                     color: kLightBlue.withOpacity(0.1),
@@ -93,18 +92,24 @@ class _MyWidgetState extends State<LikedPage> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
+    return 
+    GestureDetector(
       onTap: () {
+        var audiobook;
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+          MaterialPageRoute(builder: (context) => BookDetail(title: audiobook['title'] ?? '',
+                    author: audiobook['author'] ?? '',
+                    description: audiobook['description'] ?? '',
+                    thumbnail: audiobook['thumbnail'] ?? '',)),
         );
       },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+      child: 
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
           Expanded(
-              child: Container(
+            child: Container(
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -116,35 +121,33 @@ class _MyWidgetState extends State<LikedPage> {
                     ),
                   ],
                 ),
-                    child: Hero(
-                      tag: book.image,
-                      child: Image.asset(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width/5,
-                        book.image,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-              ),
-            
-            Text(
-              book.title,
-              style: GoogleFonts.jost(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white70),
-            ),
-            Text(
-              book.author.fullname,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white,
+                child: Hero(
+                  tag: book.image,
+                  child: Image.asset(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width / 5,
+                    book.image,
+                    fit: BoxFit.cover,
+                  ),
+                )),
+          ),
+          Text(
+            book.title,
+            style: GoogleFonts.jost(
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: Colors.white70),
+          ),
+          Text(
+            book.author.fullname,
+            style: GoogleFonts.jost(
+              fontSize: 14,
+              color: branaWhite,
+              fontWeight: FontWeight.bold,
             ),
-        )
+          )
         ],
-        ),
-      
+      ),
     );
   }
 }

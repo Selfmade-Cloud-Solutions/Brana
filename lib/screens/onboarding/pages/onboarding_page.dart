@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../constants.dart';
 import '../widgets/cards_stack.dart';
 
@@ -23,16 +22,18 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: <Widget>[
         CardsStack(
           pageNumber: number,
-          // lightCardChild: lightCardChild,
           darkCardChild: darkCardChild,
           lightCardOffsetAnimation: lightCardOffsetAnimation,
           darkCardOffsetAnimation: darkCardOffsetAnimation,
         ),
-        SizedBox(height: number % 2 == 1 ? 50.0 : 25.0),
+        SizedBox(
+        height: number % 2 == 1 ? screenHeight * 0.05 : screenHeight * 0.025  
+      ),
         AnimatedSwitcher(
           duration: branaCardAnimationDuration,
           child: textColumn,

@@ -61,9 +61,9 @@
 //                                                           _currentSong?.title ??
 //                                                               'Chapter 1',
 //                                                           style:
-//                                                               const TextStyle(
+//                                                               GoogleFonts.jost(
 //                                                             fontSize: 14.0,
-//                                                             color: Colors.white,
+//                                                             color: branaWhite,
 //                                                           ),
 //                                                         )),
 //                                                         Text(
@@ -71,16 +71,16 @@
 //                                                                   ?.artist ??
 //                                                               'Chapter 1',
 //                                                           style:
-//                                                               const TextStyle(
+//                                                               GoogleFonts.jost(
 //                                                             fontSize: 14.0,
-//                                                             color: Colors.white,
+//                                                             color: branaWhite,
 //                                                           ),
 //                                                         ),
 //                                                       ],
 //                                                     ),
 //                                                     IconButton(
 //                                                         onPressed: () {},
-//                                                         color: Colors.white,
+//                                                         color: branaWhite,
 //                                                         icon: const Icon(Icons
 //                                                             .favorite_border))
 //                                                   ],
@@ -91,7 +91,7 @@
 //                                         ],
 //                                       ),
 //                                     Slider(
-//                                       thumbColor: Colors.white,
+//                                       thumbColor: branaWhite,
 //                                       activeColor: Colors.amber,
 //                                       inactiveColor: const Color.fromARGB(
 //                                           31, 206, 198, 198),
@@ -121,15 +121,15 @@
 //                                         children: [
 //                                           Text(
 //                                             formatDuration(position),
-//                                             style: const TextStyle(
+//                                             style: GoogleFonts.jost(
 //                                                 fontSize: 13,
-//                                                 color: Colors.white),
+//                                                 color: branaWhite),
 //                                           ),
 //                                           Text(
 //                                             formatDuration(duration - position),
-//                                             style: const TextStyle(
+//                                             style: GoogleFonts.jost(
 //                                                 fontSize: 13,
-//                                                 color: Colors.white),
+//                                                 color: branaWhite),
 //                                           ),
 //                                         ],
 //                                       ),

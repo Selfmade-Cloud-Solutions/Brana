@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-
+import 'package:brana_mobile/constants.dart';
 
 class Controls extends StatelessWidget {
   const Controls({super.key, required this.audioPlayer});
@@ -15,7 +15,7 @@ class Controls extends StatelessWidget {
               audioPlayer.seekToPrevious();
             },
             iconSize: 60,
-            color: Colors.white,
+            color: branaWhite,
             icon: const Icon(Icons.skip_previous_rounded)),
         StreamBuilder<PlayerState>(
           stream: audioPlayer.playerStateStream,
@@ -40,7 +40,7 @@ class Controls extends StatelessWidget {
             }
             return const Icon(
               Icons.play_arrow_rounded,
-              color: Colors.white,
+              color: branaWhite,
               size: 80,
             );
           },
@@ -50,7 +50,7 @@ class Controls extends StatelessWidget {
               audioPlayer.seekToNext();
             },
             iconSize: 60,
-            color: Colors.white,
+            color: branaWhite,
             icon: const Icon(Icons.skip_next_rounded))
       ],
     );

@@ -20,7 +20,7 @@ class Header extends StatelessWidget {
           child: Text(
             'Skip',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: branaDark,
+                  color: branaWhite,
                 ),
           ),
         ),
