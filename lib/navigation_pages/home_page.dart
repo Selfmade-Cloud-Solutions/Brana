@@ -30,37 +30,6 @@ class _MyWidgetState extends State<HomePage> {
       });
     });
   }
-  // Function to check internet connection
-  Future<void> checkInternetConnection() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      setState(() {
-        hasInternet = false;
-        isLoading = false;
-      });
-    }
-  }
-
-  Widget buildNoInternetWidget() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error,
-            size: 40,
-            color: Colors.red,
-          ),
-          SizedBox(height: 10),
-          Text(
-            'No Internet Connection',
-            style: TextStyle(color: Colors.red, fontSize: 18),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
