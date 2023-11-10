@@ -6,7 +6,8 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:path/path.dart';
 import 'screens/onboarding/onboarding.dart';
 import 'package:flutter/services.dart';
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({Key? key}) : super(key: key);
@@ -32,8 +33,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
+      // locale: DevicePreview.locale(context),
+      // builder: DevicePreview.appBuilder,
       title: 'Brana Audiobook',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -49,8 +50,9 @@ class App extends StatelessWidget {
 
 Future<void> main() async {
   // Lock the app in portrait orientation
-
-  runApp(DevicePreview(enabled: !kReleaseMode, builder: (context) => App()));
+  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+  // runApp(DevicePreview(enabled: !kReleaseMode, builder: (context) => App()));
+  runApp(Builder(builder: (context) => App()));
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
