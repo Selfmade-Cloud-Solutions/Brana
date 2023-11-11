@@ -4,7 +4,6 @@ import 'package:brana_mobile/login_page.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginSignupOption extends StatefulWidget {
   const LoginSignupOption({super.key, required double screenHeight});
@@ -174,17 +173,18 @@ class _MyWidgetState extends State<LoginSignupOption> {
                     final GoogleSignInAccount? googleUser =
                         await googleSignIn.signIn();
 
-                    if (googleUser != null) {
-                      // Perform authentication with googleUser.id and googleUser.displayName
-                      // Navigate to the next page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Navigation()),
-                      );
-                    } else {
-                      // User canceled
-                    }
+                    // if (googleUser != null) {
+                    //   // Perform authentication with googleUser.id and googleUser.displayName
+                    //   // Navigate to the next page
+                    //   // ignore: use_build_context_synchronously
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => ),
+                    //   );
+                    // } else {
+                    //   // User canceled
+                    // }
                   } catch (error) {
                     // Handle errors
                     print('Google Sign-In failed: $error');

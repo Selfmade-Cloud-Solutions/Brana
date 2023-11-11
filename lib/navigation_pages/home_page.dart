@@ -49,7 +49,10 @@ class _MyWidgetState extends State<HomePage> {
                   height: 1,
                   color: branaWhite,
                 ),
+              ),]
+              )
               ),
+        ),
         body:  isLoading
           ? const Center(
               // Display a circular preloader if isLoading is true
@@ -125,12 +128,12 @@ class _MyWidgetState extends State<HomePage> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 2.0),
-                                    child: const SizedBox(
+                                  const Padding(
+                                    padding:  EdgeInsets.only(top: 2.0),
+                                    child:  SizedBox(
                                         height: 100, child: AuthorList()),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 30,
                                   ),
                                 ],

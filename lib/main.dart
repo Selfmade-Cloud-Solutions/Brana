@@ -5,11 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/services.dart';
-<<<<<<< HEAD
-=======
-// import 'package:device_preview/device_preview.dart';
-import 'package:google_sign_in/google_sign_in.dart';
->>>>>>> 148a126d55bd46ac8c5a805868cb13d5ef8523fd
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,46 +63,4 @@ class SecondPage extends StatelessWidget {
       ),
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
-
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      useInheritedMediaQuery: true,
-      // locale: DevicePreview.locale(context),
-      // builder: DevicePreview.appBuilder,
-      title: 'Brana Audiobook',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home: const Splashscreen(),
-      // home: AuthorsSoloPage(),
-
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-Future<void> main() async {
-  // Lock the app in portrait orientation
-  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
-  // runApp(DevicePreview(enabled: !kReleaseMode, builder: (context) => App()));
-  runApp(Builder(builder: (context) => App()));
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-  );
-}
->>>>>>> 148a126d55bd46ac8c5a805868cb13d5ef8523fd
