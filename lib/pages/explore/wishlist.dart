@@ -70,7 +70,7 @@ class _MyWidgetState extends State<WishlistPage> {
                     color: kLightBlue.withOpacity(0.1),
                     child: GridView.count(
                       physics: const BouncingScrollPhysics(),
-                      crossAxisCount: 3,
+                      crossAxisCount: 2,
                       children: buildBooks()
                           .map((book) => SizedBox(
                                 child: book,
@@ -94,14 +94,16 @@ class _MyWidgetState extends State<WishlistPage> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
-        );
-      },
-      child: Column(
+    return 
+    // GestureDetector(
+    //   onTap: () {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+    //     );
+    //   },
+    //   child: 
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
@@ -143,7 +145,7 @@ class _MyWidgetState extends State<WishlistPage> {
             ),
           )
         ],
-      ),
+      // ),
     );
   }
 }

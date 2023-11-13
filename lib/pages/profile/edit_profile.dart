@@ -48,118 +48,126 @@ void dispose() {
   // super.dispose();
 }
 
-void updateUserValue(String name) {
-  user.name = name;
+void updateUserValue(String fname) {
+  user.firstName = fname;
 }
 
 @override
 Widget build(BuildContext context) {
   return Scaffold(
       appBar: buildAppBar(context),
-      body: Form(
-          key: _formKey,
-          child: Theme(
-              data: Theme.of(context).copyWith(
-                inputDecorationTheme: const InputDecorationTheme(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: branaWhite),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Form(
+              key: _formKey,
+              child: Theme(
+                  data: Theme.of(context).copyWith(
+                    inputDecorationTheme: const InputDecorationTheme(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: branaWhite),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              child: Container(
-                color: branaDeepBlack,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                        width: 330,
-                        child: Text(
-                          "What's Your Name?",
-                          style: GoogleFonts.jost(
-                            fontSize: 25,
-                            color: branaWhite,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  child: Container(
+                    color: branaDeepBlack,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                            width: 330,
+                            child: Text(
+                              "What's Your Name?",
+                              style: GoogleFonts.jost(
+                                fontSize: 25,
+                                color: branaWhite,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 40, 16, 0),
+                                child: SizedBox(
+                                    height: 100,
+                                    width: 150,
+                                    child: TextFormField(
+                                      // Handles Form Validation for First Name
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your first name';
+                                        } else if (!isAlpha(value)) {
+                                          return 'Only Letters Please';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        labelText: 'First Name',
+                                        labelStyle: GoogleFonts.jost(
+                                          color: branaWhite,
+                                        ),
+                                      ),
+                                      controller: firstNameController,
+                                    ))),
+                            Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 40, 16, 0),
+                                child: SizedBox(
+                                    height: 100,
+                                    width: 150,
+                                    child: TextFormField(
+                                      // Handles Form Validation for Last Name
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your last name';
+                                        } else if (!isAlpha(value)) {
+                                          return 'Only Letters Please';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        labelText: 'Last Name',
+                                        labelStyle: GoogleFonts.jost(
+                                          color: branaWhite,
+                                        ),
+                                      ),
+                                      controller: secondNameController,
+                                    )))
+                          ],
+                        ),
                         Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 40, 16, 0),
-                            child: SizedBox(
-                                height: 100,
-                                width: 150,
-                                child: TextFormField(
-                                  // Handles Form Validation for First Name
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your first name';
-                                    } else if (!isAlpha(value)) {
-                                      return 'Only Letters Please';
-                                    }
-                                    return null;
-                                  },
-                                  decoration:  InputDecoration(
-                                    labelText: 'First Name',
-                                    labelStyle: GoogleFonts.jost(
-                                      color: branaWhite,
+                            padding: const EdgeInsets.only(top: 150),
+                            child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: SizedBox(
+                                  width: 330,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Validate returns true if the form is valid, or false otherwise.
+                                      if (_formKey.currentState!.validate() &&
+                                          isAlpha(firstNameController.text +
+                                              secondNameController.text)) {
+                                        updateUserValue(
+                                            "${firstNameController.text} ${secondNameController.text}");
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    child: Text(
+                                      'Update',
+                                      style: GoogleFonts.jost(fontSize: 15),
                                     ),
                                   ),
-                                  controller: firstNameController,
-                                ))),
-                        Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 40, 16, 0),
-                            child: SizedBox(
-                                height: 100,
-                                width: 150,
-                                child: TextFormField(
-                                  // Handles Form Validation for Last Name
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your last name';
-                                    } else if (!isAlpha(value)) {
-                                      return 'Only Letters Please';
-                                    }
-                                    return null;
-                                  },
-                                  decoration:  InputDecoration(
-                                    labelText: 'Last Name',
-                                    labelStyle: GoogleFonts.jost(
-                                      color: branaWhite,
-                                    ),
-                                  ),
-                                  controller: secondNameController,
                                 )))
                       ],
                     ),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 150),
-                        child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SizedBox(
-                              width: 330,
-                              height: 50,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // Validate returns true if the form is valid, or false otherwise.
-                                  if (_formKey.currentState!.validate() &&
-                                      isAlpha(firstNameController.text +
-                                          secondNameController.text)) {
-                                    updateUserValue(
-                                        "${firstNameController.text} ${secondNameController.text}");
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                child:  Text(
-                                  'Update',
-                                  style: GoogleFonts.jost(fontSize: 15),
-                                ),
-                              ),
-                            )))
-                  ],
-                ),
-              ))));
+                  ))),
+        ),
+      ));
 }
 // }

@@ -92,14 +92,22 @@ class _MyWidgetState extends State<LikedPage> {
   }
 
   Widget buildBook(Book book, int index) {
-    return GestureDetector(
+    return 
+    GestureDetector(
       onTap: () {
+        var audiobook;
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => BookDetail(book: book)),
+          MaterialPageRoute(builder: (context) => BookDetail(title: audiobook['title'] ?? '',
+                    author: audiobook['author'] ?? '',
+                    description: audiobook['description'] ?? '',
+                    thumbnail: audiobook['thumbnail'] ?? '',
+                    narrator:audiobook['narrator']
+                    )),
         );
       },
-      child: Column(
+      child: 
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(

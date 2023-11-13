@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:brana_mobile/login_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../../login_signup_option.dart';
 import 'pages/walk1/index.dart';
 import 'pages/walk2/index.dart';
 import 'pages/walk3/index.dart';
@@ -202,9 +202,10 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
   Future<void> _goToLogin() async {
     await _rippleAnimationController.forward();
+    // ignore: use_build_context_synchronously
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => LoginSignupOption(screenHeight: widget.screenHeight),
+        builder: (_) => const LoginPage(),
       ),
     );
   }
@@ -217,7 +218,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
         children: <Widget>[
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(kPaddingL),
+              padding: const EdgeInsets.all(kPaddingL/2),
               child: Column(
                 children: <Widget>[
                   Header(onSkip: _goToLogin),

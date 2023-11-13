@@ -11,49 +11,116 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  late Size mediaSize;
   @override
   Widget build(BuildContext context) {
+    mediaSize = MediaQuery.of(context).size;
+
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: branaDeepBlack,
+        // appBar: AppBar(
+        //   backgroundColor: const Color.fromARGB(255, 2, 16, 27),
+        //   elevation: 1,
+        //   leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //     icon: const Icon(
+        //       Icons.arrow_back,
+        //       color: branaWhite,
+        //     ),
+        //   ),
+        // ),
+
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          elevation: 1,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: branaWhite,
-            ),
-          ),
+          automaticallyImplyLeading: false,
+          backgroundColor: Color.fromARGB(255, 2, 16, 27),
+
+          flexibleSpace: Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: branaWhite,
+                ),
+              ),
+              SizedBox(
+                width: mediaSize.width / 2 - 80,
+              ),
+              Text(
+                "Setting",
+                style: GoogleFonts.jost(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25,
+                  height: 1,
+                  color: branaWhite,
+                ),
+              ),
+              SizedBox(
+                height: mediaSize.height / 4,
+              )
+            ],
+          )),
+          // actions: [
+          //   InkWell(
+          //     onTap: () {},
+          //   ),
+          // ],
         ),
         body: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: ListView(
             children: [
-              Text(
-                "Settings",
-                style: GoogleFonts.jost(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w500,
-                  color: branaWhite,
-                ),
+              SizedBox(
+                height: mediaSize.height / 500,
               ),
-              const Divider(
-                height: 15,
-                thickness: 2,
-              ),
+              // Text(
+              //   "Settings",
+              //   style: GoogleFonts.jost(
+              //     fontSize: 25,
+              //     fontWeight: FontWeight.w500,
+              //     color: branaWhite,
+              //   ),
+              // ),
+              // const Divider(
+              //   height: 15,
+              //   thickness: 2,
+              // ),
               const SizedBox(
                 height: 10,
               ),
               Container(
-                  padding: const EdgeInsets.only(left: 70, top: 20, right: 70),
+                  width: mediaSize.width,
+                  height: mediaSize.height,
+                  color: branaDeepBlack,
+                  // padding: const EdgeInsets.only(left: 70, top: 20, right: 70),
                   child: Column(children: [
+                    SizedBox(
+                      height: mediaSize.height / 20,
+                    ),
+                    label("General Setting"),
                     buildChangePassword(context, "Change password"),
+                    SizedBox(
+                      height: mediaSize.height / 100,
+                    ),
                     buildContentSettings(context, "Content settings"),
+                    SizedBox(
+                      height: mediaSize.height / 100,
+                    ),
                     buildPreferences(context, "Preferences"),
+                    SizedBox(
+                      height: mediaSize.height / 40,
+                    ),
+                    label("Privacy Setting"),
                     buildAccountOptionRow(context, "Privacy and security"),
+                    SizedBox(
+                      height: mediaSize.height / 100,
+                    ),
                     buildTermsAndConditions(context, "Terms and conditions"),
                     buildLogoutButton(context),
                   ]))
@@ -83,23 +150,32 @@ GestureDetector buildAccountOptionRow(BuildContext context, String title) {
           });
     },
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.jost(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: branaWhite,
-            ),
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
           ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            color: branaWhite,
-          ),
-        ],
+        ),
       ),
     ),
   );
@@ -148,14 +224,18 @@ GestureDetector buildChangePassword(BuildContext context, String title) {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: SizedBox(
-                        width: 220,
-                        height: 28,
+                        width: MediaQuery.of(context).size.width / 3,
+                        height: MediaQuery.of(context).size.height / 20,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6))),
                           onPressed: () => Navigator.pop(context),
-                          child: Text(
-                            'Update',
-                            style: GoogleFonts.jost(fontSize: 15),
-                          ),
+                          child: Text('Update',
+                              style: GoogleFonts.jost(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18)),
                         ),
                       ),
                     ),
@@ -164,23 +244,32 @@ GestureDetector buildChangePassword(BuildContext context, String title) {
           });
     },
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.jost(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: branaWhite,
-            ),
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
           ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            color: branaWhite,
-          ),
-        ],
+        ),
       ),
     ),
   );
@@ -209,23 +298,32 @@ GestureDetector buildContentSettings(BuildContext context, String title) {
           });
     },
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.jost(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: branaWhite,
-            ),
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
           ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            color: branaWhite,
-          ),
-        ],
+        ),
       ),
     ),
   );
@@ -315,22 +413,31 @@ GestureDetector buildTermsAndConditions(BuildContext context, String title) {
     child: SingleChildScrollView(
         child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.jost(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: branaWhite,
-            ),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
           ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            color: branaWhite,
-          ),
-        ],
+        ),
       ),
     )),
   );
@@ -352,23 +459,32 @@ GestureDetector buildPreferences(BuildContext context, String title) {
           });
     },
     child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.jost(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: branaWhite,
-            ),
+      padding: const EdgeInsets.only(left: 0, top: 5),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 + 150,
+        height: MediaQuery.of(context).size.height / 10,
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: branaDark,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.jost(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: branaWhite,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: branaWhite,
+              ),
+            ],
           ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            color: branaWhite,
-          ),
-        ],
+        ),
       ),
     ),
   );
@@ -376,13 +492,16 @@ GestureDetector buildPreferences(BuildContext context, String title) {
 
 Widget buildLogoutButton(BuildContext context) {
   return Padding(
-      padding: const EdgeInsets.only(top: 150),
+      padding: const EdgeInsets.only(top: 30),
       child: Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(
-              width: 250,
-              height: 28,
+              width: MediaQuery.of(context).size.width / 3,
+              height: MediaQuery.of(context).size.height / 20,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6))),
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -391,7 +510,9 @@ Widget buildLogoutButton(BuildContext context) {
                 },
                 child: Text('Logout',
                     style: GoogleFonts.jost(
-                        color: Colors.black, fontWeight: FontWeight.bold)),
+                        color: branaDarkBlue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
               ))));
 }
 
@@ -422,5 +543,22 @@ Widget _logoutDialog(BuildContext context) {
       TextButton(
           onPressed: () => Navigator.pop(context), child: const Text('No'))
     ],
+  );
+}
+
+Widget label(String label) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 30.0),
+    child: Container(
+      alignment: Alignment.topLeft,
+      child: Text(
+        label,
+        style: GoogleFonts.jost(
+            color: const Color.fromARGB(255, 190, 188, 188),
+            fontWeight: FontWeight.w300,
+            letterSpacing: 0.2,
+            fontSize: 16.5),
+      ),
+    ),
   );
 }

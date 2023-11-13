@@ -1,4 +1,5 @@
 import 'package:brana_mobile/forgot_password.dart';
+import 'package:brana_mobile/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
@@ -21,18 +22,53 @@ class _MyWidgetState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    myColor = Theme.of(context).primaryColorLight;
+    double toppadding;
+    double leftRightPadding;
+
     mediaSize = MediaQuery.of(context).size;
-    return Container(
-      decoration: BoxDecoration(
-        color: branaPrimaryColor,
-      ),
-      child: Scaffold(
-        backgroundColor: branaDeepBlack,
-        body: Stack(children: [
-          Positioned(bottom: 50, left: 10, right: 10, child: _buildBottom()),
-        ]),
-      ),
+    toppadding = mediaSize.height;
+    leftRightPadding = mediaSize.width * 0.05;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: branaDeepBlack,
+      body: Stack(children: [
+        Padding(
+          padding: EdgeInsets.only(
+              left: leftRightPadding,
+              top: toppadding / 9,
+              right: leftRightPadding,
+              bottom: toppadding / 25),
+          child: Container(
+            color: branaDarkBlue,
+            width: mediaSize.width - 50,
+            height: mediaSize.height / 1.2,
+            child: Column(
+              children: [
+                Container(
+                  child: _buildTop(),
+                ),
+                Container(
+                  child: _buildForm(),
+                ),
+                // Container(
+                //   child: _buildBottom(),
+                // )
+              ],
+            ),
+          ),
+        ),
+      ]),
+      // body: SafeArea(
+      //   child: Stack(alignment: Alignment.topCenter, children: [
+      //     Positioned(
+      //         // top: toppadding,
+      //         // bottom: bottomPadding,
+      //         left: leftRightPadding,
+      //         right: leftRightPadding,
+      //         child: _buildBottom())
+      //   ]),
+      // )
     );
   }
 
@@ -51,30 +87,20 @@ class _MyWidgetState extends State<LoginPage> {
     );
   }
 
-  Widget _buildBottom() {
-    return SizedBox(
-      width: mediaSize.width,
-      child: Card(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        color: kLightBlue.withOpacity(0.1),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: _buildForm(),
-        ),
-      ),
-    );
-  }
 
   Widget _buildForm() {
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double leftpadding = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double fontSize = screenWidth;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60),
-            child: _buildTop(),
+            padding: EdgeInsets.symmetric(horizontal: leftpadding),
+            // child: _buildTop(),
           ),
         ),
         Center(
@@ -82,37 +108,43 @@ class _MyWidgetState extends State<LoginPage> {
             "Welcome Back",
             style: GoogleFonts.jost(
               color: branaWhite,
-              fontSize: 32,
+              fontSize: fontSize / 15,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(
+          height: screenHeight / 20,
+        ),
         Center(
           child: _buildPrimaryText("Please Login"),
         ),
-        const SizedBox(height: 15),
+        SizedBox(height: screenHeight / 30),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
           child: _buildInputFieldEmail(emailController),
         ),
-        const SizedBox(height: 30),
+        SizedBox(
+          height: screenHeight / 20,
+        ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
           child:
               _buildInputFieldPassword(passwordController, isPassword: false),
         ),
-        const SizedBox(height: 5),
+        SizedBox(height: screenHeight / 30),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _buildRememberForgot(),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
+          child: _buildSignup(),
         ),
-        const SizedBox(height: 15),
+        SizedBox(height: screenHeight / 30),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80),
+          padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
           child: _buildLoginButton(),
         ),
-        const SizedBox(height: 35),
+        SizedBox(
+          height: screenHeight / 20,
+        ),
       ],
     );
   }
@@ -129,6 +161,7 @@ class _MyWidgetState extends State<LoginPage> {
   Widget _buildInputFieldEmail(TextEditingController controller) {
     return TextField(
       controller: controller,
+      style: const TextStyle(color: branaWhite),
       decoration: InputDecoration(
         labelText: 'Email',
         labelStyle: GoogleFonts.jost(color: branaWhite),
@@ -146,6 +179,7 @@ class _MyWidgetState extends State<LoginPage> {
       {isPassword = false}) {
     return TextField(
       controller: controller,
+      style: const TextStyle(color: branaWhite),
       decoration: InputDecoration(
         labelText: 'Password',
         labelStyle: GoogleFonts.jost(color: branaWhite),
@@ -170,22 +204,18 @@ class _MyWidgetState extends State<LoginPage> {
     );
   }
 
-  Widget _buildRememberForgot() {
+  Widget _buildSignup() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            Checkbox(
-              value: rememberUser,
-              onChanged: (value) {
-                setState(() {
-                  rememberUser = value!;
-                });
-              },
-            ),
-            _buildPrimaryText("Remember me"),
-          ],
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SignupPage()),
+            );
+          },
+          child: _buildPrimaryText("Not Registered ?"),
         ),
         TextButton(
           onPressed: () {
@@ -201,26 +231,36 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Widget _buildLoginButton() {
-    return ElevatedButton(
-      onPressed: () {
-        // debugPrint("Email : ${emailController.text}");
-        // debugPrint("Password : ${passwordController.text}");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Navigation()),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
-        elevation: 20,
-        shadowColor: branaPrimaryColor,
-        backgroundColor: branaPrimaryColor,
-        minimumSize: const Size.fromHeight(50),
-      ),
-      child: Text(
-        "LOGIN",
-        style: GoogleFonts.jost(
-          color: branaWhite,
+    mediaSize = MediaQuery.of(context).size;
+    double screenWidth = mediaSize.width;
+    double screenHeight = mediaSize.height;
+    double toppadding = mediaSize.height;
+    double leftpadding = mediaSize.width;
+    return Padding(
+      padding: EdgeInsets.fromLTRB(leftpadding / 4.5, toppadding / 150,
+          leftpadding / 4, toppadding / 200),
+      child: SizedBox(
+        width: screenWidth / 3,
+        height: screenHeight / 20,
+        child: ElevatedButton(
+          onPressed: () {
+            // debugPrint("Email : ${emailController.text}");
+            // debugPrint("Password : ${passwordController.text}");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Navigation()),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
+              backgroundColor: branaPrimaryColor),
+          child: Text(
+            "LOGIN",
+            style: GoogleFonts.jost(
+              color: branaWhite,
+            ),
+          ),
         ),
       ),
     );
