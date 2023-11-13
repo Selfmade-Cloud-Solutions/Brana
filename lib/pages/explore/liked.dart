@@ -103,7 +103,8 @@ class _MyWidgetState extends State<LikedPage> {
                     description: audiobook['description'] ?? '',
                     thumbnail: audiobook['thumbnail'] ?? '',
                     narrator:audiobook['narrator'],
-                      chapters: audiobook['chapters'],
+                      is_favorite:audiobook['is_favorite'] ?? '',
+                      // chapters: audiobook['chapters'],
                     )),
         );
       },

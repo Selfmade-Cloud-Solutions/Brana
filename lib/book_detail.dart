@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,8 @@ class BookDetail extends StatefulWidget {
     required this.description,
     required this.thumbnail,
     required this.narrator,
-    required this.chapters,
+    required this.is_favorite,
+    // required this.chapters,
   }) : super(key: key);
 
   final String title;
@@ -22,7 +25,8 @@ class BookDetail extends StatefulWidget {
   final String description;
   final String thumbnail;
   final String narrator;
-  final String chapters;
+  final dynamic is_favorite;
+  // final String chapters;
 
   @override
   _BookDetailState createState() => _BookDetailState();
@@ -35,7 +39,7 @@ class _BookDetailState extends State<BookDetail> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+  fetchData();
   }
 
   Future<void> fetchData() async {
@@ -52,6 +56,7 @@ class _BookDetailState extends State<BookDetail> {
       throw Exception('Failed to fetch data');
     }
   }
+  
 
   String truncateDescription(String description) {
     int numChars = 120; // 4 lines * 40 characters per line
@@ -66,7 +71,13 @@ class _BookDetailState extends State<BookDetail> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    int? favorite;
+  
+  if (widget.is_favorite is int) {
+    favorite = widget.is_favorite as int;
+  } else {
+    favorite = int.tryParse(widget.is_favorite) ?? 0;
+  }
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -142,13 +153,21 @@ class _BookDetailState extends State<BookDetail> {
                                   ),
                                 ],
                               ),
-                              IconButton(
-                                color: branaWhite, // Use branaWhite
-                                icon: const Icon(Icons.bookmark_add, size: 30),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
+                              // Parsing to integer
+
+// Check the parsed integer value against 1
+(favorite == 1)
+  ? IconButton(
+      color: branaWhite,
+      icon: const Icon(Icons.favorite, size: 30),
+      onPressed: () {},
+    )
+  : IconButton(
+      color: branaWhite,
+      icon: const Icon(Icons.favorite_border, size: 30),
+      onPressed: () {},
+                            )
+                        ]),
                           const SizedBox(height: 5),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
