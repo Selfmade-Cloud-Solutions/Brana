@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/constants.dart';
+import 'package:http/http.dart' as http;
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -500,6 +501,7 @@ Widget buildLogoutButton(BuildContext context) {
               height: MediaQuery.of(context).size.height / 20,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF041E42),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6))),
                 onPressed: () {
@@ -509,10 +511,7 @@ Widget buildLogoutButton(BuildContext context) {
                   );
                 },
                 child: Text('Logout',
-                    style: GoogleFonts.jost(
-                        color: branaDarkBlue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
+                    style: GoogleFonts.jost(color: Colors.white, fontSize: 18)),
               ))));
 }
 
@@ -530,6 +529,7 @@ Widget _logoutDialog(BuildContext context) {
         onPressed: () async {
           // Log out user
           // await AuthService().signOut();
+          await _logout();
 
           // Navigate to login page
           Navigator.pushReplacement(context,
@@ -544,6 +544,21 @@ Widget _logoutDialog(BuildContext context) {
           onPressed: () => Navigator.pop(context), child: const Text('No'))
     ],
   );
+}
+
+Future<void> _logout() async {
+  final apiUrl =
+      'https://app.berana.app/api/method/brana_audiobook.api.auth_api.logout';
+
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    headers: {'Content-Type': 'application/json'},
+  );
+  if (response.statusCode == 200) {
+    print("logged out suu");
+  } else {
+    print("logged out failed");
+  }
 }
 
 Widget label(String label) {
