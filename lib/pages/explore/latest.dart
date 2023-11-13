@@ -88,6 +88,7 @@ class _AudiobookListState extends State<LatestPage> {
                               author: audiobook['author'] ?? '',
                               description: audiobook['description'] ?? '',
                               thumbnail: audiobook['thumbnail'] ?? '',
+                              narrator:audiobook['narrator']
                             ),
                           ),
                         );

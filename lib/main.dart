@@ -1,15 +1,14 @@
-import 'package:brana_mobile/pages/authors/authors_solo_page.dart';
 import 'package:brana_mobile/screens/onboarding/onboarding.dart';
 import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+  // GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
   
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

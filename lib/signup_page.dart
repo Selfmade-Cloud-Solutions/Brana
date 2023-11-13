@@ -12,32 +12,28 @@ class SignupPage extends StatefulWidget {
 
 class _MyWidgetState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
-  late Color myColor;
   late Size mediaSize;
   TextEditingController firstnameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   TextEditingController phonenumberController = TextEditingController();
-  TextEditingController dateofbirthController = TextEditingController();
-  bool isPasswordVisible = false;
   bool rememberUser = false;
 
   @override
   Widget build(BuildContext context) {
-    double bottomPadding;
+    double topPadding;
     double leftRightPadding;
 
     mediaSize = MediaQuery.of(context).size;
 
-    bottomPadding = mediaSize.height * 0.01;
+    topPadding = mediaSize.height * 0.03;
     leftRightPadding = mediaSize.width * 0.05;
 
     return Scaffold(
         backgroundColor: branaDeepBlack,
         body: Stack(children: [
           Positioned(
-              bottom: bottomPadding,
+              top: topPadding,
               left: leftRightPadding,
               right: leftRightPadding,
               child: _buildBottom())
@@ -122,17 +118,8 @@ class _MyWidgetState extends State<SignupPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: _buildInputFieldEmail(emailController),
           ),
-          const SizedBox(height: 5),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: _buildInputFieldDateOfBirth(dateofbirthController),
-          ),
-          const SizedBox(height: 5),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child:
-                _buildInputFieldPassword(passwordController, isPassword: true),
-          ),
+          
+        
           const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 80),
@@ -219,50 +206,10 @@ class _MyWidgetState extends State<SignupPage> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'please enter your first name';
+          return 'please enter your email address';
         } else if (!RegExp(r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
             .hasMatch(value)) {
           return 'Please enter a valid email address';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _buildInputFieldPassword(TextEditingController controller,
-      {isPassword = false}) {
-    return TextFormField(
-      controller: controller,
-      style: const TextStyle(color: branaWhite),
-      decoration: InputDecoration(
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              isPasswordVisible = !isPasswordVisible;
-            });
-          },
-          icon: isPasswordVisible
-              ? const Icon(Icons.visibility)
-              : const Icon(Icons.visibility_off),
-        ),
-        labelText: 'Password',
-        labelStyle: GoogleFonts.jost(color: branaWhite),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: branaWhite),
-            borderRadius: BorderRadius.circular(8)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: branaWhite),
-            borderRadius: BorderRadius.circular(8)),
-      ),
-      obscureText: !isPasswordVisible,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'please enter your password';
-        } else if (value.length < 8) {
-          return 'Password must be at least 8 characters';
-        } else if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$')
-            .hasMatch(value)) {
-          return 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character';
         }
         return null;
       },
@@ -295,29 +242,7 @@ class _MyWidgetState extends State<SignupPage> {
     );
   }
 
-  Widget _buildInputFieldDateOfBirth(TextEditingController controller) {
-    return TextFormField(
-      controller: controller,
-      style: const TextStyle(color: branaWhite),
-      decoration: InputDecoration(
-        suffixIcon: const Icon(Icons.done),
-        labelText: 'Date of Birth',
-        labelStyle: GoogleFonts.jost(color: branaWhite),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: branaWhite),
-            borderRadius: BorderRadius.circular(8)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: branaWhite),
-            borderRadius: BorderRadius.circular(8)),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'please enter your birthdate';
-        }
-        return null;
-      },
-    );
-  }
+  
 
   Widget _buildSignupButton() {
     return ElevatedButton(
@@ -326,9 +251,7 @@ class _MyWidgetState extends State<SignupPage> {
           debugPrint("FirstName : ${firstnameController.text}");
           debugPrint("LastName : ${lastnameController.text}");
           debugPrint("Email : ${emailController.text}");
-          debugPrint("Password : ${passwordController.text}");
           debugPrint("Phone Number : ${phonenumberController.text}");
-          debugPrint("Date of Birth : ${dateofbirthController.text}");
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const Navigation()),

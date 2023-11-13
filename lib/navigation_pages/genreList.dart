@@ -143,6 +143,7 @@ class _GenreListPageState extends State<GenreListPage> {
                         author: books[index].author,
                         description: books[index].description,
                         thumbnail: books[index].thumbnail,
+                        narrator:books[index].narrator,
                       ),
                     ),
                   );
@@ -212,40 +213,14 @@ class _GenreListPageState extends State<GenreListPage> {
                                 height: screenHeight / 250,
                               ),
                               Container(
-                                height: screenHeight / 15,
-                                padding: EdgeInsets.only(
-                                    left: leftpadding / 90,
-                                    right: leftpadding / 90,
-                                    top: toppadding / 80),
-                                child: LayoutBuilder(
-                                  builder: (context, constraints) {
-                                    final maxLines =
-                                        constraints.maxHeight ~/ 12;
-
-                                    return SingleChildScrollView(
-                                      controller: ScrollController(),
-                                      child: Text(
-                                        books[index].description,
-                                        maxLines: maxLines > 3 ? 3 : maxLines,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.jost(
-                                            fontSize: fontSize / 30,
-                                            height: 1,
-                                            color: branaWhite,
-                                            fontWeight: FontWeight.w100),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Container(
                                   padding: EdgeInsets.only(
                                     left: leftpadding / 80,
                                     right: leftpadding / 80,
                                     top: toppadding / 100,
                                   ),
-                                  child: Row(
+                                  child: Column(
                                     mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Column(
                                         children: [
@@ -268,21 +243,6 @@ class _GenreListPageState extends State<GenreListPage> {
                                           ),
                                         ],
                                       ),
-                                      Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: leftpadding / 30,
-                                              vertical: toppadding / 40),
-                                          child: SizedBox(
-                                            width: screenWidth * 0.01,
-                                            height: screenHeight / 40,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: branaWhite,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                          )),
                                       Column(
                                         children: [
                                           Text(

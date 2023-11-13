@@ -1,3 +1,4 @@
+import 'package:brana_mobile/Api/home/podcast_api.dart';
 import 'package:brana_mobile/Api/home/recommended_api.dart';
 import 'package:brana_mobile/Api/home/editorspick_api.dart';
 import 'package:brana_mobile/Api/home/children_api.dart';
@@ -265,7 +266,7 @@ class _MyWidgetState extends State<HomePage> {
                         const SizedBox(
                           height: 5,
                         ),
-                        const SizedBox(height: 200, child: ChildrenList()),
+                        const SizedBox(height: 200, child: PodcastList()),
 
                         const SizedBox(height: 5),
                         Container(

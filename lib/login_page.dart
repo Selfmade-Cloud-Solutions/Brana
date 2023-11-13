@@ -1,4 +1,5 @@
 import 'package:brana_mobile/forgot_password.dart';
+import 'package:brana_mobile/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
@@ -21,13 +22,11 @@ class _MyWidgetState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    double bottomPadding;
     double toppadding;
     double leftRightPadding;
 
     mediaSize = MediaQuery.of(context).size;
     toppadding = mediaSize.height;
-    bottomPadding = mediaSize.height / 5;
     leftRightPadding = mediaSize.width * 0.05;
 
     return Scaffold(
@@ -88,30 +87,10 @@ class _MyWidgetState extends State<LoginPage> {
     );
   }
 
-  Widget _buildBottom() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0.0),
-      child: SizedBox(
-        // width: mediaSize.width,
-        // height: mediaSize.height - 350,
-        child: Card(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          color: kLightBlue.withOpacity(0.1),
-          child: Padding(
-            padding: const EdgeInsets.all(0.0),
-            // child: _buildForm(),
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildForm() {
     mediaSize = MediaQuery.of(context).size;
     double screenWidth = mediaSize.width;
-    double toppadding = mediaSize.height;
     double leftpadding = mediaSize.width;
     double screenHeight = mediaSize.height;
     double fontSize = screenWidth;
@@ -156,7 +135,7 @@ class _MyWidgetState extends State<LoginPage> {
         SizedBox(height: screenHeight / 30),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
-          child: _buildRememberForgot(),
+          child: _buildSignup(),
         ),
         SizedBox(height: screenHeight / 30),
         Padding(
@@ -225,22 +204,18 @@ class _MyWidgetState extends State<LoginPage> {
     );
   }
 
-  Widget _buildRememberForgot() {
+  Widget _buildSignup() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            Checkbox(
-              value: rememberUser,
-              onChanged: (value) {
-                setState(() {
-                  rememberUser = value!;
-                });
-              },
-            ),
-            _buildPrimaryText("Remember me"),
-          ],
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SignupPage()),
+            );
+          },
+          child: _buildPrimaryText("Not Registered ?"),
         ),
         TextButton(
           onPressed: () {

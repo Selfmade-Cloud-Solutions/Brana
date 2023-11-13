@@ -55,6 +55,7 @@ class _AudiobookListState extends State<RecommendedList> {
                     author: audiobook['author'] ?? '',
                     description: audiobook['description'] ?? '',
                     thumbnail: audiobook['thumbnail'] ?? '',
+                    narrator:audiobook['narrator'],
                   ),
                 ),
               );
