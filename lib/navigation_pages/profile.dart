@@ -1,4 +1,5 @@
 import 'dart:async';
+// import 'package:brana_mobile/models/user.dart';
 import 'package:brana_mobile/pages/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 // import 'package:brana_mobile/pages/profile/pages/edit_description.dart';
@@ -6,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/pages/profile/pages/edit_image.dart';
 import 'package:brana_mobile/pages/profile/pages/edit_name.dart';
 // import 'package:brana_mobile/pages/profile/pages/edit_phone.dart';
-// import 'package:brana_mobile/user/user.dart';
+import 'package:brana_mobile/user/user.dart';
 import 'package:brana_mobile/widgets/display_image_widget.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:brana_mobile/pages/settings.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,6 +25,45 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late Size mediaSize;
+  // late UserData user;
+
+  void initstate() {
+    super.initState();
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    try {
+      await UserData.init(); // Initialize SharedPreferences
+
+      final apiUrl =
+          'https://app.berana.app/api/method/brana_audiobook.api.user_profile_api.retrieve_profile';
+
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseJson = json.decode(response.body);
+
+        if (responseJson.containsKey('message') &&
+            responseJson['message'] != null) {
+          final loggedUser = responseJson['message'];
+          UserData.setUser(
+              User.fromJson(loggedUser())); // Set user data in UserData
+          setState(() {
+            user = UserData
+                .getUser(); // Update the user variable with fetched data
+          });
+        }
+      } else {
+        print('Failed to fetch user data');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 "My Profile",
                 style: GoogleFonts.jost(
                   fontWeight: FontWeight.w600,
-                  fontSize: fontSize / 20,
+                  fontSize: 25,
                   // height: screenHeight / 200,
                   color: branaWhite,
                 ),
@@ -97,11 +139,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           height: screenHeight / 80,
                         ),
-                        buildUserInfoDisplay(user.firstName, user.lastName),
+                        buildUserInfoDisplay(),
                         SizedBox(
                           height: screenHeight / 250,
                         ),
-                        emailDisplay(user.email),
+                        emailDisplay(),
                         SizedBox(
                           height: screenHeight / 25,
                         ),
@@ -199,12 +241,12 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Icon(
         Icons.settings,
         color: branaWhite,
-        size: fontSize / 20,
+        size: 25,
       ),
     );
   }
 
-  Widget buildUserInfoDisplay(String finame, String laname) {
+  Widget buildUserInfoDisplay() {
     mediaSize = MediaQuery.of(context).size;
 
     double bottompadding = mediaSize.height;
@@ -233,20 +275,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Container(
                         child: Text(
-                          finame,
+                          user.firstName,
                           style: GoogleFonts.jost(
-                              fontSize: fontSize / 25,
-                              height: 1.4,
-                              color: Colors.white),
+                              fontSize: 25, height: 1.4, color: Colors.white),
                         ),
                       ),
                       Container(
                         child: Text(
-                          laname,
+                          user.lastName,
                           style: GoogleFonts.jost(
-                              fontSize: fontSize / 25,
-                              height: 1.4,
-                              color: Colors.white),
+                              fontSize: 25, height: 1.4, color: Colors.white),
                         ),
                       )
                     ],
@@ -256,7 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
             )));
   }
 
-  Widget emailDisplay(String mail) {
+  Widget emailDisplay() {
     mediaSize = MediaQuery.of(context).size;
 
     double bottompadding = mediaSize.height;
@@ -285,9 +323,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Container(
                         child: Text(
-                          mail,
+                          user.email,
                           style: GoogleFonts.jost(
-                              fontSize: fontSize / 30,
+                              fontSize: 15,
                               height: 1.4,
                               color: const Color.fromARGB(255, 158, 155, 155)),
                         ),
@@ -327,7 +365,7 @@ class _ProfilePageState extends State<ProfilePage> {
           'View Profile',
           overflow: TextOverflow.visible,
           style: GoogleFonts.jost(
-              fontSize: fontSize / 30,
+              fontSize: 20,
               color: const Color.fromARGB(255, 2, 16, 27),
               fontWeight: FontWeight.w400),
         ),
@@ -387,7 +425,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text(
                       "18 Books ",
                       style: GoogleFonts.jost(
-                          fontSize: fontSize / 20,
+                          fontSize: 20,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
@@ -441,7 +479,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text(
                       "390 Minutes ",
                       style: GoogleFonts.jost(
-                          fontSize: fontSize / 25,
+                          fontSize: 20,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
@@ -471,7 +509,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: const Color.fromARGB(255, 190, 188, 188),
               fontWeight: FontWeight.w300,
               letterSpacing: 0.2,
-              fontSize: fontSize / 25),
+              fontSize: 25),
         ),
       ),
     );

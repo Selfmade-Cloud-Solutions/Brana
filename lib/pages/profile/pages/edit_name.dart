@@ -70,7 +70,67 @@ class EditNameFormPageState extends State<EditNameFormPage> {
     double fontSize = screenWidth;
 
     return Scaffold(
-        appBar: buildAppBar(context),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: branaDeepBlack,
+          flexibleSpace: Center(
+              child: Padding(
+            padding: EdgeInsets.only(bottom: bottompadding / 500),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: branaWhite,
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                ),
+                Text(
+                  "Edit Profile",
+                  style: GoogleFonts.jost(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 25,
+                    // height: screenHeight / 200,
+                    color: branaWhite,
+                  ),
+                ),
+              ],
+            ),
+          )),
+          actions: [
+            Ink(
+              child: Material(
+                color: edit ? Color.fromARGB(255, 1, 35, 2) : Colors.blue,
+                borderRadius: BorderRadius.circular(100.0),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      edit = !edit;
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: leftpadding / 300,
+                        vertical: leftpadding / 300),
+                    child: Icon(
+                      Icons.edit,
+                      color: edit
+                          ? Color.fromARGB(255, 252, 252, 252)
+                          : Color.fromARGB(255, 255, 255, 255),
+                      size: 28,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
         body: SingleChildScrollView(
           child: Container(
             height: screenHeight,
@@ -102,86 +162,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                               //         color: Colors.blue, fontSize: 17),
                               //   ),
                               // ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: leftpadding * 0,
-                                    vertical: toppadding * 0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: toppadding / 200,
-                                            horizontal: leftpadding / 20),
-                                        child: Text(
-                                          "Edit Profile",
-                                          style: GoogleFonts.jost(
-                                              color: const Color.fromARGB(
-                                                  255, 255, 255, 255),
-                                              fontSize: fontSize / 20),
-                                        ),
-                                      ),
-                                    ),
-                                    // SizedBox(
-                                    //   width: screenWidth / 5,
-                                    // ),
-                                    Container(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: leftpadding / 20),
-                                        child: Ink(
-                                          child: Material(
-                                            color: edit
-                                                ? Color.fromARGB(255, 1, 35, 2)
-                                                : Colors.blue,
-                                            borderRadius:
-                                                BorderRadius.circular(100.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  edit = !edit;
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal:
-                                                        leftpadding / 300,
-                                                    vertical:
-                                                        leftpadding / 300),
-                                                child: Icon(
-                                                  Icons.edit,
-                                                  color: edit
-                                                      ? Color.fromARGB(
-                                                          255, 252, 252, 252)
-                                                      : Color.fromARGB(
-                                                          255, 255, 255, 255),
-                                                  size: 28,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    // IconButton(
-                                    //   onPressed: () {
-                                    //     setState(() {
-                                    //       edit = !edit;
-                                    //     });
-                                    //   },
-                                    //   icon: Icon(
-                                    //     Icons.edit,
-                                    //     color: edit
-                                    //         ? Color.fromARGB(190, 2, 95, 56)
-                                    //         : Colors.blue,
-                                    //     size: 28,
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              ),
+
                               SizedBox(
                                 height: screenHeight / 30,
                               ),
@@ -282,7 +263,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                                         style: GoogleFonts.jost(
                                             fontSize: fontSize / 25,
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.blue),
+                                            color: branaPrimaryColor),
                                       ),
                                     ),
                                   )))
@@ -439,10 +420,9 @@ class EditNameFormPageState extends State<EditNameFormPage> {
     return Text(
       label,
       style: GoogleFonts.jost(
-          color: Colors.blue,
-          fontWeight: FontWeight.w600,
+          color: const Color.fromARGB(255, 255, 255, 255),
           letterSpacing: 0.2,
-          fontSize: fontSize / 25),
+          fontSize: 20),
     );
   }
 }
