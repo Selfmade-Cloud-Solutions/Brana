@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:brana_mobile/forgot_password.dart';
 import 'package:brana_mobile/signup_page.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _MyWidgetState extends State<LoginPage> {
   late Color myColor;
   late Size mediaSize;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
@@ -86,7 +89,6 @@ class _MyWidgetState extends State<LoginPage> {
       ),
     );
   }
-
 
   Widget _buildForm() {
     mediaSize = MediaQuery.of(context).size;
@@ -243,13 +245,26 @@ class _MyWidgetState extends State<LoginPage> {
         width: screenWidth / 3,
         height: screenHeight / 20,
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             // debugPrint("Email : ${emailController.text}");
             // debugPrint("Password : ${passwordController.text}");
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const Navigation()),
-            );
+
+            if (_validateInputs()) {
+              final bool success = await _login();
+              if (success) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Navigation()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      backgroundColor: Colors.transparent,
+                      content: Text('Incorrect username or password',
+                          style: TextStyle(color: Colors.red))),
+                );
+              }
+            }
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -264,5 +279,48 @@ class _MyWidgetState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  bool _validateInputs() {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            backgroundColor: Colors.transparent,
+            content: Text('Please enter email and password',
+                style: TextStyle(color: Colors.red))),
+      );
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> _login() async {
+    final apiUrl =
+        'https://app.berana.app/api/method/brana_audiobook.api.auth_api.login';
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {
+        'identifier': emailController.text,
+        'password': passwordController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = json.decode(response.body);
+
+      if (responseJson.containsKey('message') &&
+          responseJson['message'] != null) {
+        final user = responseJson['message'];
+
+        print('Logged in user: $user');
+        return true;
+      }
+    } else {
+      print('Authentication failed');
+    }
+
+    return false;
   }
 }
