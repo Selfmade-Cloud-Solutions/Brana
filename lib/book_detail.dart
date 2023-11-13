@@ -13,12 +13,14 @@ class BookDetail extends StatefulWidget {
     required this.author,
     required this.description,
     required this.thumbnail,
+    required this.narrator,
   }) : super(key: key);
 
   final String title;
   final String author;
   final String description;
   final String thumbnail;
+  final String narrator;
 
   @override
   _BookDetailState createState() => _BookDetailState();
@@ -50,15 +52,13 @@ class _BookDetailState extends State<BookDetail> {
   }
 
   String truncateDescription(String description) {
-    List<String> words = description.split(' ');
-    int numWords =
-        30; // Change this value to control the number of displayed words
+    int numChars = 120; // 4 lines * 40 characters per line
 
-    if (words.length <= numWords) {
+    if (description.length <= numChars) {
       return description;
     }
 
-    return '${words.sublist(0, numWords).join(' ')}...';
+    return '${description.substring(0, numChars)}...';
   }
 
   @override
@@ -80,7 +80,7 @@ class _BookDetailState extends State<BookDetail> {
       ),
       body: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(0),
             image: DecorationImage(
               image: NetworkImage(widget.thumbnail),
               fit: BoxFit.cover,
@@ -99,100 +99,148 @@ class _BookDetailState extends State<BookDetail> {
                 ),
               ),
             ),
-              isLoading
-                  ? const Center(
-                      // Display the preloader if isLoading is true
-                      child: CircularProgressIndicator(color: branaWhite),
-                    )
-                  : SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16, bottom: 110, right: 16, top: 50),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: ClipRRect(
+            isLoading
+                ? const Center(
+                    // Display the preloader if isLoading is true
+                    child: CircularProgressIndicator(color: branaWhite),
+                  )
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 16, bottom: 110, right: 16, top: 50),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child:CachedNetworkImage(
-                                        imageUrl:widget.thumbnail,
-                                        fit: BoxFit.cover,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.7,
-                                      )
-                                    
+                                child: CachedNetworkImage(
+                                  imageUrl: widget.thumbnail,
+                                  fit: BoxFit.cover,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                )),
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.title,
+                                    style: GoogleFonts.jost(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w800,
+                                      color: branaWhite, // Use branaWhite
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.title,
-                                      style: GoogleFonts.jost(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w800,
-                                        color: branaWhite, // Use branaWhite
-                                      ),
-                                    ),
-                                    Text(
-                                      widget.author,
-                                      style: GoogleFonts.jost(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                        color: branaWhite, // Use branaWhite
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                IconButton(
-                                  color: branaWhite, // Use branaWhite
-                                  icon:
-                                      const Icon(Icons.bookmark_add, size: 30),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                            Text(
-                              showFullDescription
-                                  ? widget.description
-                                  : truncateDescription(widget.description),
-                              style: GoogleFonts.jost(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w300,
+                              IconButton(
                                 color: branaWhite, // Use branaWhite
+                                icon: const Icon(Icons.bookmark_add, size: 30),
+                                onPressed: () {},
                               ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height:5
+                          ),
+                          Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: <Widget>[
+    Column(
+      children: [
+        Text(
+          "Author",
+          style: GoogleFonts.jost(
+            fontSize: 18,
+            height: 1,
+            color: branaWhite,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          widget.author,
+          style: GoogleFonts.jost(
+            fontSize: 18,
+            height: 1,
+            color: branaWhite,
+          ),
+        ),
+      ],
+    ),
+    Container(
+      height: 30,
+      width: 10,
+      decoration: BoxDecoration(
+        color: branaWhite,
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ),
+    Column(
+      children: [
+        Text(
+          "Narrator",
+          style: GoogleFonts.jost(
+            fontSize: 18,
+            height: 1,
+            color: branaWhite,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          widget.narrator,
+          style: GoogleFonts.jost(
+            fontSize: 18,
+            height: 1,
+            color: branaWhite,
+          ),
+        ),
+      ],
+    ),
+  ],
+),
+
+                          const SizedBox(
+                            height:5
+                          ),
+                          Text(
+                            showFullDescription
+                                ? widget.description
+                                : truncateDescription(widget.description),
+                            style: GoogleFonts.jost(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
+                              color: branaWhite,
                             ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  showFullDescription = !showFullDescription;
-                                });
-                              },
-                              child: Center(
-                                child: Text(
-                                    showFullDescription
-                                        ? 'Read Less'
-                                        : 'Read More',
-                                    style: const TextStyle(
-                                      color:
-                                          branaWhite, // Customize the color if desired
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                showFullDescription = !showFullDescription;
+                              });
+                            },
+                            child: Center(
+                              child: Text(
+                                  showFullDescription
+                                      ? 'Read Less'
+                                      : 'Read More',
+                                  style: const TextStyle(
+                                    color:
+                                        branaWhite, // Customize the color if desired
+                                    fontWeight: FontWeight.bold,
+                                  )),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-            
+                  ),
             Positioned(
               bottom: 0,
               child: Container(
@@ -220,11 +268,12 @@ class _BookDetailState extends State<BookDetail> {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BookDetail(
-                        title: audiobook['title'] ?? '',
-                        author: audiobook['author'] ?? '',
-                        description: audiobook['description'] ?? '',
-                        thumbnail: audiobook['thumbnail'] ?? '',
+                      builder: (context) => AudioPlayerScreen(
+                        book: audiobook['title'],
+                        // title: audiobook['title'] ?? '',
+                        // author: audiobook['author'] ?? '',
+                        // description: audiobook['description'] ?? '',
+                        // thumbnail: audiobook['thumbnail'] ?? '',
                       ),
                     ),
                   ),

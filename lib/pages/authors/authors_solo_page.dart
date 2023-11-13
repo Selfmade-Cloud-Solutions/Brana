@@ -204,8 +204,8 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
                       author: widget.author,
                       description: audiobook['description'] ??
                           'No description available',
-                      thumbnail:
-                          audiobook['thumbnail'] ?? 'No thumbnail available',
+                      thumbnail:audiobook['thumbnail'] ?? 'No thumbnail available',
+                          narrator:audiobook['narrator']
                     ),
                   ),
                 );

@@ -7,14 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/constants.dart';
 
-class EditorsPickList extends StatefulWidget {
-  const EditorsPickList({Key? key}) : super(key: key);
+class PodcastList extends StatefulWidget {
+  const PodcastList({Key? key}) : super(key: key);
 
   @override
-  State<EditorsPickList> createState() => _AudiobookListState();
+  State<PodcastList> createState() => _AudiobookListState();
 }
 
-class _AudiobookListState extends State<EditorsPickList> {
+class _AudiobookListState extends State<PodcastList> {
   late List<dynamic> audiobooks = [];
 
   @override
@@ -25,7 +25,7 @@ class _AudiobookListState extends State<EditorsPickList> {
 
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(
-        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_editors_picks'));
+        'https://app.berana.app/api/method/brana_audiobook.api.podcast_api.retrieve_recommended_podcasts'));
     if (response.statusCode == 200) {
       setState(() {
         audiobooks = jsonDecode(response.body)['message'];
@@ -52,10 +52,10 @@ class _AudiobookListState extends State<EditorsPickList> {
                   MaterialPageRoute(
                     builder: (context) => BookDetail(
                       title: audiobook['title'] ?? '',
-                      author: audiobook['author'] ?? '',
+                      author: audiobook['Host'] ?? '',
                       description: audiobook['description'] ?? '',
-                      thumbnail: audiobook['thumbnail'] ?? '',
-                      narrator:audiobook['narrator']
+                      thumbnail: audiobook['cover image'] ?? '',
+                      narrator:''
                     ),
                   ),
                 );
@@ -69,9 +69,9 @@ class _AudiobookListState extends State<EditorsPickList> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: audiobook['thumbnail'] != null
+                      child: audiobook['cover image'] != null
                           ? CachedNetworkImage(
-                              imageUrl: audiobook['thumbnail'],
+                              imageUrl: audiobook['cover image'],
                               width: 120,
                               height: 120,
                             )
@@ -87,7 +87,7 @@ class _AudiobookListState extends State<EditorsPickList> {
                       ),
                     ),
                     Text(
-                      audiobook['Author'] ?? '',
+                      audiobook['Host'] ?? '',
                       style: GoogleFonts.jost(
                         fontSize: 12,
                         color: branaWhite,
