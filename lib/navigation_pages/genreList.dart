@@ -102,7 +102,6 @@ class _GenreListPageState extends State<GenreListPage> {
     double toppadding = mediaSize.height;
     double bottompadding = mediaSize.height;
     double leftpadding = mediaSize.width;
-    double rightpadding = mediaSize.width;
     double screenHeight = mediaSize.height;
     double screenWidth = mediaSize.width;
 
@@ -144,6 +143,7 @@ class _GenreListPageState extends State<GenreListPage> {
                         description: books[index].description,
                         thumbnail: books[index].thumbnail,
                         narrator:books[index].narrator,
+                      chapters: books[index].chapter
                       ),
                     ),
                   );

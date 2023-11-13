@@ -14,6 +14,7 @@ class BookDetail extends StatefulWidget {
     required this.description,
     required this.thumbnail,
     required this.narrator,
+    required this.chapters,
   }) : super(key: key);
 
   final String title;
@@ -21,6 +22,7 @@ class BookDetail extends StatefulWidget {
   final String description;
   final String thumbnail;
   final String narrator;
+  final String chapters;
 
   @override
   _BookDetailState createState() => _BookDetailState();
@@ -147,68 +149,63 @@ class _BookDetailState extends State<BookDetail> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height:5
-                          ),
+                          const SizedBox(height: 5),
                           Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: <Widget>[
-    Column(
-      children: [
-        Text(
-          "Author",
-          style: GoogleFonts.jost(
-            fontSize: 18,
-            height: 1,
-            color: branaWhite,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          widget.author,
-          style: GoogleFonts.jost(
-            fontSize: 18,
-            height: 1,
-            color: branaWhite,
-          ),
-        ),
-      ],
-    ),
-    Container(
-      height: 30,
-      width: 10,
-      decoration: BoxDecoration(
-        color: branaWhite,
-        borderRadius: BorderRadius.circular(20),
-      ),
-    ),
-    Column(
-      children: [
-        Text(
-          "Narrator",
-          style: GoogleFonts.jost(
-            fontSize: 18,
-            height: 1,
-            color: branaWhite,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          widget.narrator,
-          style: GoogleFonts.jost(
-            fontSize: 18,
-            height: 1,
-            color: branaWhite,
-          ),
-        ),
-      ],
-    ),
-  ],
-),
-
-                          const SizedBox(
-                            height:5
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Column(
+                                children: [
+                                  Text(
+                                    "Author",
+                                    style: GoogleFonts.jost(
+                                      fontSize: 18,
+                                      height: 1,
+                                      color: branaWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.author,
+                                    style: GoogleFonts.jost(
+                                      fontSize: 18,
+                                      height: 1,
+                                      color: branaWhite,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 30,
+                                width: 10,
+                                decoration: BoxDecoration(
+                                  color: branaWhite,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Narrator",
+                                    style: GoogleFonts.jost(
+                                      fontSize: 18,
+                                      height: 1,
+                                      color: branaWhite,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.narrator,
+                                    style: GoogleFonts.jost(
+                                      fontSize: 18,
+                                      height: 1,
+                                      color: branaWhite,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
+                          const SizedBox(height: 5),
                           Text(
                             showFullDescription
                                 ? widget.description

@@ -205,7 +205,8 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
                       description: audiobook['description'] ??
                           'No description available',
                       thumbnail:audiobook['thumbnail'] ?? 'No thumbnail available',
-                          narrator:audiobook['narrator']
+                          narrator:audiobook['narrator'],
+                      chapters: audiobook['chapters'],
                     ),
                   ),
                 );

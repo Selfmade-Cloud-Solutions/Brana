@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -13,11 +14,47 @@ class SignupPage extends StatefulWidget {
 class _MyWidgetState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   late Size mediaSize;
-  TextEditingController firstnameController = TextEditingController();
-  TextEditingController lastnameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phonenumberController = TextEditingController();
+  TextEditingController firstname = TextEditingController();
+  TextEditingController lastname = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phonenumber = TextEditingController();
+  TextEditingController username = TextEditingController();
   bool rememberUser = false;
+
+  Future<void> signUp() async {
+    final apiEndpoint =
+        'https://app.berana.app/api/method/brana_audiobook.api.auth_api.signup';
+    
+    final Map<String, dynamic> signUpData = {
+      'firstname': firstname.text,
+      'lastname': lastname.text,
+      'username': username.text,
+      'email': email.text,
+      'phonenumber': phonenumber.text,
+    };
+
+    final response = await http.post(
+      Uri.parse(apiEndpoint),
+      body: signUpData,
+    );
+
+    if (response.statusCode == 200 && _formKey.currentState!.validate()) {
+      // Successful signup, navigate to the next screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Navigation()),
+      );
+    } else {
+      // Error in the signup process, display a snackbar with an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Sign Up Failed!',
+          style: GoogleFonts.jost(
+            color:Colors.red,
+          ),)),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,25 +138,28 @@ class _MyWidgetState extends State<SignupPage> {
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: _buildInputFieldFirstName(firstnameController),
+            child: _buildInputFieldFirstName(firstname),
           ),
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: _buildInputFieldLastName(lastnameController),
+            child: _buildInputFieldLastName(lastname),
           ),
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: _buildInputFieldPhoneNumber(phonenumberController),
+            child: _buildInputFieldPhoneNumber(phonenumber),
           ),
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: _buildInputFieldEmail(emailController),
+            child: _buildInputFieldEmail(email),
           ),
-          
-        
+          const SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: _buildInputFieldUsername(username),
+          ),
           const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 80),
@@ -189,6 +229,32 @@ class _MyWidgetState extends State<SignupPage> {
     );
   }
 
+  Widget _buildInputFieldUsername(TextEditingController controller) {
+    return TextFormField(
+      controller: controller,
+      style: const TextStyle(color: branaWhite),
+      decoration: InputDecoration(
+          suffixIcon: const Icon(Icons.done),
+          labelText: 'Set Username',
+          labelStyle: GoogleFonts.jost(color: branaWhite),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: branaWhite),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: branaWhite),
+              borderRadius: BorderRadius.circular(8))),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'please set username';
+        } else if (!RegExp(r'^[a-zA-Z0-9._]+$]').hasMatch(value)) {
+          return 'Please enter only letters, number or _';
+        }
+        return null;
+      },
+    );
+  }
+
   Widget _buildInputFieldEmail(TextEditingController controller) {
     return TextFormField(
       controller: controller,
@@ -242,22 +308,9 @@ class _MyWidgetState extends State<SignupPage> {
     );
   }
 
-  
-
   Widget _buildSignupButton() {
     return ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          debugPrint("FirstName : ${firstnameController.text}");
-          debugPrint("LastName : ${lastnameController.text}");
-          debugPrint("Email : ${emailController.text}");
-          debugPrint("Phone Number : ${phonenumberController.text}");
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Navigation()),
-          );
-        }
-      },
+      onPressed: signUp,
       style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
           elevation: 20,

@@ -55,7 +55,9 @@ class _AudiobookListState extends State<PodcastList> {
                       author: audiobook['Host'] ?? '',
                       description: audiobook['description'] ?? '',
                       thumbnail: audiobook['cover image'] ?? '',
-                      narrator:''
+                      narrator:'',
+                      chapters: audiobook['episodes'],
+                      
                     ),
                   ),
                 );
