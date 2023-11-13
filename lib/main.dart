@@ -1,3 +1,4 @@
+import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:brana_mobile/screens/onboarding/onboarding.dart';
 import 'package:brana_mobile/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,25 @@ class SecondPage extends StatelessWidget {
           return Onboarding(screenHeight: screenHeight);
         },
       ),
+    );
+  }
+}
+
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Brana Audiobook',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+      ),
+      home:  const Splashscreen(),
+      // home: EditorsPicksPage(),
+
+      debugShowCheckedModeBanner: false,
     );
   }
 }

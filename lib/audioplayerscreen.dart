@@ -3,7 +3,7 @@ import 'package:audio_session/audio_session.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:brana_mobile/audioplayer.dart';
 import 'package:brana_mobile/data.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:brana_mobile/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +60,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
       AudioSource.uri(
         Uri.parse(
             // 'asset:/assets/audiobooks/6.mp3'
-            "https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_01_fitzgerald_64kb.mp3"),
+            "https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.play_audiobook_chapter?audiobook_chapter=ሚፈልግ ሰው"),
         tag: MediaItem(
           id: '1',
           album: "ላስብበት",
@@ -139,10 +139,22 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                 bufferedPosition,
                 duration ?? Duration.zero,
               ));
+  void fetchData() async {
+    var url =
+        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobooks';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var data = response.body;
+      print(data);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    fetchData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _init();
     });
