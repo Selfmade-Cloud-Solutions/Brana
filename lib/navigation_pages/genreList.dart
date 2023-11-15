@@ -41,7 +41,7 @@ class BookModel {
       thumbnail: json['thumbnail'] as String? ?? "",
       chapter: json['Total chapter'].toString(), // Convert int to String
       duration: json['duration'] as String? ?? "",
-      is_favorite: is_favorite.toString(), // Ensure it's stored as a string
+      is_favorite: json['duration'] as String? ?? "", 
     );
   }
 }
@@ -82,7 +82,6 @@ class _GenreListPageState extends State<GenreListPage> {
           });
         }
       }
-      // ignore: empty_catches
     } catch (e) {}
   }
 

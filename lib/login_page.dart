@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:brana_mobile/forgot_password.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,56 +25,38 @@ class _MyWidgetState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
   bool isPasswordVisible = false;
-
+@override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    double toppadding;
     double leftRightPadding;
 
     mediaSize = MediaQuery.of(context).size;
-    toppadding = mediaSize.height;
     leftRightPadding = mediaSize.width * 0.05;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: branaDeepBlack,
-      body: Stack(children: [
+      body: 
         Padding(
           padding: EdgeInsets.only(
               left: leftRightPadding,
-              top: toppadding / 9,
+              top: mediaSize.height/20,
               right: leftRightPadding,
-              bottom: toppadding / 25),
+              bottom: mediaSize.height/343),
           child: Container(
             color: branaDarkBlue,
             width: mediaSize.width - 50,
             height: mediaSize.height / 1.2,
             child: Column(
-              children: [
-                Container(
-                  child: _buildTop(),
-                ),
-                Container(
-                  child: _buildForm(),
-                ),
-                // Container(
-                //   child: _buildBottom(),
-                // )
+              children: [ 
+                _buildTop(),
+                _buildForm(),
               ],
             ),
           ),
         ),
-      ]),
-      // body: SafeArea(
-      //   child: Stack(alignment: Alignment.topCenter, children: [
-      //     Positioned(
-      //         // top: toppadding,
-      //         // bottom: bottomPadding,
-      //         left: leftRightPadding,
-      //         right: leftRightPadding,
-      //         child: _buildBottom())
-      //   ]),
-      // )
     );
   }
 
@@ -142,7 +127,7 @@ class _MyWidgetState extends State<LoginPage> {
         SizedBox(height: screenHeight / 30),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
-          child: _buildLoginButton(),
+          child: Center(child:_buildLoginButton()),
         ),
         SizedBox(
           height: screenHeight / 20,
@@ -236,19 +221,11 @@ class _MyWidgetState extends State<LoginPage> {
     mediaSize = MediaQuery.of(context).size;
     double screenWidth = mediaSize.width;
     double screenHeight = mediaSize.height;
-    double toppadding = mediaSize.height;
-    double leftpadding = mediaSize.width;
-    return Padding(
-      padding: EdgeInsets.fromLTRB(leftpadding / 4.5, toppadding / 150,
-          leftpadding / 4, toppadding / 200),
-      child: SizedBox(
+    return SizedBox(
         width: screenWidth / 3,
         height: screenHeight / 20,
         child: ElevatedButton(
           onPressed: () async {
-            // debugPrint("Email : ${emailController.text}");
-            // debugPrint("Password : ${passwordController.text}");
-
             if (_validateInputs()) {
               final bool success = await _login();
               if (success) {
@@ -277,7 +254,6 @@ class _MyWidgetState extends State<LoginPage> {
             ),
           ),
         ),
-      ),
     );
   }
 
@@ -295,7 +271,7 @@ class _MyWidgetState extends State<LoginPage> {
   }
 
   Future<bool> _login() async {
-    final apiUrl =
+    const apiUrl =
         'https://app.berana.app/api/method/brana_audiobook.api.auth_api.login';
 
     final response = await http.post(
@@ -312,13 +288,15 @@ class _MyWidgetState extends State<LoginPage> {
 
       if (responseJson.containsKey('message') &&
           responseJson['message'] != null) {
-        final user = responseJson['message'];
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        // final user = responseJson['message'];
 
-        print('Logged in user: $user');
+        // print('Logged in user: $user');
         return true;
       }
     } else {
-      print('Authentication failed');
+      // print('Authentication failed');
     }
 
     return false;

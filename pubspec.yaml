@@ -44,7 +44,6 @@ dependencies:
   connectivity_plus: ^5.0.1
   carousel_slider:
   http: ^1.1.0
-  shared_preferences: ^2.2.1
   shared_preferences_windows: ^2.2.0 
   email_validator:
   image_picker:
@@ -56,10 +55,10 @@ dependencies:
   flutter_cache_manager: ^3.3.1
   another_transformer_page_view: ^2.0.1
   smooth_page_indicator:
-  connectivity: ^3.0.6
   device_preview: ^1.1.0
   google_sign_in: ^6.1.6
- 
+  shared_preferences: ^2.2.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

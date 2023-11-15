@@ -1,8 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
 
 import 'package:brana_mobile/login_page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
 import 'pages/walk1/index.dart';
 import 'pages/walk2/index.dart';
@@ -14,11 +16,11 @@ import 'widgets/onboarding_page_indicator.dart';
 import 'widgets/ripple.dart';
 
 class Onboarding extends StatefulWidget {
-  final double screenHeight;
+  // final double screenHeight;
 
   const Onboarding({
     super.key,
-    required this.screenHeight,
+    // required this.screenHeight,
   });
 
   @override
@@ -56,7 +58,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
 
     _rippleAnimation = Tween<double>(
       begin: 0.0,
-      end: widget.screenHeight,
+      end: 0.0,
     ).animate(CurvedAnimation(
       parent: _rippleAnimationController,
       curve: Curves.easeIn,
@@ -200,15 +202,18 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> _goToLogin() async {
-    await _rippleAnimationController.forward();
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const LoginPage(),
-      ),
-    );
-  }
+ Future<void> _goToLogin() async {
+  // Set hasCompletedOnboarding to true
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('hasCompletedOnboarding', true);
+
+  await _rippleAnimationController.forward();
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => const LoginPage(),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {

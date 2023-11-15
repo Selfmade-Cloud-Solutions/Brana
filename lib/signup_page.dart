@@ -136,6 +136,18 @@ class _MyWidgetState extends State<SignupPage> {
 
     return Scaffold(
         backgroundColor: branaDeepBlack,
+        extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 2, 22, 41),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
         body: Stack(children: [
           Positioned(
               top: topPadding,
