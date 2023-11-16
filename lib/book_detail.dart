@@ -266,7 +266,7 @@ class _BookDetailState extends State<BookDetail> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => AudioPlayerScreen(
-                        book: audiobook['title'],
+                        // book: audiobook['title'],
                         // title: audiobook['title'] ?? '',
                         // author: audiobook['author'] ?? '',
                         // description: audiobook['description'] ?? '',

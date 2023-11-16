@@ -40,7 +40,8 @@ class MyApp extends StatelessWidget {
         // Consider removing or adjusting useMaterial3 based on your needs.
         // useMaterial3: true,
       ),
-      home: const Splashscreen(),
+      // home: const Splashscreen(),
+      home: const AudioPlayerScreen(),
       // You can change the home widget here to your desired default screen.
       // home: AuthorsSoloPage(),
 
@@ -65,21 +66,21 @@ class SecondPage extends StatelessWidget {
   }
 }
 
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+// class App extends StatelessWidget {
+//   const App({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Brana Audiobook',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home:  const Splashscreen(),
-      // home: EditorsPicksPage(),
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Brana Audiobook',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//         useMaterial3: true,
+//       ),
+//       // home:  const Splashscreen(),
+//       home: const AudioPlayerScreen(),
 
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+//       debugShowCheckedModeBanner: false,
+//     );
+//   }
+// }

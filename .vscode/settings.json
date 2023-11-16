@@ -1,6 +1,6 @@
 {
     "cmake.sourceDirectory": "/home/bright/Documents/work/brana_mobile_new/linux",
-    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.configuration.updateBuildConfiguration": "automatic",
     "githubPullRequests.ignoredPullRequestBranches": [
         "main"
     ]

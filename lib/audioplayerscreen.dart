@@ -13,15 +13,20 @@ import 'package:just_audio/just_audio.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'dart:convert';
 
 class AudioPlayerScreen extends StatefulWidget {
-  final Book book;
-  const AudioPlayerScreen({super.key, required this.book});
+  // final Book book;
+  // required this.book
+  const AudioPlayerScreen({super.key});
 
   @override
   // ignore: no_logic_in_create_state
-  State<StatefulWidget> createState() => _AudioPlayerScreenState(book);
+  // book as argument
+  State<StatefulWidget> createState() => _AudioPlayerScreenState();
 }
+
+Audiobook? audiobook;
 
 class AudioPosition {
   const AudioPosition(
@@ -32,6 +37,29 @@ class AudioPosition {
   final Duration position;
   final Duration bufferedPosition;
   final Duration duration;
+}
+
+class Audiobook {
+  final String booktitle;
+  final String author;
+  final String thumbnail;
+  final String sampletitle;
+  final String duration;
+  final List<Chapter> chapters;
+
+  Audiobook(
+      {required this.booktitle,
+      required this.author,
+      required this.thumbnail,
+      required this.sampletitle,
+      required this.duration,
+      required this.chapters});
+}
+
+class Chapter {
+  final String title;
+  final String duration;
+  Chapter({required this.title, required this.duration});
 }
 
 class _AudioPlayerScreenState extends State<AudioPlayerScreen>
@@ -47,78 +75,164 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
   ));
   bool _isExpanded = true;
   final _audioPlayer = AudioPlayer();
-  Book book;
-  _AudioPlayerScreenState(this.book);
-  final _playlist = ConcatenatingAudioSource(
-    useLazyPreparation: true,
-    shuffleOrder: DefaultShuffleOrder(),
-    children: [
-      // ClippingAudioSource(
-      //   start: const Duration(seconds: 60),
-      //   end: const Duration(seconds: 90),
-      //   child:
-      AudioSource.uri(
-        Uri.parse(
-            // 'asset:/assets/audiobooks/6.mp3'
-            "https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.play_audiobook_chapter?audiobook_chapter=ሚፈልግ ሰው"),
-        tag: MediaItem(
-          id: '1',
-          album: "ላስብበት",
-          title: 'Chapter 1',
-          artist: 'ሮማን አፈወርቅ',
-          artUri: Uri.parse(
-              'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9'),
-        ),
-      ),
-      // ),
-      AudioSource.uri(
-        Uri.parse(
-            // 'asset:/assets/audiobooks/4.mp3'
-            "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3"),
-        tag: MediaItem(
-          id: '2',
-          album: "ላስብበት",
-          title: "Chapter 2",
-          artist: 'ሮማን አፈወርቅ',
-          artUri: Uri.parse(
-              "https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"),
-        ),
-      ),
-      AudioSource.uri(
-        Uri.parse(
-            // 'asset:/assets/audiobooks/3.mp3'
-            "https://s3.amazonaws.com/scifri-segments/scifri201711241.mp3"),
-        tag: MediaItem(
-          id: '3',
-          album: "ላስብበት",
-          title: "Chapter 3",
-          artist: 'ሮማን አፈወርቅ',
-          artUri: Uri.parse(
-              // 'asset:/assets/books/ላስብበት.jpg'
-              "https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"),
-        ),
-      ),
-    ],
-  );
+
+  Stream<AudioPosition> get _audioPositionStream =>
+      Rx.combineLatest3<Duration, Duration, Duration?, AudioPosition>(
+          _audioPlayer.positionStream.handleError((error) {
+        logger.e('Position stream error: $error');
+      }), _audioPlayer.bufferedPositionStream.handleError((error) {
+        logger.e('Buffered position stream error: $error');
+      }), _audioPlayer.durationStream.handleError((error) {
+        logger.e('Duration stream error: $error');
+      }),
+          (position, bufferedPosition, duration) => AudioPosition(
+                position,
+                bufferedPosition,
+                duration ?? Duration.zero,
+              ));
+  late final ConcatenatingAudioSource _playlist;
+    @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      // Release the player's resources when not in use. We use "stop" so that
+      // if the app resumes later, it will still remember what position to
+      // resume from.
+      _audioPlayer.stop();
+    }
+  }
+  
+    void _selectSong(Audiobook audiobook) {
+    setState(() {
+      audiobook = audiobook;
+      // _isPlaying = false;
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    fetchData().then((value) {
+      setState(() {
+        audiobook = value;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _init();
+        });
+      });
+    }).catchError((error) {
+      logger.e('Error fetching data: $error');
+    });
+  }
+
+  Future<Audiobook> fetchData() async {
+    try {
+      final response = await http.get(Uri.parse(
+          'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobook?audiobook_id=ባርቾ'));
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        List<Chapter> chapters = [];
+        for (var chapterData in responseData['message']['chapters']) {
+          Chapter chapter = Chapter(
+            title: chapterData['title'] ?? "nulll",
+            duration: chapterData['duration'] ?? "nulll",
+          );
+          chapters.add(chapter);
+        }
+        Audiobook audiobook = Audiobook(
+          booktitle: responseData['message']['title'] ?? "null",
+          author: responseData['message']['author'] ?? "null",
+          thumbnail: responseData['message']['thumbnail'] ?? "null",
+          sampletitle:
+              responseData['message']['Sample Audiobook Title'] ?? "nulll",
+          duration: responseData['message']['duration'] ?? "nulll",
+          chapters: chapters,
+        );
+
+        logger.i(responseData['message']);
+
+        return audiobook;
+      } else {
+        throw Exception('Failed to fetch data');
+      }
+    } catch (error) {
+      logger.e('error fetching data: $error');
+      rethrow;
+    }
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
 
   Future<void> _init() async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return const Center(child: CircularProgressIndicator());
-        });
-    Navigator.of(context).pop();
+    // showDialog(
+    //     context: context,
+    //     barrierDismissible: false,
+    //     builder: (context) {
+    //       return const Center(child: CircularProgressIndicator());
+    //     });
+    // Navigator.of(context).pop();
     // await DefaultCacheManager().emptyCache();
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-    // Listen to errors during playback.
-    _audioPlayer.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace stackTrace) {
+    _playlist = ConcatenatingAudioSource(
+        useLazyPreparation: true,
+        shuffleOrder: DefaultShuffleOrder(),
+        children: [
+          AudioSource.uri(
+              Uri.parse(
+                  "https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.audiobook_sample?audiobook_id=ከአድማስ ባሻገር"),
+              tag: MediaItem(
+                id: audiobook!.booktitle,
+                album: audiobook!.booktitle,
+                title: audiobook!.booktitle,
+                artist: audiobook!.sampletitle,
+                artUri: Uri.parse(audiobook!.thumbnail),
+              )),
+          for (var chapter in audiobook!.chapters)
+            AudioSource.uri(
+              Uri.parse(
+                  "https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.audiobook_sample?audiobook_id=መተዋወቂያ"),
+              tag: MediaItem(
+                id: chapter.title,
+                album: audiobook!.booktitle,
+                title: chapter.title,
+                artist: audiobook!.sampletitle,
+                artUri: Uri.parse(audiobook!.thumbnail),
+              ),
+            ),
+        ]);
+    _audioPlayer.playbackEventStream.listen((event) {
+      if (event.processingState == ProcessingState.completed) {
+        logger.e('completed ${event.bufferedPosition}');
+      }else{
+        // logger.e('playback error ${event.currentIndex}');
+      }
+      // else if (event.processingState == ProcessingState.idle) {
+      //   logger.e('playback error ${event.bufferedPosition}');
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return AlertDialog(
+      //         title: const Text('Playback Error'),
+      //         content: const Text('An error occurred while playing the audio.'),
+      //         actions: [
+      //           TextButton(
+      //             onPressed: () {
+      //               _audioPlayer.stop();
+      //               Navigator.of(context).pop();
+      //             },
+      //             child: const Text('OK'),
+      //           ),
+      //         ],
+      //       );
+      //     },
+      //   );
+      // }
+    }, onError: (Object e, StackTrace stackTrace) {
       logger.e('A stream error occurred: $e');
     });
     try {
-      // AAC example: https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.aac
       await _audioPlayer.setAudioSource(_playlist);
       await _audioPlayer.setLoopMode(LoopMode.all);
     } catch (e, stackTrace) {
@@ -127,43 +241,6 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
     }
     // ignore: use_build_context_synchronously
     // Navigator.of(context).pop();
-  }
-
-  Stream<AudioPosition> get _audioPositionStream =>
-      Rx.combineLatest3<Duration, Duration, Duration?, AudioPosition>(
-          _audioPlayer.positionStream,
-          _audioPlayer.bufferedPositionStream,
-          _audioPlayer.durationStream,
-          (position, bufferedPosition, duration) => AudioPosition(
-                position,
-                bufferedPosition,
-                duration ?? Duration.zero,
-              ));
-  void fetchData() async {
-    var url =
-        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobooks';
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var data = response.body;
-      print(data);
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _init();
-    });
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override
@@ -186,7 +263,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(book.title,
+              Text(audiobook!.booktitle,
                   style: GoogleFonts.jost(
                     color: _isExpanded
                         ? branaWhite
@@ -194,7 +271,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                     fontSize: 17,
                     fontWeight: FontWeight.w400,
                   )),
-              Text(book.author.fullname,
+              Text(audiobook!.author,
                   style: GoogleFonts.jost(
                     color: _isExpanded
                         ? branaWhite
@@ -224,35 +301,47 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
           children: [
             if (!_isExpanded)
               (Expanded(
-                child: ListView.builder(
-                  itemCount: songs.length,
-                  itemBuilder: (context, index) {
-                    final song = songs[index];
+                  child: ListView.builder(
+                itemCount: audiobook!.chapters.length + 1,
+                itemBuilder: (context, index) {
+                  final currentAudiobook = audiobook!;[index];
+                  if (index == 0) {
                     return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 1.0),
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage(book.image),
-                      ),
-                      title: Text(
-                        song.artist,
-                        style: GoogleFonts.jost(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 2, 22, 41),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 1.0),
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/authors/ዘነበወላ.jpg'),
                         ),
-                      ),
-                      subtitle: Text(book.title),
-                      trailing: Text(song.duration),
-                      onTap: () async {
-                        // _selectSong(song);
-                        // // init(index);
-                        // audioPlayer.stop();
-                      },
-                    );
-                  },
-                ),
-              )),
+                        title: Text(
+                          audiobook!.sampletitle,
+                          style: GoogleFonts.jost(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 2, 22, 41),
+                          ),
+                        ),
+                        subtitle: const Text("Sample Audiobook"),
+                        trailing: Text(audiobook!.duration),
+                        onTap: () async {
+                          _selectSong(currentAudiobook);
+                          // // init(index);
+                          // audioPlayer.stop();
+                        });
+                  } else {
+                    Chapter chapter = audiobook!.chapters[index - 1];
+                    return ListTile(
+                        title: Text(chapter.title),
+                        subtitle: Text('Chapter $index'),
+                        trailing: Text(chapter.duration),
+                        onTap: () async {
+                          // _selectSong(song);
+                          // // init(index);
+                          // audioPlayer.stop();
+                        });
+                  }
+                },
+              ))),
             AnimatedContainer(
               duration: const Duration(milliseconds: 800),
               curve: Curves.linearToEaseOut,
@@ -273,7 +362,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                       ]),
                   image: DecorationImage(
                     opacity: 0.06,
-                    image: AssetImage(book.image),
+                    image: AssetImage('assets/authors/ዘነበወላ.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -330,7 +419,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                   onSeek: _audioPlayer.seek,
                                 ),
                               ),
-                              if (_isExpanded) const SizedBox(height: 20),
+                              if (_isExpanded) const SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -509,170 +598,3 @@ class MediaMetadata extends StatelessWidget {
     );
   }
 }
-
-// class Controls extends StatelessWidget {
-//   const Controls({super.key, required this.audioPlayer});
-//   final AudioPlayer audioPlayer;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: [
-//         IconButton(
-//             onPressed: () async {
-//               await audioPlayer.seekToPrevious();
-//             },
-//             iconSize: 30,
-//             color: branaWhite,
-//             icon: const Icon(Icons.skip_previous_rounded)),
-//         IconButton(
-//             onPressed: () async {
-//               await audioPlayer
-//                   .seek(Duration(seconds: audioPlayer.position.inSeconds - 15));
-//             },
-//             iconSize: 35,
-//             color: branaWhite,
-//             icon: const Icon(CupertinoIcons.gobackward_15)),
-//         StreamBuilder<PlayerState>(
-//           stream: audioPlayer.playerStateStream,
-//           builder: (context, snapshot) {
-//             final playerState = snapshot.data;
-//             final processingState = playerState?.processingState;
-//             final playing = playerState?.playing;
-//             if (!(playing ?? false)) {
-//               return IconButton(
-//                   onPressed: () {
-//                     audioPlayer.play();
-//                   },
-//                   iconSize: 80,
-//                   color: Colors.yellow,
-//                   icon: const Icon(Icons.play_arrow_sharp));
-//             } else if (processingState != ProcessingState.completed) {
-//               return IconButton(
-//                   onPressed: () {
-//                     audioPlayer.pause();
-//                   },
-//                   iconSize: 80,
-//                   color: Colors.yellow,
-//                   icon: const Icon(Icons.pause_sharp));
-//             }
-//             return const Icon(
-//               Icons.play_arrow_sharp,
-//               color: Colors.yellow,
-//               size: 80,
-//             );
-//           },
-//         ),
-//         IconButton(
-//             onPressed: () async {
-//               await audioPlayer
-//                   .seek(Duration(seconds: audioPlayer.position.inSeconds + 15));
-//             },
-//             iconSize: 35,
-//             color: branaWhite,
-//             icon: const Icon(CupertinoIcons.goforward_15)),
-//         IconButton(
-//             onPressed: () async {
-//               await audioPlayer.seekToNext();
-//             },
-//             iconSize: 30,
-//             color: branaWhite,
-//             icon: const Icon(Icons.skip_next_rounded))
-//       ],
-//     );
-//   }
-// }
-
-final List<Song> songs = [
-  Song(
-    id: '1',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 1',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    // links: 'assets/audiobooks/1.mp3',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_01_fitzgerald_64kb.mp3',
-    duration: '00:29:24',
-  ),
-  Song(
-    id: '2',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 2',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_02_fitzgerald_64kb.mp3',
-    duration: '00:39:24',
-  ),
-  Song(
-    id: '3',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 3',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_03_fitzgerald_64kb.mp3',
-    duration: '00:35:24',
-  ),
-  Song(
-    id: '4',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 4',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_04_fitzgerald_64kb.mp3',
-    duration: '00:35:24',
-  ),
-  Song(
-    id: '5',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 5',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
-    duration: '00:35:24',
-  ),
-  Song(
-    id: '6',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 6',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
-    duration: '00:35:24',
-  ),
-  Song(
-    id: '7',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 7',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
-    duration: '00:35:24',
-  ),
-  Song(
-    id: '8',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 8',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
-    duration: '00:35:24',
-  ),
-  Song(
-    id: '9',
-    album: 'ላስብበት',
-    title: 'ላስብበት',
-    artist: 'Chapter 9',
-    albumCover: 'assets/books/ላስብበት.jpg',
-    audiolinks:
-        'https://www.archive.org/download/this_side_paradise_librivox/thissideofparadise_05_fitzgerald_64kb.mp3',
-    duration: '00:35:24',
-  ),
-];
