@@ -157,7 +157,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
       rethrow;
     }
   }
-
+  
   @override
   void dispose() {
     _audioPlayer.dispose();
@@ -390,7 +390,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                     StreamBuilder<AudioPosition>(
                       stream: _audioPositionStream,
                       builder: (context, snapshot) {
-                        final Audioposition = snapshot.data;
+                        final audioposition = snapshot.data;
                         return Expanded(
                           flex: 1,
                           child: Column(
@@ -411,10 +411,10 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                                   ),
                                   timeLabelType: TimeLabelType.remainingTime,
                                   progress:
-                                      Audioposition?.position ?? Duration.zero,
+                                      audioposition?.position ?? Duration.zero,
                                   total:
-                                      Audioposition?.duration ?? Duration.zero,
-                                  buffered: Audioposition?.bufferedPosition ??
+                                      audioposition?.duration ?? Duration.zero,
+                                  buffered: audioposition?.bufferedPosition ??
                                       Duration.zero,
                                   onSeek: _audioPlayer.seek,
                                 ),
