@@ -1,10 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:brana_mobile/audioplayerscreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:brana_mobile/constants.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class BookDetail extends StatefulWidget {
   const BookDetail({
@@ -14,7 +16,8 @@ class BookDetail extends StatefulWidget {
     required this.description,
     required this.thumbnail,
     required this.narrator,
-    required this.chapters,
+    required this.is_favorite,
+    // required this.chapters,
   }) : super(key: key);
 
   final String title;
@@ -22,7 +25,8 @@ class BookDetail extends StatefulWidget {
   final String description;
   final String thumbnail;
   final String narrator;
-  final String chapters;
+  final dynamic is_favorite;
+  // final String chapters;
 
   @override
   _BookDetailState createState() => _BookDetailState();
@@ -32,24 +36,51 @@ class _BookDetailState extends State<BookDetail> {
   late Map<String, dynamic> audiobook = {};
   bool showFullDescription = false;
   bool isLoading = true;
+  int? favorite;
   @override
   void initState() {
     super.initState();
-    fetchData();
+    checkConnectivity();
+  if (widget.is_favorite is int) {
+    favorite = widget.is_favorite as int;
+  } else {
+    favorite = int.tryParse(widget.is_favorite) ?? 0;
+  }
+}
+  Future<void> _updateFavoriteStatus(bool newStatus) async {
+    try {
+      // Make an HTTP request to update the favorite status
+      String apiUrl =
+          'https://app.berana.app/api/method/brana_audiobook.api.user_favorite_api.favorite?title=${widget.title}';
+
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        // Update the local state based on the response
+        setState(() {
+          favorite = newStatus ? 1 : 0;
+        });
+      } else {
+        // Handle the error if the request fails
+        print(
+            'Failed to update favorite status. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Handle any other errors that might occur during the request
+      print('Error updating favorite status: $error');
+    }
   }
 
-  Future<void> fetchData() async {
-    final apiUrl =
-        'https://app.berana.app/api/method/brana_audiobook.api.audiobook_api.retrieve_audiobook?audiobook_id=${widget.title}';
-    final response = await http.get(Uri.parse(apiUrl));
-
-    if (response.statusCode == 200) {
+  void checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
       setState(() {
-        audiobook = jsonDecode(response.body)['message'];
-        isLoading = false;
+        isLoading = true;
       });
     } else {
-      throw Exception('Failed to fetch data');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -66,7 +97,7 @@ class _BookDetailState extends State<BookDetail> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -127,28 +158,41 @@ class _BookDetailState extends State<BookDetail> {
                           ),
                           const SizedBox(height: 16),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.title,
-                                    style: GoogleFonts.jost(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w800,
-                                      color: branaWhite, // Use branaWhite
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.title,
+                                      style: GoogleFonts.jost(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w800,
+                                        color: branaWhite, // Use branaWhite
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              IconButton(
-                                color: branaWhite, // Use branaWhite
-                                icon: const Icon(Icons.bookmark_add, size: 30),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
+                                  ],
+                                ),
+                                (favorite == 1)
+                                    ? IconButton(
+                                        color: branaWhite,
+                                        icon: const Icon(Icons.favorite,
+                                            size: 30),
+                                        onPressed: () {
+                                          _updateFavoriteStatus(
+                                              false); // Toggle to false
+                                        },
+                                      )
+                                    : IconButton(
+                                        color: branaWhite,
+                                        icon: const Icon(Icons.favorite_border,
+                                            size: 30),
+                                        onPressed: () {
+                                          _updateFavoriteStatus(
+                                              true); // Toggle to true
+                                        },
+                                      ),
+                              ]),
                           const SizedBox(height: 5),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -14,6 +14,7 @@ class BookModel {
   final String thumbnail;
   final String chapter;
   final String duration;
+  final dynamic is_favorite; // Change the type to dynamic
 
   BookModel({
     required this.title,
@@ -23,9 +24,15 @@ class BookModel {
     required this.thumbnail,
     required this.chapter,
     required this.duration,
+    required this.is_favorite,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
+    dynamic is_favorite = json['is_favorite']; // Store the raw value as dynamic
+    if (is_favorite is int) {
+      is_favorite = is_favorite.toString(); // Convert int to String
+    }
+
     return BookModel(
       title: json['title'] as String? ?? "",
       description: json['description'] as String? ?? "",
@@ -34,9 +41,11 @@ class BookModel {
       thumbnail: json['thumbnail'] as String? ?? "",
       chapter: json['Total chapter'].toString(), // Convert int to String
       duration: json['duration'] as String? ?? "",
+      is_favorite: json['duration'] as String? ?? "", 
     );
   }
 }
+
 
 class GenreListPage extends StatefulWidget {
   final String genreName;
@@ -73,7 +82,6 @@ class _GenreListPageState extends State<GenreListPage> {
           });
         }
       }
-      // ignore: empty_catches
     } catch (e) {}
   }
 
@@ -90,7 +98,7 @@ class _GenreListPageState extends State<GenreListPage> {
         "$text Chapters",
         style: GoogleFonts.jost(
           color: branaWhite,
-          fontSize: fontSize/30,
+          fontSize: fontSize / 30,
         ),
       ),
     );
@@ -142,8 +150,9 @@ class _GenreListPageState extends State<GenreListPage> {
                         author: books[index].author,
                         description: books[index].description,
                         thumbnail: books[index].thumbnail,
-                        narrator:books[index].narrator,
-                      chapters: books[index].chapter
+                        narrator: books[index].narrator,
+                        is_favorite: books[index].is_favorite ?? '',
+                        // chapters: books[index].chapter
                       ),
                     ),
                   );
@@ -273,8 +282,8 @@ class _GenreListPageState extends State<GenreListPage> {
                                   padding: EdgeInsets.only(
                                       top: toppadding / 550,
                                       left: leftpadding / 30,
-                                      right: leftpadding/30, 
-                                      bottom: toppadding/60),
+                                      right: leftpadding / 30,
+                                      bottom: toppadding / 60),
                                   child: Row(
                                     children: <Widget>[
                                       _chip(books[index].chapter, branaWhite,

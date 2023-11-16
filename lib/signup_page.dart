@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:brana_mobile/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
-import 'package:brana_mobile/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -22,9 +25,9 @@ class _MyWidgetState extends State<SignupPage> {
   bool rememberUser = false;
 
   Future<void> signUp() async {
-    final apiEndpoint =
+    const apiEndpoint =
         'https://app.berana.app/api/method/brana_audiobook.api.auth_api.signup';
-    
+
     final Map<String, dynamic> signUpData = {
       'firstname': firstname.text,
       'lastname': lastname.text,
@@ -38,20 +41,85 @@ class _MyWidgetState extends State<SignupPage> {
       body: signUpData,
     );
 
-    if (response.statusCode == 200 && _formKey.currentState!.validate()) {
-      // Successful signup, navigate to the next screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const Navigation()),
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+
+      if (responseBody.containsKey('message')) {
+        final dynamic message = responseBody['message'];
+
+        if (message is Map && message.containsKey('message')) {
+          final String errorMessage = message['message'];
+
+          if (errorMessage.toLowerCase().contains('already registered')) {
+            // Username is already in use, show the error
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.transparent,
+                content: Text(
+                  'Username is already registered. Please try another name.',
+                  style: GoogleFonts.jost(color: Colors.red),
+                ),
+              ),
+            );
+            return;
+          }
+        }
+      }
+      if (_formKey.currentState!.validate()) {
+      // Successful signup, show a dialog popup
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor:kLightBlue.withOpacity(0.5) ,
+            title:  Text('Signup Successful',
+            style: GoogleFonts.jost(
+                          fontSize: 18,
+                          height: 1,
+                          color: branaWhite,
+                          fontWeight: FontWeight.bold,
+                                    ),
+            ),
+            content: Text('You have successfully signed up! please check your email for password link',
+            style: GoogleFonts.jost(
+                          fontSize: 18,
+                          height: 1,
+                          color: branaWhite,
+                                    ),),
+            actions: <Widget>[
+              ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+          elevation: 10,
+          minimumSize: const Size.fromHeight(50),
+          backgroundColor: branaPrimaryColor),
+      child: Text(
+        "Continue",
+        style: GoogleFonts.jost(
+          color: branaWhite,
+        ),
+      ),
+    )
+            ],
+          );
+        },
       );
-    } else {
-      // Error in the signup process, display a snackbar with an error message
+    }
+  }  else {
+      // Error in the signup process, display a snackbar with a generic error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Sign Up Failed!',
-          style: GoogleFonts.jost(
-            color:Colors.red,
-          ),)),
+          content: Text(
+            'Sign Up Failed!',
+            style: GoogleFonts.jost(color: Colors.red),
+          ),
+        ),
       );
     }
   }
@@ -68,6 +136,18 @@ class _MyWidgetState extends State<SignupPage> {
 
     return Scaffold(
         backgroundColor: branaDeepBlack,
+        extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 2, 22, 41),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
         body: Stack(children: [
           Positioned(
               top: topPadding,
@@ -247,9 +327,7 @@ class _MyWidgetState extends State<SignupPage> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'please set username';
-        } else if (!RegExp(r'^[a-zA-Z0-9._]+$]').hasMatch(value)) {
-          return 'Please enter only letters, number or _';
-        }
+        } 
         return null;
       },
     );

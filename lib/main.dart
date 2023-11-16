@@ -49,22 +49,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-class SecondPage extends StatelessWidget {
-  const SecondPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (BuildContext context) {
-          final screenHeight = MediaQuery.of(context).size.height;
-
-          return Onboarding(screenHeight: screenHeight);
-        },
-      ),
-    );
-  }
-}
 
 // class App extends StatelessWidget {
 //   const App({Key? key}) : super(key: key);

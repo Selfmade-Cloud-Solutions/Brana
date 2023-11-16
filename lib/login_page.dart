@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:brana_mobile/forgot_password.dart';
 import 'package:brana_mobile/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:brana_mobile/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,60 +20,43 @@ class LoginPage extends StatefulWidget {
 class _MyWidgetState extends State<LoginPage> {
   late Color myColor;
   late Size mediaSize;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
   bool isPasswordVisible = false;
-
+@override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    double toppadding;
     double leftRightPadding;
 
     mediaSize = MediaQuery.of(context).size;
-    toppadding = mediaSize.height;
     leftRightPadding = mediaSize.width * 0.05;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: branaDeepBlack,
-      body: Stack(children: [
+      body: 
         Padding(
           padding: EdgeInsets.only(
               left: leftRightPadding,
-              top: toppadding / 9,
+              top: mediaSize.height/20,
               right: leftRightPadding,
-              bottom: toppadding / 25),
+              bottom: mediaSize.height/343),
           child: Container(
             color: branaDarkBlue,
             width: mediaSize.width - 50,
             height: mediaSize.height / 1.2,
             child: Column(
-              children: [
-                Container(
-                  child: _buildTop(),
-                ),
-                Container(
-                  child: _buildForm(),
-                ),
-                // Container(
-                //   child: _buildBottom(),
-                // )
+              children: [ 
+                _buildTop(),
+                _buildForm(),
               ],
             ),
           ),
         ),
-      ]),
-      // body: SafeArea(
-      //   child: Stack(alignment: Alignment.topCenter, children: [
-      //     Positioned(
-      //         // top: toppadding,
-      //         // bottom: bottomPadding,
-      //         left: leftRightPadding,
-      //         right: leftRightPadding,
-      //         child: _buildBottom())
-      //   ]),
-      // )
     );
   }
 
@@ -86,7 +74,6 @@ class _MyWidgetState extends State<LoginPage> {
       ),
     );
   }
-
 
   Widget _buildForm() {
     mediaSize = MediaQuery.of(context).size;
@@ -140,7 +127,7 @@ class _MyWidgetState extends State<LoginPage> {
         SizedBox(height: screenHeight / 30),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
-          child: _buildLoginButton(),
+          child: Center(child:_buildLoginButton()),
         ),
         SizedBox(
           height: screenHeight / 20,
@@ -234,22 +221,27 @@ class _MyWidgetState extends State<LoginPage> {
     mediaSize = MediaQuery.of(context).size;
     double screenWidth = mediaSize.width;
     double screenHeight = mediaSize.height;
-    double toppadding = mediaSize.height;
-    double leftpadding = mediaSize.width;
-    return Padding(
-      padding: EdgeInsets.fromLTRB(leftpadding / 4.5, toppadding / 150,
-          leftpadding / 4, toppadding / 200),
-      child: SizedBox(
+    return SizedBox(
         width: screenWidth / 3,
         height: screenHeight / 20,
         child: ElevatedButton(
-          onPressed: () {
-            // debugPrint("Email : ${emailController.text}");
-            // debugPrint("Password : ${passwordController.text}");
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const Navigation()),
-            );
+          onPressed: () async {
+            if (_validateInputs()) {
+              final bool success = await _login();
+              if (success) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Navigation()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      backgroundColor: Colors.transparent,
+                      content: Text('Incorrect username or password',
+                          style: TextStyle(color: Colors.red))),
+                );
+              }
+            }
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -262,7 +254,51 @@ class _MyWidgetState extends State<LoginPage> {
             ),
           ),
         ),
-      ),
     );
+  }
+
+  bool _validateInputs() {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            backgroundColor: Colors.transparent,
+            content: Text('Please enter email and password',
+                style: TextStyle(color: Colors.red))),
+      );
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> _login() async {
+    const apiUrl =
+        'https://app.berana.app/api/method/brana_audiobook.api.auth_api.login';
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {
+        'identifier': emailController.text,
+        'password': passwordController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseJson = json.decode(response.body);
+
+      if (responseJson.containsKey('message') &&
+          responseJson['message'] != null) {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        // final user = responseJson['message'];
+
+        // print('Logged in user: $user');
+        return true;
+      }
+    } else {
+      // print('Authentication failed');
+    }
+
+    return false;
   }
 }

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import "package:brana_mobile/constants.dart";
-import 'package:brana_mobile/data.dart';
 import 'package:brana_mobile/book_detail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -206,7 +205,8 @@ class _AuthorsSoloPage extends State<AuthorsSoloPage> {
                           'No description available',
                       thumbnail:audiobook['thumbnail'] ?? 'No thumbnail available',
                           narrator:audiobook['narrator'],
-                      chapters: audiobook['chapters'],
+                      is_favorite:audiobook['is_favorite'] ?? '',
+                      // chapters: audiobook['chapters'],
                     ),
                   ),
                 );

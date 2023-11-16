@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/constants.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -34,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color.fromARGB(255, 2, 16, 27),
+          backgroundColor: branaDeepBlack,
 
           flexibleSpace: Center(
               child: Row(
@@ -151,7 +155,7 @@ GestureDetector buildAccountOptionRow(BuildContext context, String title) {
     },
     child: Padding(
       padding: const EdgeInsets.only(left: 0, top: 5),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 2 + 150,
         height: MediaQuery.of(context).size.height / 10,
         child: Card(
@@ -228,12 +232,14 @@ GestureDetector buildChangePassword(BuildContext context, String title) {
                         height: MediaQuery.of(context).size.height / 20,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
+                            backgroundColor:branaBlue.withOpacity(0.4),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6))),
+                                  borderRadius: BorderRadius.circular(6))
+                                  ),
                           onPressed: () => Navigator.pop(context),
                           child: Text('Update',
                               style: GoogleFonts.jost(
-                                  color: Colors.black,
+                                  color: branaWhite,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18)),
                         ),
@@ -245,7 +251,7 @@ GestureDetector buildChangePassword(BuildContext context, String title) {
     },
     child: Padding(
       padding: const EdgeInsets.only(left: 0, top: 5),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 2 + 150,
         height: MediaQuery.of(context).size.height / 10,
         child: Card(
@@ -299,7 +305,7 @@ GestureDetector buildContentSettings(BuildContext context, String title) {
     },
     child: Padding(
       padding: const EdgeInsets.only(left: 0, top: 5),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 2 + 150,
         height: MediaQuery.of(context).size.height / 10,
         child: Card(
@@ -413,7 +419,7 @@ GestureDetector buildTermsAndConditions(BuildContext context, String title) {
     child: SingleChildScrollView(
         child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 2 + 150,
         height: MediaQuery.of(context).size.height / 10,
         child: Card(
@@ -460,7 +466,7 @@ GestureDetector buildPreferences(BuildContext context, String title) {
     },
     child: Padding(
       padding: const EdgeInsets.only(left: 0, top: 5),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 2 + 150,
         height: MediaQuery.of(context).size.height / 10,
         child: Card(
@@ -500,6 +506,7 @@ Widget buildLogoutButton(BuildContext context) {
               height: MediaQuery.of(context).size.height / 20,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    backgroundColor: branaDarkBlue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6))),
                 onPressed: () {
@@ -509,10 +516,7 @@ Widget buildLogoutButton(BuildContext context) {
                   );
                 },
                 child: Text('Logout',
-                    style: GoogleFonts.jost(
-                        color: branaDarkBlue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
+                    style: GoogleFonts.jost(color: Colors.white, fontSize: 18)),
               ))));
 }
 
@@ -530,20 +534,38 @@ Widget _logoutDialog(BuildContext context) {
         onPressed: () async {
           // Log out user
           // await AuthService().signOut();
+          await _logout();
 
-          // Navigate to login page
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const LoginPage()));
         },
         child: Text(
           'Logout',
-          style: GoogleFonts.jost(fontSize: 15),
+          style: GoogleFonts.jost(fontSize: 15,
+          color:Colors.red,),
         ),
       ),
       TextButton(
-          onPressed: () => Navigator.pop(context), child: const Text('No'))
+          onPressed: () => Navigator.pop(context), child:  Text('No',
+          style: GoogleFonts.jost(fontSize: 15,
+          color:kLightBlue.withOpacity(0.9)),))
     ],
   );
+}
+
+Future<void> _logout() async {
+  const apiUrl =
+      'https://app.berana.app/api/method/brana_audiobook.api.auth_api.logout';
+
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    headers: {'Content-Type': 'application/json'},
+  );
+  if (response.statusCode == 200) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedOut', true);
+  } else {
+  }
 }
 
 Widget label(String label) {

@@ -6,7 +6,6 @@ class User {
   String phone;
   String aboutMeDescription;
 
-  // Constructor
   User({
     required this.image,
     required this.firstName,
@@ -26,20 +25,20 @@ class User {
   }) =>
       User(
         image: imagePath ?? image,
-        firstName: fname ?? this.firstName,
-        lastName: lname ?? this.lastName,
+        firstName: fname ?? firstName,
+        lastName: lname ?? lastName,
         email: email ?? this.email,
         phone: phone ?? this.phone,
         aboutMeDescription: about ?? aboutMeDescription,
       );
 
   static User fromJson(Map<String, dynamic> json) => User(
-        image: json['imagePath'],
-        firstName: json['fname'],
-        lastName: json['lname'],
-        email: json['email'],
-        aboutMeDescription: json['about'],
-        phone: json['phone'],
+        image: json['imagePath'] ?? '',
+        firstName: json['fname'] ?? '',
+        lastName: json['lname'] ?? '',
+        email: json['email'] ?? '',
+        aboutMeDescription: json['about'] ?? '',
+        phone: json['phone'] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
