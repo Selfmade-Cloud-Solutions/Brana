@@ -4,10 +4,9 @@ import 'package:brana_mobile/pages/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 // import 'package:brana_mobile/pages/profile/pages/edit_description.dart';
 // import 'package:brana_mobile/pages/profile/pages/edit_email.dart';
-import 'package:brana_mobile/pages/profile/pages/edit_image.dart';
+// import 'package:brana_mobile/pages/profile/pages/edit_image.dart';
 import 'package:brana_mobile/pages/profile/pages/edit_name.dart';
 // import 'package:brana_mobile/pages/profile/pages/edit_phone.dart';
-import 'package:brana_mobile/user/user.dart';
 import 'package:brana_mobile/widgets/display_image_widget.dart';
 import 'package:brana_mobile/user/user_data.dart';
 import 'package:brana_mobile/pages/settings.dart';
@@ -36,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       await UserData.init(); // Initialize SharedPreferences
 
-      final apiUrl =
+      const apiUrl =
           'https://app.berana.app/api/method/brana_audiobook.api.user_profile_api.retrieve_profile';
 
       final response = await http.get(
@@ -51,33 +50,29 @@ class _ProfilePageState extends State<ProfilePage> {
             responseJson['message'] != null) {
           final loggedUser = responseJson['message'];
           UserData.setUser(
-              User.fromJson(loggedUser())); // Set user data in UserData
+              User.fromJson(loggedUser()));
           setState(() {
             user = UserData
-                .getUser(); // Update the user variable with fetched data
+                .getUser(); 
           });
         }
       } else {
-        print('Failed to fetch user data');
       }
+    // ignore: empty_catches
     } catch (error) {
-      print('Error: $error');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = UserData.myUser;
     const color = Color.fromRGBO(255, 255, 255, 1);
     mediaSize = MediaQuery.of(context).size;
     double toppadding = mediaSize.height;
     double bottompadding = mediaSize.height;
     double leftpadding = mediaSize.width;
-    double rightpadding = mediaSize.width;
     double screenHeight = mediaSize.height;
     double screenWidth = mediaSize.width;
 
-    double fontSize = screenWidth;
     return Scaffold(
       backgroundColor: branaDeepBlack,
       appBar: AppBar(
@@ -116,8 +111,6 @@ class _ProfilePageState extends State<ProfilePage> {
           width: screenWidth,
           color: branaDeepBlack,
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: EdgeInsets.only(
@@ -203,7 +196,6 @@ class _ProfilePageState extends State<ProfilePage> {
       padding: EdgeInsets.only(top: toppadding * 0),
       child: InkWell(
           onTap: () {
-            // navigateSecondPage(const EditImagePage());
           },
           child: CircleAvatar(
             radius: 50,
@@ -212,17 +204,6 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {},
             ),
           )
-          // child: Container(
-          //   width: 80.0,
-          //   height: 80.0,
-          //   decoration: BoxDecoration(
-          //       image: DecorationImage(
-          //         image: NetworkImage(user.image),
-          //         fit: BoxFit.cover,
-          //       ),
-          //       shape: BoxShape.rectangle,
-          //       borderRadius: BorderRadius.circular(10.0)),
-          // ),
           ),
     );
   }
@@ -231,14 +212,12 @@ class _ProfilePageState extends State<ProfilePage> {
     mediaSize = MediaQuery.of(context).size;
     // double toppadding = mediaSize.height;
     double rightpadding = mediaSize.width;
-    double screenWidth = mediaSize.width;
-    double fontSize = screenWidth;
 
     return Container(
       padding: EdgeInsets.only(
         right: rightpadding / 10,
       ),
-      child: Icon(
+      child: const Icon(
         Icons.settings,
         color: branaWhite,
         size: 25,
@@ -251,41 +230,26 @@ class _ProfilePageState extends State<ProfilePage> {
 
     double bottompadding = mediaSize.height;
 
-    double screenWidth = mediaSize.width;
 
-    double fontSize = screenWidth;
     return SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.only(bottom: bottompadding / 350),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Text(
-                //   title,
-                //   style: GoogleFonts.jost(
-                //     fontSize: 15,
-                //     fontWeight: FontWeight.w500,
-                //     color: branaWhite,
-                //   ),
-                // ),
-
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        child: Text(
-                          user.firstName,
-                          style: GoogleFonts.jost(
-                              fontSize: 25, height: 1.4, color: Colors.white),
-                        ),
+                      Text(
+                        user.firstName,
+                        style: GoogleFonts.jost(
+                            fontSize: 25, height: 1.4, color: Colors.white),
                       ),
-                      Container(
-                        child: Text(
-                          user.lastName,
-                          style: GoogleFonts.jost(
-                              fontSize: 25, height: 1.4, color: Colors.white),
-                        ),
+                      Text(
+                        user.lastName,
+                        style: GoogleFonts.jost(
+                            fontSize: 25, height: 1.4, color: Colors.white),
                       )
                     ],
                   ),
@@ -293,42 +257,28 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             )));
   }
-
   Widget emailDisplay() {
     mediaSize = MediaQuery.of(context).size;
 
     double bottompadding = mediaSize.height;
 
-    double screenWidth = mediaSize.width;
 
-    double fontSize = screenWidth;
     return SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.only(bottom: bottompadding / 350),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Text(
-                //   title,
-                //   style: GoogleFonts.jost(
-                //     fontSize: 15,
-                //     fontWeight: FontWeight.w500,
-                //     color: branaWhite,
-                //   ),
-                // ),
-
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        child: Text(
-                          user.email,
-                          style: GoogleFonts.jost(
-                              fontSize: 15,
-                              height: 1.4,
-                              color: const Color.fromARGB(255, 158, 155, 155)),
-                        ),
+                      Text(
+                        user.email,
+                        style: GoogleFonts.jost(
+                            fontSize: 15,
+                            height: 1.4,
+                            color: const Color.fromARGB(255, 158, 155, 155)),
                       ),
                     ],
                   ),
@@ -343,7 +293,6 @@ class _ProfilePageState extends State<ProfilePage> {
     double screenWidth = mediaSize.width;
     double screenHeight = mediaSize.height;
 
-    double fontSize = screenWidth;
     return SizedBox(
       width: screenWidth / 3,
       height: screenHeight / 10 - 40,
@@ -372,8 +321,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
-  // Refrshes the Page after updating user info.
   FutureOr onGoBack(dynamic value) {
     setState(() {});
   }
@@ -389,7 +336,6 @@ class _ProfilePageState extends State<ProfilePage> {
     double screenWidth = mediaSize.width;
     double screenHeight = mediaSize.height;
     double leftpadding = mediaSize.width;
-    double fontSize = screenWidth;
 
     return SizedBox(
       width: screenWidth,
@@ -412,10 +358,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: screenWidth / 30,
                     ),
                     const Padding(
-                      padding: const EdgeInsets.only(top: 0.0),
+                      padding: EdgeInsets.only(top: 0.0),
                       child: Icon(
                         Icons.book_outlined,
-                        color: const Color.fromARGB(255, 255, 255, 255),
+                        color: branaWhite,
                         size: 30,
                       ),
                     ),
@@ -445,7 +391,6 @@ class _ProfilePageState extends State<ProfilePage> {
     double screenWidth = mediaSize.width;
     double screenHeight = mediaSize.height;
     double leftpadding = mediaSize.width;
-    double fontSize = screenWidth;
     return SizedBox(
       width: screenWidth,
       child: Row(
@@ -496,9 +441,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget label(String label) {
     mediaSize = MediaQuery.of(context).size;
-    double screenWidth = mediaSize.width;
     double leftpadding = mediaSize.width;
-    double fontSize = screenWidth;
     return Padding(
       padding: EdgeInsets.only(left: leftpadding / 15),
       child: Container(

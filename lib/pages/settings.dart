@@ -1,11 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:brana_mobile/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:brana_mobile/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:brana_mobile/sharedPreference.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -13,6 +17,54 @@ class SettingsPage extends StatefulWidget {
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
+Future<void> _logout(BuildContext context) async {
+  const apiUrl = 'https://app.berana.app/api/method/brana_audiobook.api.auth_api.logout';
+
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (isLoggedIn) {
+      // Retrieve headers from SharedPreferences
+      String? headersString = prefs.getString('authHeaders');
+      if (headersString != null) {
+        Map<String, dynamic> headers = jsonDecode(headersString);
+
+        // Create a Dio instance for making HTTP requests
+        Dio dio = Dio();
+
+        // Add headers to the Dio instance
+        dio.options.headers['Content-Type'] = 'application/json';
+        dio.options.headers.addAll(headers);
+
+        // Make the request using Dio
+        final response = await dio.post(apiUrl);
+
+        if (response.statusCode == 200) {
+          await prefs.setBool('isLoggedIn', false);
+          // Update the state to reflect the change
+          await checkLoginStatus(context);
+        } else {
+          // Handle error...
+          print('Logout failed. Status code: ${response.statusCode}');
+          // Add any additional error handling as needed
+        }
+      } else {
+        // Handle case where headers are not found in SharedPreferences
+        print('Headers not found in SharedPreferences');
+      }
+    } else {
+      // Handle case where user is not logged in
+      print('User is not logged in');
+    }
+  } catch (e) {
+    // Handle exceptions
+    print('Error during logout: $e');
+    // Add any additional error handling as needed
+  }
+}
+
+
 
 class _SettingsPageState extends State<SettingsPage> {
   late Size mediaSize;
@@ -22,24 +74,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
         backgroundColor: branaDeepBlack,
-        // appBar: AppBar(
-        //   backgroundColor: const Color.fromARGB(255, 2, 16, 27),
-        //   elevation: 1,
-        //   leading: IconButton(
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //     },
-        //     icon: const Icon(
-        //       Icons.arrow_back,
-        //       color: branaWhite,
-        //     ),
-        //   ),
-        // ),
-
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: branaDeepBlack,
-
           flexibleSpace: Center(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -70,11 +107,6 @@ class _SettingsPageState extends State<SettingsPage> {
               )
             ],
           )),
-          // actions: [
-          //   InkWell(
-          //     onTap: () {},
-          //   ),
-          // ],
         ),
         body: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -83,18 +115,6 @@ class _SettingsPageState extends State<SettingsPage> {
               SizedBox(
                 height: mediaSize.height / 500,
               ),
-              // Text(
-              //   "Settings",
-              //   style: GoogleFonts.jost(
-              //     fontSize: 25,
-              //     fontWeight: FontWeight.w500,
-              //     color: branaWhite,
-              //   ),
-              // ),
-              // const Divider(
-              //   height: 15,
-              //   thickness: 2,
-              // ),
               const SizedBox(
                 height: 10,
               ),
@@ -232,10 +252,9 @@ GestureDetector buildChangePassword(BuildContext context, String title) {
                         height: MediaQuery.of(context).size.height / 20,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:branaBlue.withOpacity(0.4),
+                              backgroundColor: branaBlue.withOpacity(0.4),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6))
-                                  ),
+                                  borderRadius: BorderRadius.circular(6))),
                           onPressed: () => Navigator.pop(context),
                           child: Text('Update',
                               style: GoogleFonts.jost(
@@ -532,41 +551,31 @@ Widget _logoutDialog(BuildContext context) {
     actions: [
       TextButton(
         onPressed: () async {
-          // Log out user
-          // await AuthService().signOut();
-          await _logout();
+          await _logout(context);
 
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const LoginPage()));
         },
         child: Text(
           'Logout',
-          style: GoogleFonts.jost(fontSize: 15,
-          color:Colors.red,),
+          style: GoogleFonts.jost(
+            fontSize: 15,
+            color: Colors.red,
+          ),
         ),
       ),
       TextButton(
-          onPressed: () => Navigator.pop(context), child:  Text('No',
-          style: GoogleFonts.jost(fontSize: 15,
-          color:kLightBlue.withOpacity(0.9)),))
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            'No',
+            style: GoogleFonts.jost(
+                fontSize: 15, color: kLightBlue.withOpacity(0.9)),
+          ))
     ],
   );
 }
 
-Future<void> _logout() async {
-  const apiUrl =
-      'https://app.berana.app/api/method/brana_audiobook.api.auth_api.logout';
 
-  final response = await http.post(
-    Uri.parse(apiUrl),
-    headers: {'Content-Type': 'application/json'},
-  );
-  if (response.statusCode == 200) {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('isLoggedOut', true);
-  } else {
-  }
-}
 
 Widget label(String label) {
   return Padding(

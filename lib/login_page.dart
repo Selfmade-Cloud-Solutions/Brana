@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:brana_mobile/forgot_password.dart';
 import 'package:brana_mobile/signup_page.dart';
@@ -25,10 +27,11 @@ class _MyWidgetState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
   bool isPasswordVisible = false;
-@override
+  @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     double leftRightPadding;
@@ -38,25 +41,24 @@ class _MyWidgetState extends State<LoginPage> {
 
     return Scaffold(
       backgroundColor: branaDeepBlack,
-      body: 
-        Padding(
-          padding: EdgeInsets.only(
-              left: leftRightPadding,
-              top: mediaSize.height/20,
-              right: leftRightPadding,
-              bottom: mediaSize.height/343),
-          child: Container(
-            color: branaDarkBlue,
-            width: mediaSize.width - 50,
-            height: mediaSize.height / 1.2,
-            child: Column(
-              children: [ 
-                _buildTop(),
-                _buildForm(),
-              ],
-            ),
+      body: Padding(
+        padding: EdgeInsets.only(
+            left: leftRightPadding,
+            top: mediaSize.height / 20,
+            right: leftRightPadding,
+            bottom: mediaSize.height / 343),
+        child: Container(
+          color: branaDarkBlue,
+          width: mediaSize.width - 50,
+          height: mediaSize.height / 1.2,
+          child: Column(
+            children: [
+              _buildTop(),
+              _buildForm(),
+            ],
           ),
         ),
+      ),
     );
   }
 
@@ -127,7 +129,7 @@ class _MyWidgetState extends State<LoginPage> {
         SizedBox(height: screenHeight / 30),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: leftpadding / 20),
-          child: Center(child:_buildLoginButton()),
+          child: Center(child: _buildLoginButton()),
         ),
         SizedBox(
           height: screenHeight / 20,
@@ -222,38 +224,38 @@ class _MyWidgetState extends State<LoginPage> {
     double screenWidth = mediaSize.width;
     double screenHeight = mediaSize.height;
     return SizedBox(
-        width: screenWidth / 3,
-        height: screenHeight / 20,
-        child: ElevatedButton(
-          onPressed: () async {
-            if (_validateInputs()) {
-              final bool success = await _login();
-              if (success) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Navigation()),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      backgroundColor: Colors.transparent,
-                      content: Text('Incorrect username or password',
-                          style: TextStyle(color: Colors.red))),
-                );
-              }
+      width: screenWidth / 3,
+      height: screenHeight / 20,
+      child: ElevatedButton(
+        onPressed: () async {
+          if (_validateInputs()) {
+            final bool success = await _login();
+            if (success) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Navigation()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    backgroundColor: Colors.transparent,
+                    content: Text('Incorrect username or password',
+                        style: TextStyle(color: Colors.red))),
+              );
             }
-          },
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6)),
-              backgroundColor: branaPrimaryColor),
-          child: Text(
-            "LOGIN",
-            style: GoogleFonts.jost(
-              color: branaWhite,
-            ),
+          }
+        },
+        style: ElevatedButton.styleFrom(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            backgroundColor: branaPrimaryColor),
+        child: Text(
+          "LOGIN",
+          style: GoogleFonts.jost(
+            color: branaWhite,
           ),
         ),
+      ),
     );
   }
 
@@ -274,31 +276,67 @@ class _MyWidgetState extends State<LoginPage> {
     const apiUrl =
         'https://app.berana.app/api/method/brana_audiobook.api.auth_api.login';
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: {
+    Dio dio = Dio(); // Create a Dio instance
+
+    try {
+      // Set up the headers
+      dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      dio.options.headers['authHeader'] = 'Your-Header-Value';
+
+      // Set up the request data
+      Map<String, dynamic> requestData = {
         'identifier': emailController.text,
         'password': passwordController.text,
-      },
-    );
+      };
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseJson = json.decode(response.body);
+      // Make the request
+      final response =
+          await dio.post(apiUrl, data: FormData.fromMap(requestData));
 
-      if (responseJson.containsKey('message') &&
-          responseJson['message'] != null) {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('isLoggedIn', true);
-        // final user = responseJson['message'];
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseJson = response.data;
+        if (responseJson.containsKey('message') &&
+            responseJson['message'] != null) {
+          // Extract and store headers in SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          List<String>? cookies = response.headers['set-cookie'];
+          Map<String, String> headers = extractHeadersFromCookies(cookies);
 
-        // print('Logged in user: $user');
-        return true;
+          print('Received headers: ${response.headers}');
+          prefs.setString('authHeaders', jsonEncode(headers));
+          prefs.setBool('isLoggedIn', true);
+          return true;
+        }
+      } else {
+        // Handle other status codes if needed
       }
-    } else {
-      // print('Authentication failed');
+    } catch (error) {
+      // Handle Dio errors, if any
+      print('Dio error: $error');
     }
 
     return false;
+  }
+
+  Map<String, String> extractHeadersFromCookies(List<String>? cookies) {
+    Map<String, String> headers = {};
+
+    if (cookies != null) {
+      for (String cookieString in cookies) {
+        Cookie cookie = Cookie.fromSetCookieValue(cookieString);
+
+        if (cookie.name == 'sid' ||
+            cookie.name == 'system_user' ||
+            cookie.name == 'full_name' ||
+            cookie.name == 'user_id' ||
+            cookie.name == 'user_image') {
+          headers[cookie.name] = cookie.value;
+
+    print(headers);
+        }
+      }
+    }
+
+    return headers;
   }
 }

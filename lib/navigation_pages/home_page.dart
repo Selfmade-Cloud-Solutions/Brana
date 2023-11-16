@@ -29,15 +29,17 @@ class _MyWidgetState extends State<HomePage> {
   }
 
   void checkConnectivity() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      setState(() {
-        isLoading = true; // No internet, stop the preloader
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
+    if (mounted) {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        setState(() {
+          isLoading = true; // No internet, stop the preloader
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 

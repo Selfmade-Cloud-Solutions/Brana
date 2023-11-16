@@ -67,7 +67,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                     color: branaWhite,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 150,
                 ),
                 Text(
@@ -106,8 +106,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                     SizedBox(
                       height: screenHeight / 30,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: leftpadding / 2.5),
+                    Center(
                       child: InkWell(
                         onTap: () {
                           navigateSecondPage(const EditImagePage());
@@ -123,15 +122,15 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                               ),
                             ),
                             Material(
-                              color: Colors.blue,
+                              color: branaBlue,
                               borderRadius: BorderRadius.circular(10),
                               child: InkWell(
                                 onTap: () {
                                   navigateSecondPage(const EditImagePage());
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.camera_alt_outlined,
-                                  color: Colors.white,
+                                  color: branaWhite,
                                   size: 28,
                                 ),
                               ),
@@ -186,7 +185,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
       height: mediaSize.height / 15,
       width: mediaSize.width,
       decoration: BoxDecoration(
-        color: Color(0xff2a2e3d),
+        color: const Color(0xff2a2e3d),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Center(

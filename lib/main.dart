@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
         // Consider removing or adjusting useMaterial3 based on your needs.
         // useMaterial3: true,
       ),
-      // home: const Splashscreen(),
-      home: const AudioPlayerScreen(),
+      home: const Splashscreen(),
+      // home: const AudioPlayerScreen(),
       // You can change the home widget here to your desired default screen.
       // home: AuthorsSoloPage(),
 

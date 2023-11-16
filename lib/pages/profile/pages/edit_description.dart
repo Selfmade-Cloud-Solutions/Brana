@@ -26,9 +26,7 @@ class _EditDescriptionFormPageState extends State<EditDescriptionFormPage> {
     super.dispose();
   }
 
-  void updateUserValue(String description) {
-    user.aboutMeDescription = description;
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -83,27 +81,10 @@ class _EditDescriptionFormPageState extends State<EditDescriptionFormPage> {
                     ),
                   ),
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                          width: 350,
-                          height: 0,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Validate returns true if the form is valid, or false otherwise.
-                              if (_formKey.currentState!.validate()) {
-                                updateUserValue(descriptionController.text);
-                                Navigator.pop(context);
-                              }
-                            },
-                            child:  Text(
+                            Text(
                               'Update',
                               style: GoogleFonts.jost(fontSize: 15),
                             ),
-                          ),
-                        )))
               ]),
         ));
   }

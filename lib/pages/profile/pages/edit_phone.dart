@@ -25,11 +25,7 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
     super.dispose();
   }
 
-  void updateUserValue(String phone) {
-    String formattedPhoneNumber =
-        "(${phone.substring(0, 3)}) ${phone.substring(3, 6)}-${phone.substring(6, phone.length)}";
-    user.phone = formattedPhoneNumber;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,28 +85,10 @@ class EditPhoneFormPageState extends State<EditPhoneFormPage> {
                                       ),
                                     ),
                                   ))),
-                          Padding(
-                              padding: const EdgeInsets.only(top: 150),
-                              child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: SizedBox(
-                                    width: 320,
-                                    height: 50,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        // Validate returns true if the form is valid, or false otherwise.
-                                        if (_formKey.currentState!.validate() &&
-                                            isNumeric(phoneController.text)) {
-                                          updateUserValue(phoneController.text);
-                                          Navigator.pop(context);
-                                        }
-                                      },
-                                      child: Text(
+                                  Text(
                                         'Update',
                                         style: GoogleFonts.jost(fontSize: 15),
-                                      ),
-                                    ),
-                                  )))
+                                  )       
                         ]),
                   ))),
         ));
