@@ -4,8 +4,8 @@ Welcome to the documentation for the Brana Audiobooks app. This document provide
 
 ## User Documentation
 
-### Splash Screen
+### 1. Splash Screen
 
 The Brana Audiobooks splash screen serves as the initial screen upon launching the app. Its purpose is to create a smooth and engaging transition for users while essential background tasks are executed.
 
-![Image Alt text](flutter_08.png)
+![Image Alt text](spl.png)
