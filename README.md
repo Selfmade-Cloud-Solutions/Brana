@@ -19,6 +19,7 @@ The app checks if the user has completed the onboarding process.
 If completed, the user is directed to the login page.
 If not completed, the user is navigated to the onboarding screens.
 
+```
 Future<void> _checkOnboardingStatus() async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -44,3 +45,4 @@ Future<void> _checkOnboardingStatus() async {
     print('Error checking onboarding status: $e');
   }
 }
+```
