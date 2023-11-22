@@ -142,4 +142,4 @@ The page is designed to be responsive, adapting to different screen sizes for an
 
 ## 6. Profile page 
 The Profile Page serves as a personalized space for users to manage their account information, view statistics, and customize their profile. This documentation will walk you through the key features and functionalities of the Profile Page.
-![Image Alt text](Screenshot%(740)-07.png)
+![Image Alt text](Screenshot (740)-07.png)
